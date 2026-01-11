@@ -1,0 +1,310 @@
+%==============================================================================
+% Appendix F: Code and Data Access
+%==============================================================================
+\section{Code and Data Access}
+\label{app:access}
+
+This appendix provides information on accessing the computational code 
+and data associated with this paper.
+
+%------------------------------------------------------------------------------
+\subsection{Code Repository}
+\label{app:repository}
+
+\subsubsection{Repository location}
+
+The complete source code for this project is available at:
+
+\begin{center}
+\texttt{https://github.com/Muacca/DPPUv2-paper01}
+\end{center}
+
+\subsubsection{Repository structure}
+
+\begin{verbatim}
+DPPUv2/
+|-- README.md                    # Project overview
+|-- LICENSE                      # License information
+|
+|-- script/                         # Source code
+|   |-- DPPUv2_engine_core_v3.py      # Core symbolic engine
+|   |-- DPPUv2_parameter_scan_v3.py   # Parameter scanning
+|   |-- DPPUv2_runner_S3S1_v3.py      # S3 topology runner
+|   |-- DPPUv2_runner_T3S1_v3.py      # T3 topology runner
+|   |-- DPPUv2_runner_Nil3S1_v3.py    # Nil3 topology runner
+|   |-- DPPUv2_visualize_phasemap_v3.py    # Phase diagram generator
+|   |-- DPPUv2_visualize_phasematrix_v3.py # Phase matrix generator
+|   |-- DPPUv2_interactive_viewer_v3.py    # Interactive viewer
+|   |-- DPPUv2_visualize_notebook_v3.ipynb # Visualize notebook
+|   `-- requirements.txt                   # Python dependencies
+|
+|-- data/                        # Output data and image
+|
+|-- LaTeX/                       # LaTeX source and figures of the paper
+|
+`-- *.md                         # Documentation
+\end{verbatim}
+
+\subsubsection{File inventory}
+
+\begin{table}[H]
+\centering
+\caption{Provided files and their associated appendices.}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Category & File & Description & Reference \\
+\midrule
+\textbf{Engine} & \texttt{DPPUv2\_engine\_core\_v3.py} & Core symbolic engine & App.~\ref{app:reproducibility} \\
+ & \texttt{DPPUv2\_runner\_S3S1\_v3.py} & $\Sthree \times \Sone$ runner &  \\
+ & \texttt{DPPUv2\_runner\_T3S1\_v3.py} & $\Tthree \times \Sone$ runner &  \\
+ & \texttt{DPPUv2\_runner\_Nil3S1\_v3.py} & $\Nilthree \times \Sone$ runner &  \\
+\midrule
+\textbf{Scan} & \texttt{DPPUv2\_parameter\_scan\_v3.py} & Parameter scanning & App.~\ref{app:numerical} \\
+\midrule
+\textbf{Visualization} & \texttt{DPPUv2\_visualize\_notebook\_v3.ipynb} & Visualize notebook & App.~\ref{app:visualization} \\
+ & \texttt{DPPUv2\_interactive\_viewer\_v3.py} & Interactive viewer &  \\
+ & \texttt{DPPUv2\_visualize\_phasemap\_v3.py} & Phase diagram generator &  \\
+ & \texttt{DPPUv2\_visualize\_phasematrix\_v3.py} & Phase matrix generator &  \\
+\midrule
+\textbf{Logs} & \texttt{*\_\{timestamp\}.log} & Verification logs & App.~\ref{app:reproducibility} \\
+\midrule
+\textbf{Data} & \texttt{dppu\_scan\_*.csv} & Scan results (CSV) & App.~\ref{app:numerical} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%------------------------------------------------------------------------------
+\subsection{Software Requirements}
+\label{app:requirements}
+
+\subsubsection{Python version}
+
+Python 3.10 or higher is required.
+
+\subsubsection{Dependencies}
+
+\begin{table}[H]
+\centering
+\caption{Required Python packages.}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Package & Version & Purpose \\
+\midrule
+\texttt{numpy} & $\geq$ 1.20 & Numerical arrays \\
+\texttt{sympy} & $\geq$ 1.12 & Symbolic computation \\
+\texttt{mpmath} & $\geq$ 1.3 & Multi-precision arithmetic \\
+\texttt{scipy} & $\geq$ 1.9 & Optimization (Brent's method) \\
+\texttt{pandas} & $\geq$ 1.5 & Data handling \\
+\texttt{matplotlib} & $\geq$ 3.5 & Visualization \\
+\texttt{jupyter} & $\geq$ 1.0 & Interactive notebooks \\
+\texttt{ipywidgets} & $\geq$ 8.0 & Interactive viewer widgets \\
+\texttt{ipympl} & $\geq$ 0.9 & Jupyter matplotlib backend \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Installation}
+
+\begin{lstlisting}[language=bash, basicstyle=\ttfamily\footnotesize]
+# Clone repository
+git clone [repository-url]
+cd DPPUv2
+
+# Create virtual environment (recommended)
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# or: venv\Scripts\activate  # Windows
+
+# Install dependencies
+pip install -r requirements.txt
+\end{lstlisting}
+
+For JupyterLab users, additional extensions may be required:
+\begin{lstlisting}[language=bash, basicstyle=\ttfamily\footnotesize]
+# JupyterLab widget support (if needed)
+jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-matplotlib
+\end{lstlisting}
+
+%------------------------------------------------------------------------------
+\subsection{Quick Start Guide}
+\label{app:quickstart}
+
+\subsubsection{Running a single topology}
+
+\begin{lstlisting}[language=bash, basicstyle=\ttfamily\footnotesize]
+# Run S3 topology with all variants
+python src/DPPUv2_runner_S3S1_v3.py
+
+# Output: logs and symbolic expressions to stdout
+# Verification results saved to data/logs/
+\end{lstlisting}
+
+\subsubsection{Running parameter scans}
+
+\begin{lstlisting}[language=bash, basicstyle=\ttfamily\footnotesize]
+# Full parameter scan (default: all topologies, all variants)
+python DPPUv2_parameter_scan_v3.py
+
+# Single topology/variant
+python DPPUv2_parameter_scan_v3.py \
+    --topologies S3 --ny-variants FULL
+
+# Custom parameter ranges
+python DPPUv2_parameter_scan_v3.py \
+    --topologies S3 --ny-variants FULL \
+    --V-min 0.0 --V-max 5.0 --V-points 51 \
+    --eta-min -10.0 --eta-max 5.0 --eta-points 151 \
+    --theta-min 0.0 --theta-max 5.0 --theta-points 51
+
+# Output: CSV files in output/
+\end{lstlisting}
+
+\subsubsection{Generating figures}
+
+\begin{lstlisting}[language=bash, basicstyle=\ttfamily\footnotesize]
+# Generate phase diagrams
+python src/DPPUv2_visualize_phasemap_v3.py \
+    --input data/scans/S3S1_FULL_MX_*.csv \
+    --output figures/
+
+# Generate phase matrix
+python src/DPPUv2_visualize_phasematrix_v3.py \
+    --theta 1.0 \
+    --output figures/fig12_phase_matrix_0010.png
+\end{lstlisting}
+
+\subsubsection{Interactive exploration}
+
+\begin{lstlisting}[language=bash, basicstyle=\ttfamily\footnotesize]
+# Launch Jupyter notebook
+jupyter notebook DPPUv2_visualize_notebook_v3.ipynb
+\end{lstlisting}
+
+In the notebook, run:
+\begin{lstlisting}[language=Python, basicstyle=\ttfamily\footnotesize]
+%matplotlib widget
+from DPPUv2_interactive_viewer_v3 import DPPUv2InteractiveViewer
+
+viewer = DPPUv2InteractiveViewer()
+viewer.display()
+\end{lstlisting}
+
+%------------------------------------------------------------------------------
+\subsection{Data Files}
+\label{app:data_files}
+
+\subsubsection{Parameter scan results}
+
+Scan results are provided as CSV files with naming convention:
+\begin{center}
+\texttt{<topology>\_<variant>\_<mode>\_<timestamp>.csv}
+\end{center}
+
+Example files included in the repository:
+
+\begin{itemize}
+  \item \texttt{S3S1\_FULL\_MX\_20241214\_135031.csv}
+  \item \texttt{S3S1\_TT\_MX\_20241214\_135031.csv}
+  \item \texttt{S3S1\_REE\_MX\_20241214\_135031.csv}
+  \item \texttt{T3S1\_FULL\_MX\_20241214\_135031.csv}
+  \item (etc., 9 files total)
+\end{itemize}
+
+\subsubsection{Verification logs}
+
+Log files documenting sanity checks:
+
+\begin{itemize}
+  \item \texttt{S3S1\_*\_20241214\_135031.log}
+  \item \texttt{T3S1\_*\_20241214\_135031.log}
+  \item \texttt{Nil3S1\_*\_20241214\_135031.log}
+\end{itemize}
+
+These logs contain:
+\begin{itemize}
+  \item Metric compatibility verification results
+  \item Riemann tensor antisymmetry checks
+  \item NY density decomposition verification
+  \item Symbolic expressions for all computed quantities
+\end{itemize}
+
+%------------------------------------------------------------------------------
+\subsection{License}
+\label{app:license}
+
+The code and data are released under the MIT License:
+
+\begin{quote}
+\small
+MIT License
+
+Copyright (c) 2026 Muacca
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the ``Software''), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+\end{quote}
+
+%------------------------------------------------------------------------------
+\subsection{Version History}
+\label{app:version_history}
+
+\begin{table}[H]
+\centering
+\caption{Version history of DPPUv2 code.}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Version & Date & Major Changes \\
+\midrule
+v1.0 & 2025-11 & Initial implementation (teleparallel gravity base) \\
+v2.0 & 2025-12 & Migration to Einstein--Cartan framework; $\Sthree \times \Sone$ implementation \\
+v3.0 & 2025-12 & Mode/Variant enumeration; 3-stage Riemann verification; \\
+     &         & $\Tthree \times \Sone$ and $\Nilthree \times \Sone$ added \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All results in this paper are based on v3.0.
+
+%------------------------------------------------------------------------------
+\subsection{Citation}
+\label{app:citation}
+
+If you use this code or data in your research, please cite:
+
+\begin{quote}
+\small
+Muacca, ``Topology-Dependent Phase Classification of Effective Potentials 
+in Einstein--Cartan + Nieh--Yan Minisuperspace,'' 
+arXiv:[to be assigned] (2026).
+\end{quote}
+
+The Zenodo DOI for the code repository is:
+\begin{center}
+\texttt{10.5281/zenodo.[to be assigned]}
+\end{center}
+
+%------------------------------------------------------------------------------
+\subsection{Contact}
+\label{app:contact}
+
+For questions, bug reports, or collaboration inquiries:
+
+\begin{itemize}
+  \item Email: \texttt{muacca@dmwp.jp}
+  \item GitHub Issues: \texttt{https://github.com/Muacca/DPPUv2-paper01/issues}
+\end{itemize}

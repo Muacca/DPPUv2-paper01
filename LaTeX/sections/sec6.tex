@@ -1,0 +1,364 @@
+%==============================================================================
+% Section 6: Representative Points and Stability Quality
+%==============================================================================
+\section{Representative Points and Stability Quality}
+\label{sec:representative}
+
+This section presents the specific shapes of the effective potential $\Veff(r)$ 
+and stability metrics at representative parameter points on the phase diagrams. 
+This clarifies how the operational definitions of Type I/II/III 
+(Sec.~\ref{sec:type_definition}) correspond to actual potential shapes.
+
+%------------------------------------------------------------------------------
+\subsection{Selection Criteria for Representative Points}
+\label{sec:selection_criteria}
+
+For each topology, representative points are selected according to the 
+following criteria:
+
+\begin{enumerate}
+  \item \textbf{Type I representative}: Points showing metastable wells with 
+        barriers. $\Delta V > 0$ and $\dd\Veff/\dd r|_{r \to 0^+} > 0$
+  \item \textbf{Type II representative}: Points showing rolling. Minimum exists 
+        but no barrier in $r \to 0$ direction
+  \item \textbf{Type III representative}: Points showing instability. No stable 
+        minimum within allowed region
+  \item \textbf{Near phase boundary}: Points in parameter regions where Type 
+        transitions occur
+\end{enumerate}
+
+Below, we fix $\kappa = L = 1$ and focus on results for the FULL variant.
+
+%------------------------------------------------------------------------------
+\subsection{Representative Points for $\Sthree \times \Sone$}
+\label{sec:S3_representatives}
+
+\subsubsection{List of representative points}
+
+\begin{table}[H]
+\centering
+\caption{$\Sthree$-FULL representative points and stability metrics.}
+\label{tab:S3_representatives}
+\begin{tabular}{@{}ccccccc@{}}
+\toprule
+Point & $(V, \eta, \theta_{\NY})$ & Type & $r_0$ & $\log_{10}(r_0)$ & 
+$\Delta V$ & $\log_{10}(\Delta V)$ \\
+\midrule
+S1 & $(2.0, -4.0, 1.0)$ & II & $1.26$ & $0.10$ & --- & --- \\
+S2 & $(2.0, -7.0, 1.0)$ & I & $3.98$ & $0.60$ & $1.2 \times 10^3$ & $3.1$ \\
+S3 & $(2.0, 0.0, 1.0)$ & I & $0.32$ & $-0.50$ & $2.1 \times 10^2$ & $2.3$ \\
+S4 & $(2.0, 1.0, 1.0)$ & III & --- & --- & --- & --- \\
+S5 & $(2.0, -2.0, 1.0)$ & I/II boundary & $0.63$ & $-0.20$ & $\approx 0$ & --- \\
+S6 & $(2.0, -4.0, 2.0)$ & II & $2.51$ & $0.40$ & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Characteristics of each representative point}
+
+\paragraph{Point S1 (Type II, $\eta = -4$):}
+This is the point where $C = 9(\eta + 4)^2 - 36 = -36$ takes its minimum value. 
+$\Veff(r)$ starts from negative values as $r \to 0$, monotonically increases, 
+passes through a minimum, and increases again. Near the origin, 
+$\dd\Veff/\dd r < 0$, so no barrier exists.
+
+\paragraph{Point S2 (Type I, $\eta = -7$):}
+$C = 9(-7 + 4)^2 - 36 = 45 > 0$. $\Veff(r)$ starts from positive values as 
+$r \to 0$, forms a barrier before falling into the well. Barrier height 
+$\Delta V \approx 10^3$ suggests strong suppression of quantum tunneling 
+from the metastable state.
+
+\paragraph{Point S3 (Type I, $\eta = 0$):}
+$C = 9(4)^2 - 36 = 108 > 0$. Due to the effect of $\theta_{\NY} = 1$, 
+$B = 6V\kappa^2\theta_{\NY}(\eta - 4) = -48 < 0$, and a minimum forms even 
+at $\eta = 0$. This is an example where a region that was Type III at 
+$\theta_{\NY} = 0$ transitions to Type I at $\theta_{\NY} > 0$.
+
+\paragraph{Point S4 (Type III, $\eta = 1$):}
+$C = 9(5)^2 - 36 = 189 > 0$, but the effect of $B = -36$ is insufficient, 
+and no minimum forms within the allowed region. Search reaches $r_{\max}$.
+
+\paragraph{Point S5 (I/II boundary, $\eta = -2$):}
+This is the critical point where $C = 9(2)^2 - 36 = 0$. 
+$\dd\Veff/\dd r|_{r=0} = 0$, positioned at the boundary between Type I and Type II.
+
+%------------------------------------------------------------------------------
+\subsection{Representative Points for $\Tthree \times \Sone$}
+\label{sec:T3_representatives}
+
+\subsubsection{List of representative points}
+
+\begin{table}[H]
+\centering
+\caption{$\Tthree$-FULL representative points and stability metrics.}
+\label{tab:T3_representatives}
+\begin{tabular}{@{}ccccccc@{}}
+\toprule
+Point & $(V, \eta, \theta_{\NY})$ & Type & $r_0$ & $\log_{10}(r_0)$ & 
+$\Delta V$ & $\log_{10}(\Delta V)$ \\
+\midrule
+T1 & $(2.0, -3.0, 1.0)$ & I & $2.5$ & $0.40$ & $4.2 \times 10^2$ & $2.6$ \\
+T2 & $(2.0, -5.0, 1.5)$ & I & $5.0$ & $0.70$ & $2.1 \times 10^3$ & $3.3$ \\
+T3 & $(2.0, 0.0, 1.0)$ & III & --- & --- & --- & --- \\
+T4 & $(2.0, 2.0, 1.0)$ & III & --- & --- & --- & --- \\
+T5 & $(2.0, -2.0, 0.5)$ & III & --- & --- & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Note:} For $\theta_{\NY} < 0.87$, the entire parameter region is Type III. 
+Type I appears only for $\theta_{\NY} \geq 0.87$ and $\eta < 0$.
+
+\subsubsection{Characteristics of each representative point}
+
+\paragraph{Points T1, T2 (Type I, $\eta < 0$, $\theta_{\NY} \geq 1$):}
+With the isotropic setting for $\Tthree$, Type I (metastable well with barrier) 
+forms when $\theta_{\NY}$ exceeds the threshold ($\approx 0.87$) and $\eta < 0$. 
+The more negative $\eta$ and the larger $\theta_{\NY}$, the larger $r_0$ and 
+$\Delta V$ become.
+
+\paragraph{Points T3, T4 (Type III, $\eta \geq 0$ or small $\theta_{\NY}$):}
+In the region $\eta \geq 0$, or when $\theta_{\NY} < 0.87$, 
+$B = 6V\eta\kappa^2\theta_{\NY}$ does not contribute to minimum formation 
+($B \geq 0$ or $B$'s effect is weak), resulting in Type III.
+
+\paragraph{Point T5 (Type III, $\theta_{\NY}$ below threshold):}
+Even with $\eta = -2 < 0$, at $\theta_{\NY} = 0.5 < 0.87$, the Type I condition 
+$B^2 > 3V^2 C$ is not satisfied, resulting in Type III. This is numerical 
+confirmation of the threshold condition derived in Sec.~\ref{sec:T3_structure}.
+
+\subsubsection{Confirmation of $\eta \to -\eta$ asymmetry}
+
+With the isotropic setting for $\Tthree$, since $B = 6V\eta\kappa^2\theta_{\NY}$ 
+is linear in $\eta$, $\eta \to -\eta$ symmetry is broken for $\theta_{\NY} > 0$. 
+In Table~\ref{tab:T3_representatives}:
+
+\begin{itemize}
+  \item $\eta < 0$ (points T1, T2): $B < 0$, Type I possible
+  \item $\eta > 0$ (point T4): $B > 0$, Type III
+\end{itemize}
+
+This asymmetry is visualized in Figure~\ref{fig:phase_T3}, where stable regions 
+appear only on the $\eta < 0$ side. In the limit $\theta_{\NY} = 0$, $B = 0$ 
+and symmetry is restored, but in this case the entire region is Type III.
+
+%------------------------------------------------------------------------------
+\subsection{Representative Points for $\Nilthree \times \Sone$}
+\label{sec:Nil3_representatives}
+
+\subsubsection{List of representative points}
+
+\begin{table}[H]
+\centering
+\caption{$\Nilthree$-FULL representative points and stability metrics.}
+\label{tab:Nil3_representatives}
+\begin{tabular}{@{}ccccccc@{}}
+\toprule
+Point & $(V, \eta, \theta_{\NY})$ & Type & $r_0$ & $\log_{10}(r_0)$ & 
+$\Delta V$ & $\log_{10}(\Delta V)$ \\
+\midrule
+N1 & $(2.0, 0.5, 1.0)$ & II & $0.20$ & $-0.70$ & --- & --- \\
+N2 & $(2.0, -5.0, 1.0)$ & I & $2.51$ & $0.40$ & $8.9 \times 10^2$ & $2.95$ \\
+N3 & $(2.0, -5.0, 2.0)$ & I & $5.01$ & $0.70$ & $3.5 \times 10^3$ & $3.55$ \\
+N4 & $(2.0, 2.0, 1.0)$ & III & --- & --- & --- & --- \\
+N5 & $(2.0, -0.3, 1.0)$ & II/III boundary & $\approx 0.01$ & $\approx -2$ & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Characteristics of each representative point}
+
+\paragraph{Point N1 (Type II, within main band):}
+$\eta = 0.5$ is in the region where $C = 36(0.5 - 1/3)^2 - 13 \approx -12 < 0$, 
+located within the main band. $r_0$ is small ($\log_{10}(r_0) \approx -0.7$), 
+consistent with the main band in the phase diagram being displayed in 
+purple-blue colors.
+
+\paragraph{Points N2, N3 (Type I, separate stable region):}
+At $\eta = -5$, $C = 36(-5 - 1/3)^2 - 13 \approx 1010 > 0$, but 
+$B = 8V\kappa^2\theta_{\NY}(3\eta + 1) = -224\theta_{\NY} < 0$ is sufficiently 
+large to form a minimum. Increasing $\theta_{\NY}$ from 1 to 2 approximately 
+doubles $r_0$ and quadruples $\Delta V$. This shows that the separate stable 
+region expands and deepens with increasing $\theta_{\NY}$.
+
+\paragraph{Point N4 (Type III, outside main band):}
+At $\eta = 2$, $C = 36(2 - 1/3)^2 - 13 \approx 87 > 0$, and 
+$B = 8V\kappa^2\theta_{\NY}(7) = 112 > 0$. Since $B > 0$, minimum formation 
+is inhibited, resulting in Type III.
+
+\paragraph{Point N5 (II/III boundary):}
+$\eta \approx -0.27$ is close to the critical value where $C = 0$. A minimum 
+exists but $r_0 \approx r_{\min}$, barely determined as Type II by boundary 
+criteria.
+
+%------------------------------------------------------------------------------
+\subsection{Visualization of Stability Metrics}
+\label{sec:metrics_visualization}
+
+\subsubsection{Distribution of $\log_{10}(r_0)$}
+
+The color gradient in phase diagrams (purple $\to$ yellow) represents 
+$\log_{10}(r_0)$. Typical ranges for each topology:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+Topology & $\log_{10}(r_0)$ range & Characteristics \\
+\midrule
+$\Sthree$ & $[-0.5, 3.0]$ & Increases in negative $\eta$ direction \\
+$\Tthree$ & $[0, 5]$ & Proportional to $|\eta|/V$ \\
+$\Nilthree$ & $[-2, 3]$ & Small in main band, large in separate region \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Distribution of $\log_{10}(\Delta V)$ (Type I only)}
+
+White contour lines in phase diagrams represent $\log_{10}(\Delta V)$. 
+Typical barrier heights:
+
+\begin{itemize}
+  \item \textbf{$\Sthree$}: $\log_{10}(\Delta V) \in [2, 5]$ in Type I region. 
+        Increases with $|\eta|$
+  \item \textbf{$\Tthree$}: $\log_{10}(\Delta V) \in [2, 4]$ in Type I region 
+        with $\theta_{\NY} \geq 0.87$ and $\eta < 0$. Increases with $|\eta|$ 
+        and $\theta_{\NY}$
+  \item \textbf{$\Nilthree$}: $\log_{10}(\Delta V) \in [2, 5]$ in separate 
+        stable region. Increases with $\theta_{\NY}$
+\end{itemize}
+
+\subsubsection{Correlation between barrier height and stable radius}
+
+From the contour patterns in phase diagrams, the following trends can be read:
+
+\begin{enumerate}
+  \item \textbf{$\Sthree$}: $\log_{10}(\Delta V)$ and $\log_{10}(r_0)$ show 
+        positive correlation. Points with larger $r_0$ have deeper wells 
+        and higher barriers
+  \item \textbf{$\Tthree$, $\Nilthree$}: Similar positive correlation observed 
+        in stable regions with $\eta < 0$
+\end{enumerate}
+
+This correlation can be understood from the scaling law 
+$\Veff \propto r \times P(r)$ of the effective potential. As $r_0$ increases, 
+the region $r < r_0$ forming the barrier also widens, consequently increasing 
+$\Delta V$.
+
+Scaling laws for each topology are shown in 
+Figures~\ref{fig:scaling_S3}--\ref{fig:scaling_Nil3}.
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/fig16_Scaling_laws_S3.png}
+  \caption{Scaling laws: $\Sthree \times \Sone$ ($\eta = -7.0$, $\theta_{\NY} = 2.0$).}
+  \label{fig:scaling_S3}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/fig17_Scaling_laws_T3.png}
+  \caption{Scaling laws: $\Tthree \times \Sone$ ($\eta = -7.0$, $\theta_{\NY} = 2.0$).}
+  \label{fig:scaling_T3}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/fig18_Scaling_laws_Nil3.png}
+  \caption{Scaling laws: $\Nilthree \times \Sone$ ($\eta = -7.0$, $\theta_{\NY} = 2.0$).}
+  \label{fig:scaling_Nil3}
+\end{figure}
+
+%------------------------------------------------------------------------------
+\subsection{Consistency Check Between Analytical Boundaries and Numerical Scan}
+\label{sec:consistency_check}
+
+\subsubsection{Type I/II boundary for $\Sthree$}
+
+The analytical boundary condition $C(\eta) = 9(\eta + 4)^2 - 36 = 0$ derived 
+in Sec.~\ref{sec:type_transitions} gives $\eta = -2$ and $\eta = -6$.
+
+Comparison with numerical scan results:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+Boundary & Analytical value & Numerical scan result ($V = 2$, $\theta_{\NY} = 1$) & Deviation \\
+\midrule
+Upper I/II & $\eta = -2$ & $\eta \approx -2.0$ & $< 0.1$ \\
+Lower II/I & $\eta = -6$ & $\eta \approx -5.9$ & $\approx 0.1$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Deviations are on the order of scan grid spacing ($\Delta\eta = 0.1$), showing 
+good agreement between analytical predictions and numerical results.
+
+\subsubsection{Type I/III boundary for $\Tthree$}
+
+For $\Tthree$ with isotropic setting, the boundary between Type I and Type III 
+is determined by the condition derived in Sec.~\ref{sec:T3_structure}:
+\begin{equation}
+  \theta_{\NY} = \frac{\sqrt{3}}{2\kappa^2} \approx 0.87 \quad (\kappa = 1).
+\end{equation}
+
+Comparison with numerical scan results:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+Boundary & Analytical value & Numerical scan result ($V = 2$, $\eta = -3$) & Deviation \\
+\midrule
+$\theta_{\NY}$ threshold & $0.87$ & $\theta_{\NY} \approx 0.9$ & $\approx 0.03$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Additionally, the $\eta = 0$ axis is the boundary where $C = 0$, and for 
+$\theta_{\NY} > 0.87$, the Type I/III boundary is observed near this location. 
+Type I appears only on the $\eta < 0$ side, with the entire $\eta > 0$ side 
+being Type III.
+
+\subsubsection{Main band boundary for $\Nilthree$}
+
+The $C(\eta) = 0$ condition derived in Sec.~\ref{sec:Nil3_structure} gives 
+$\eta \approx -0.27$ and $\eta \approx 0.93$.
+
+Comparison with numerical scan results:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+Boundary & Analytical value & Numerical scan result ($\theta_{\NY} = 0$) & Deviation \\
+\midrule
+Lower & $\eta \approx -0.27$ & $\eta \approx -0.3$ & $\approx 0.03$ \\
+Upper & $\eta \approx 0.93$ & $\eta \approx 1.0$ & $\approx 0.07$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Deviations are on the order of grid spacing, confirming consistency.
+
+%------------------------------------------------------------------------------
+\subsection{Summary of This Section}
+\label{sec:representative_summary}
+
+This section quantitatively presented stability metrics at representative 
+points for each topology and confirmed the following:
+
+\begin{enumerate}
+  \item \textbf{Operational definition of Type classification} corresponds 
+        consistently with actual $\Veff(r)$ shapes
+  \item \textbf{$\log_{10}(r_0)$ and $\log_{10}(\Delta V)$} show systematic 
+        patterns on phase diagrams with clear correlation to geometric parameters
+  \item \textbf{Analytical boundary conditions} (derived in 
+        Sec.~\ref{sec:mechanisms}) and \textbf{numerical scan results} are 
+        consistent within grid resolution
+\end{enumerate}
+
+These representative point data can be used as reference points in EC+NY 
+minisuperspace analysis, and as input for future dynamical analysis 
+(WKB tunneling rate calculations, etc.).

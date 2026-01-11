@@ -1,0 +1,383 @@
+%==============================================================================
+% Section 5: Mechanisms and Interpretation of Phase Structure
+%==============================================================================
+\section{Mechanisms and Interpretation of Phase Structure}
+\label{sec:mechanisms}
+
+This section interprets the features of the phase diagrams presented in 
+Sec.~\ref{sec:numerical} based on the analytical structure of the effective 
+potential $\Veff(r)$.
+
+%------------------------------------------------------------------------------
+\subsection{Shape Changes of $\Veff(r)$ at Type Transitions}
+\label{sec:type_transitions}
+
+\subsubsection{Type III $\to$ Type II transition (appearance of well)}
+
+The transition from Type III to Type II corresponds to the appearance of a 
+local minimum in $\Veff(r)$.
+
+Consider the case of $\Sthree$-FULL with $\theta_{\NY} = 0$, $V = 2$ fixed, 
+and $\eta$ varying from $0$ to $-2$:
+
+\begin{itemize}
+  \item \textbf{$\eta = 0$ (Type III)}: $\Veff(r)$ is monotonically increasing 
+        with no minimum within the allowed region
+  \item \textbf{$\eta = -2$ (Type II)}: A local minimum appears in $\Veff(r)$. 
+        However, there is no barrier in the $r \to 0$ direction, with 
+        $\dd\Veff/\dd r < 0$ near the origin
+\end{itemize}
+
+This transition can be understood from the effective potential structure 
+derived in Sec.~\ref{sec:reductions}. For $\Sthree$:
+\begin{equation}
+  \Veff(r) \propto r \left[ V^2 r^2 + B r + C \right],
+\end{equation}
+where $B = 6V\kappa^2\theta_{\NY}(\eta - 4)$ and 
+$C = 9\eta^2 + 72\eta + 108 = 9(\eta + 4)^2 - 36$.
+
+For $\theta_{\NY} = 0$, $B = 0$, and minimum existence is determined solely 
+by the sign of $C$. Minima can appear in the range $\eta \in (-8, 0)$ where 
+$C < 0$, but due to the behavior as $r \to 0$, this results in Type II.
+
+\subsubsection{Type II $\to$ Type I transition (barrier formation)}
+
+The transition from Type II to Type I corresponds to barrier formation in 
+the $r \to 0$ direction.
+
+This transition is characterized by a sign change of the gradient of $\Veff(r)$ 
+near the origin:
+\begin{equation}
+  \left.\frac{\dd\Veff}{\dd r}\right|_{r \to 0^+} \quad 
+  \begin{cases}
+    < 0 & \text{(Type II: rolling)} \\
+    > 0 & \text{(Type I: barrier)}
+  \end{cases}
+\end{equation}
+
+Differentiating the effective potential for $\Sthree$:
+\begin{equation}
+  \frac{\dd\Veff}{\dd r} \propto 3V^2 r^2 + 2B r + C.
+\end{equation}
+
+As $r \to 0$, $\dd\Veff/\dd r \propto C$, so \textbf{the sign of $C$ determines 
+Type I/II}:
+\begin{itemize}
+  \item $C > 0$: $\dd\Veff/\dd r|_{r=0} > 0$ $\to$ Type I
+  \item $C < 0$: $\dd\Veff/\dd r|_{r=0} < 0$ $\to$ Type II
+\end{itemize}
+
+For $\Sthree$, $C = 9(\eta + 4)^2 - 36$, and $C = 0$ at $\eta = -4 \pm 2$, 
+i.e., $\eta = -2$ or $\eta = -6$. These correspond to the I/II boundary positions.
+
+\subsubsection{Type I $\to$ Type II $\to$ Type I re-transition}
+
+The ``Type I $\to$ Type II $\to$ Type I'' re-transition observed for 
+$\Sthree$-FULL with $\theta_{\NY} \geq 1$ can be understood from the fact 
+that $C(\eta) = 9(\eta + 4)^2 - 36$ is a quadratic function.
+
+$C(\eta)$ takes minimum value $-36$ at $\eta = -4$, and $C = 0$ at 
+$\eta = -2$ and $\eta = -6$. Therefore:
+\begin{itemize}
+  \item $\eta > -2$: $C > 0$ $\to$ Type I (or Type III)
+  \item $-6 < \eta < -2$: $C < 0$ $\to$ Type II
+  \item $\eta < -6$: $C > 0$ $\to$ Type I
+\end{itemize}
+
+This structure produces the Type I $\to$ Type II $\to$ Type I re-transition 
+as $\eta$ varies from positive to negative.
+
+%------------------------------------------------------------------------------
+\subsection{Origin of Complex Phase Structure in $\Sthree$}
+\label{sec:S3_complex}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/fig13_Phase_Potential_S3.png}
+  \caption{Phase-potential correspondence for $\Sthree \times \Sone$ 
+           ($\theta_{\NY} = 2$).}
+  \label{fig:phase_potential_S3}
+\end{figure}
+
+\paragraph{Observed features:}
+\begin{enumerate}
+  \item For $\theta_{\NY} = 0$, only a band-like Type II region exists, 
+        with no Type I
+  \item For $\theta_{\NY} > 0$, as shown in Figure~\ref{fig:phase_potential_S3}, 
+        Type I bands appear and expand with increasing $\theta_{\NY}$
+  \item A ``re-transition'' structure of Type I $\to$ Type II $\to$ Type I 
+        is observed for $\theta_{\NY} \geq 1$
+  \item Stable radius $r_0$ tends to increase as $\eta$ becomes more negative
+  \item $\eta \to -\eta$ symmetry is broken
+\end{enumerate}
+
+The reason $\Sthree$ exhibits complex phase structure is due to competition 
+between two factors:
+
+\subsubsection{Role of coefficient $B$ ($\theta_{\NY}$ dependence)}
+
+The coefficient of the $r^2$ term, $B = 6V\kappa^2\theta_{\NY}(\eta - 4)$, 
+has the following effects for $\theta_{\NY} > 0$:
+
+\begin{itemize}
+  \item For $\eta < 4$, $B < 0$: Adds negative contribution to $\Veff(r)$, 
+        promoting minimum formation
+  \item $|B|$ increases proportionally with $\theta_{\NY}$
+\end{itemize}
+
+For $\theta_{\NY} = 0$, $B = 0$, and minimum existence is determined by $C$ alone. 
+When $\theta_{\NY} > 0$, the contribution of $B$ is added, and minima can form 
+even in regions where $C > 0$. This is the mechanism for ``expansion of stable 
+region with increasing $\theta_{\NY}$''.
+
+\subsubsection{Role of coefficient $C$ (Type I/II boundary)}
+
+The coefficient of $r$, $C = 9(\eta + 4)^2 - 36$, governs the behavior as 
+$r \to 0$ and determines Type I/II.
+
+Importantly, the factor $(\eta + 4)$ appearing in the expression for $C$ 
+reflects coupling with the positive background curvature $R_{\LC} = 24/r^2$ 
+of $\Sthree$. As seen in Sec.~\ref{sec:reductions}, $(\eta + 4)$ appears in 
+$N_{\REE} = -2V(\eta + 4)/r$, which propagates to $C$.
+
+\subsubsection{Origin of the factor $(\eta - 4)$}
+
+The factor $B \propto (\eta - 4)$ in the FULL variant is directly derived from 
+$N_{\FULL} = N_{\TT} - N_{\REE} = 2V(4 - \eta)/r$.
+
+This factor differs from both TT ($B \propto \eta$) and REE ($B \propto \eta + 4$), 
+being unique to FULL. Due to $(\eta - 4)$, $B < 0$ over the wide range $\eta < 4$, 
+which is the reason FULL has stable regions even for $\eta > 0$.
+
+%------------------------------------------------------------------------------
+\subsection{Phase Structure of $\Tthree$: $\theta_{\NY}$ Threshold and $\eta$ Asymmetry}
+\label{sec:T3_structure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/fig14_Phase_Potential_T3.png}
+  \caption{Phase-potential correspondence for $\Tthree \times \Sone$ 
+           ($\theta_{\NY} = 2$).}
+  \label{fig:phase_potential_T3}
+\end{figure}
+
+\paragraph{Observed features:}
+\begin{itemize}
+  \item $\theta_{\NY} \lesssim 0.9$: Entire region is Type III
+  \item $\theta_{\NY} \gtrsim 0.9$: As shown in Figure~\ref{fig:phase_potential_T3}, 
+        Type I appears in $\eta < 0$
+  \item $\eta \to -\eta$ symmetry is broken (prominent for $\theta_{\NY} > 0$)
+\end{itemize}
+
+We analyze the phase structure of $\Tthree$ with the isotropic setting 
+$R_1 = R_2 = R_3 = r$.
+
+\subsubsection{Effective potential structure}
+
+The effective potential for $\Tthree$ is:
+\begin{equation}
+  \Veff(r) \propto r \cdot \left[ V^2 r^2 + B r + C \right],
+\end{equation}
+where $B = 6V\eta\kappa^2\theta_{\NY}$ and $C = 9\eta^2$. This has the same 
+$r^3 + r^2 + r$ structure as $\Sthree$.
+
+\subsubsection{Entire Type III for $\theta_{\NY} = 0$}
+
+For $\theta_{\NY} = 0$, $B = 0$, giving:
+\begin{equation}
+  \Veff(r) \propto r (V^2 r^2 + 9\eta^2).
+\end{equation}
+
+Since $C = 9\eta^2 \geq 0$ and $V^2 > 0$, the bracketed term is always positive, 
+and $\Veff(r)$ is monotonically increasing for $r > 0$. Therefore, the entire 
+parameter region is Type III (unstable).
+
+This originates from the flatness of $\Tthree$ ($R_{\LC} = 0$): since there 
+is no contribution from background curvature, the coefficient $C$ of $r$ 
+contains no first-order term in $\eta$, and $C = 9\eta^2$ is always non-negative.
+
+\subsubsection{Type I appearance for $\theta_{\NY} > 0$}
+
+For $\theta_{\NY} > 0$, $B = 6V\eta\kappa^2\theta_{\NY}$ becomes effective.
+
+The condition for minimum existence is that $\dd\Veff/\dd r = 0$ has positive 
+solutions:
+\begin{equation}
+  3V^2 r^2 + 2Br + C = 0.
+\end{equation}
+
+The discriminant $D = 4B^2 - 12V^2 C = 4(B^2 - 3V^2 C)$ must be positive, 
+and the solutions must be positive:
+\begin{equation}
+  B < 0 \quad \text{and} \quad B^2 > 3V^2 C.
+\end{equation}
+
+$B < 0$ occurs for $\eta < 0$ (when $\theta_{\NY} > 0$), and the second 
+condition is:
+\begin{equation}
+  36V^2\eta^2\kappa^4\theta_{\NY}^2 > 27V^2\eta^2,
+\end{equation}
+which is satisfied when $\theta_{\NY} > \sqrt{3}/(2\kappa^2) \approx 0.87$ 
+(for $\kappa = 1$).
+
+This provides the analytical explanation for the observation ``Type I appears 
+at $\theta_{\NY} \approx 0.9$''.
+
+\subsubsection{Breaking of $\eta \to -\eta$ symmetry}
+
+For $\Tthree$, since $B = 6V\eta\kappa^2\theta_{\NY}$ is linear in $\eta$, 
+$B \to -B$ under $\eta \to -\eta$.
+
+\begin{itemize}
+  \item $\eta < 0$, $\theta_{\NY} > 0$: $B < 0$ (contributes to minimum formation)
+  \item $\eta > 0$, $\theta_{\NY} > 0$: $B > 0$ (inhibits minimum formation)
+\end{itemize}
+
+Therefore, for $\theta_{\NY} > 0$, stable regions appear only on the $\eta < 0$ 
+side, and $\eta \to -\eta$ symmetry is broken.
+
+This asymmetry is also seen in $\Sthree$ ($B \propto (\eta - 4)$) and $\Nilthree$ 
+($B \propto (3\eta + 1)$), but for $\Tthree$ where $C = 9\eta^2$ is symmetric 
+in $\eta$, it is characteristic that the asymmetry derives purely from the $B$ term.
+
+%------------------------------------------------------------------------------
+\subsection{Conditions for Band + Separate Stable Region Structure in $\Nilthree$}
+\label{sec:Nil3_structure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/fig15_Phase_Potential_Nil3.png}
+  \caption{Phase-potential correspondence for $\Nilthree \times \Sone$ 
+           ($\theta_{\NY} = 2$).}
+  \label{fig:phase_potential_Nil3}
+\end{figure}
+
+\paragraph{Observed features:}
+\begin{enumerate}
+  \item As shown in Figure~\ref{fig:phase_potential_Nil3}, Type II region 
+        is limited to a narrow main band at $-0.3 < \eta < 1$
+  \item For $\theta_{\NY} > 0$, a separate Type I region appears and expands 
+        in the $\eta < 0$ region
+  \item $\eta \to -\eta$ symmetry is broken
+\end{enumerate}
+
+We analyze why $\Nilthree$ exhibits a narrow stable band and separate stable 
+region.
+
+\subsubsection{Origin of the narrow main band}
+
+The effective potential for $\Nilthree$ is:
+\begin{equation}
+  \Veff(r) \propto r \left[ 4V^2 r^2 + B r + C \right],
+\end{equation}
+where $C = 36\eta^2 - 24\eta - 9 = 36(\eta - 1/3)^2 - 13$.
+
+The condition for $C$ to be negative is $36(\eta - 1/3)^2 < 13$, i.e.:
+\begin{equation}
+  \eta \in \left( \frac{1}{3} - \frac{\sqrt{13}}{6}, 
+                  \frac{1}{3} + \frac{\sqrt{13}}{6} \right) 
+       \approx (-0.27, 0.93).
+\end{equation}
+
+Only in this narrow range does $C < 0$, allowing stable minima to form. 
+This is the origin of the ``narrow main band''.
+
+\subsubsection{Conditions for separate stable region appearance}
+
+The island appearing in the $\eta < 0$ region for $\theta_{\NY} > 0$ is due 
+to the effect of coefficient $B = 8V\kappa^2\theta_{\NY}(3\eta + 1)$.
+
+For $\eta < -1/3$, $B < 0$, and if $|B|$ is sufficiently large, minima can 
+form even in regions where $C > 0$. Specifically, if the condition
+\begin{equation}
+  B^2 > 3V^2 C
+\end{equation}
+for $3V^2 r^2 + 2Br + C = 0$ to have positive real solutions is satisfied, 
+minima exist. As $\theta_{\NY}$ increases, $|B|$ grows, and this condition 
+is satisfied over a wider range of $\eta$. This is the mechanism for 
+``stable region growing with $\theta_{\NY}$''.
+
+\subsubsection{Breaking of $\eta \to -\eta$ symmetry}
+
+For $\Nilthree$, $C(\eta) = 36\eta^2 - 24\eta - 9$ contains a first-order 
+term in $\eta$, so $\eta \to -\eta$ symmetry is broken. This reflects the 
+anisotropic structure constants of $\Nilthree$.
+
+%------------------------------------------------------------------------------
+\subsection{TT/REE Diagnosis: Role of Curvature Coupling}
+\label{sec:TT_REE_diagnosis}
+
+From comparison of FULL, TT, and REE, we identify which contributions drive 
+the phase structure.
+
+\subsubsection{$\Sthree$: Dominant role of $N_{\REE}$}
+
+The $r^2$ term coefficients for the 3 variants in $\Sthree$:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+Variant & Form of $B$ & Range of $\eta$ where $B < 0$ \\
+\midrule
+FULL & $\propto (\eta - 4)$ & $\eta < 4$ \\
+TT & $\propto \eta$ & $\eta < 0$ \\
+REE & $\propto (\eta + 4)$ & $\eta < -4$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The factor $(\eta - 4)$ in FULL reflects an additional shift arising from 
+the combination of the $\eta$ factor in $N_{\TT}$ and the $(\eta + 4)$ factor 
+in $N_{\REE}$: $\eta - (\eta + 4) = -4$.
+
+FULL has the widest stable region because this factor maximizes the range 
+of $\eta$ where $B < 0$ (the entire region $\eta < 4$).
+
+\subsubsection{$\Tthree$: Disappearance of curvature contribution and role of NY term}
+
+For $\Tthree$, since background curvature $R_{\LC} = 0$, the curvature coupling 
+term from $N_{\REE}$ vanishes. As a result:
+\begin{itemize}
+  \item $N_{\FULL} = N_{\REE} = -2V\eta/r$ (completely identical)
+  \item TT differs by a factor of 2, but phase boundary positions are similar
+\end{itemize}
+
+With the isotropic setting, the NY term contributes proportionally to $r^2$, 
+so it contributes to minimum formation for $\theta_{\NY} > 0$. Unlike $\Sthree$, 
+the coefficient $C = 9\eta^2$ of $r$ is always non-negative, so Type I appearance 
+requires $\theta_{\NY}$ to exceed the threshold ($\approx 0.9$).
+
+The similarity of phase structure across the 3 variants is because the lack 
+of curvature coupling limits the differences between variants to coefficient 
+differences only.
+
+\subsubsection{General role of curvature coupling}
+
+From the above comparisons, it is suggested that the $\theta_{\NY}$ dependence 
+of phase boundaries is primarily driven by \textbf{coupling with background 
+curvature} through $N_{\REE}$:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+Topology & Background curvature $R_{\LC}$ & Curvature coupling strength & 
+$\theta_{\NY}$ sensitivity \\
+\midrule
+$\Sthree$ & $+24/r^2$ (positive) & Strong & High \\
+$\Tthree$ & $0$ (flat) & None & Moderate (threshold exists) \\
+$\Nilthree$ & $-1/(2r^2)$ (negative) & Moderate & Moderate \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The larger the background curvature, the more prominent the contribution of 
+$N_{\REE}$, and the higher the sensitivity of phase structure to $\theta_{\NY}$.
+
+\textbf{Note:} Although $\Tthree$ has zero background curvature, with the 
+isotropic setting $R_1 = R_2 = R_3 = r$, the NY term contributes to the 
+effective potential in a form proportional to $r^2$, giving rise to 
+$\theta_{\NY}$ sensitivity. However, since the coefficient $C = 9\eta^2$ of 
+$r$ is always non-negative, a threshold of $\theta_{\NY} > 0.87$ is required 
+for Type I appearance.

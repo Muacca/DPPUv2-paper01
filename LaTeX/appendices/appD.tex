@@ -1,0 +1,316 @@
+%==============================================================================
+% Appendix D: Visualization Tools
+%==============================================================================
+\section{Visualization Tools}
+\label{app:visualization}
+
+This appendix documents the visualization tools developed for analyzing 
+and presenting the results of this paper. For code access and installation 
+instructions, see Appendix~\ref{app:access}.
+
+%------------------------------------------------------------------------------
+\subsection{Overview of Visualization Pipeline}
+\label{app:viz_overview}
+
+The visualization pipeline consists of the following components:
+
+\begin{enumerate}
+  \item \textbf{Phase map generator}: Creates 2D phase diagrams on $(V, \eta)$ plane
+  \item \textbf{Phase matrix generator}: Creates comparison grids across 
+        topologies and variants
+  \item \textbf{Potential plotter}: Generates $\Veff(r)$ curves for 
+        representative points
+  \item \textbf{Interactive viewer}: Jupyter-based tool for exploration
+\end{enumerate}
+
+%------------------------------------------------------------------------------
+\subsection{Phase Diagram Generation}
+\label{app:phase_diagram}
+
+\subsubsection{Color mapping}
+
+Phase diagrams use the following visual encoding:
+
+\begin{table}[H]
+\centering
+\caption{Visual encoding for phase diagrams.}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Element & Encoding & Description \\
+\midrule
+Type I region & Solid color & Metastable with barrier \\
+Type II region & Hatched color & Rolling, no barrier \\
+Type III region & White & Unstable \\
+Color gradient & Purple $\to$ Yellow & $\log_{10}(r_0)$ value \\
+White contours & Solid lines & $\log_{10}(\Delta V)$ levels \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Colormap specification}
+
+\begin{itemize}
+  \item Base colormap: \texttt{viridis} (perceptually uniform)
+  \item Range: $\log_{10}(r_0) \in [-2, 5]$
+  \item Out-of-range handling: Clipped to bounds
+\end{itemize}
+
+\subsubsection{Hatching for Type II}
+
+Type II regions are distinguished from Type I by diagonal hatching:
+\begin{itemize}
+  \item Pattern: $45^\circ$ diagonal lines
+  \item Density: 4 lines per unit
+  \item Color: Semi-transparent gray overlay
+\end{itemize}
+
+\subsubsection{Implementation}
+
+\begin{lstlisting}[language=Python, basicstyle=\ttfamily\footnotesize]
+import matplotlib.pyplot as plt
+import numpy as np
+
+def plot_phase_diagram(V_grid, eta_grid, types, r0_values, 
+                       delta_V_values, theta_NY):
+    fig, ax = plt.subplots(figsize=(8, 6))
+    
+    # Create masked arrays for each type
+    type1_mask = (types == 1)
+    type2_mask = (types == 2)
+    
+    # Plot Type I (solid)
+    log_r0 = np.log10(r0_values)
+    im = ax.pcolormesh(V_grid, eta_grid, log_r0, 
+                       cmap='viridis', vmin=-2, vmax=5,
+                       shading='auto')
+    
+    # Overlay hatching for Type II
+    ax.contourf(V_grid, eta_grid, type2_mask, 
+                levels=[0.5, 1.5], hatches=['//'],
+                colors='none', alpha=0.3)
+    
+    # Contours for barrier height
+    cs = ax.contour(V_grid, eta_grid, 
+                    np.log10(delta_V_values),
+                    levels=[1, 2, 3, 4], colors='white',
+                    linewidths=0.8)
+    ax.clabel(cs, inline=True, fontsize=8)
+    
+    # Labels and colorbar
+    ax.set_xlabel(r'$V$')
+    ax.set_ylabel(r'$\eta$')
+    ax.set_title(f'Phase diagram ($\\theta_{{NY}} = {theta_NY}$)')
+    plt.colorbar(im, ax=ax, label=r'$\log_{10}(r_0)$')
+    
+    return fig, ax
+\end{lstlisting}
+
+%------------------------------------------------------------------------------
+\subsection{Phase Matrix Generation}
+\label{app:phase_matrix}
+
+Phase matrices display 3 topologies $\times$ 3 variants in a single figure 
+for comparison.
+
+\subsubsection{Layout}
+
+\begin{itemize}
+  \item Grid: $3 \times 3$ subplots
+  \item Rows: Topologies ($\Sthree$, $\Tthree$, $\Nilthree$)
+  \item Columns: NY variants (FULL, TT, REE)
+  \item Shared colorbar: Single colorbar for entire figure
+\end{itemize}
+
+\subsubsection{Filename convention}
+
+Phase matrix files are named:
+\begin{center}
+\texttt{fig12\_phase\_matrix\_XXXX.png}
+\end{center}
+where \texttt{XXXX} is Serial number.
+
+%------------------------------------------------------------------------------
+\subsection{Potential Curve Plotting}
+\label{app:potential_curves}
+
+\subsubsection{Standard plot format}
+
+For representative points, $\Veff(r)$ curves are plotted with:
+
+\begin{itemize}
+  \item $x$-axis: $r$ (linear or logarithmic scale)
+  \item $y$-axis: $\Veff(r)$ (linear scale)
+  \item Markers: Minimum position $r_0$ (if exists)
+  \item Annotations: Type classification, $\Delta V$ value
+\end{itemize}
+
+\subsubsection{Multi-panel comparison}
+
+For phase-potential correspondence figures (e.g., Figure~\ref{fig:phase_potential_S3}):
+
+\begin{itemize}
+  \item Left panel: Phase diagram with marked points
+  \item Right panels: $\Veff(r)$ curves for each marked point
+  \item Color coding: Consistent colors between diagram markers and curves
+\end{itemize}
+
+%------------------------------------------------------------------------------
+\subsection{Interactive Viewer}
+\label{app:interactive}
+
+\subsubsection{Jupyter notebook interface}
+
+The interactive viewer (\texttt{DPPUv2\_interactive\_viewer\_v3.py}) provides:
+
+\paragraph{Configuration selection}
+\begin{itemize}
+  \item Topology switching: $\Sthree \times \Sone$, $\Tthree \times \Sone$, $\Nilthree \times \Sone$
+  \item Torsion mode: MX (mixed), AX (axial only), VT (vector only)
+  \item NY variant: FULL, TT, REE
+  \item $\Tthree$ anisotropy parameters: $\alpha = R_2/R_1$, $\beta = R_3/R_1$
+\end{itemize}
+
+\paragraph{Phase diagram display}
+\begin{itemize}
+  \item Type I/II/III classification on $(V, \eta)$ plane
+  \item Real-time update via $\theta_{\NY}$ slider
+\end{itemize}
+
+\paragraph{Potential plotting}
+\begin{itemize}
+  \item Click-to-select points on phase diagram (up to 3 simultaneous points)
+  \item $\Veff(r)$ shape comparison
+  \item Axis scale switching (linear / log / symlog)
+  \item Dynamic range adjustment
+\end{itemize}
+
+\subsubsection{Usage}
+
+\begin{lstlisting}[language=Python, basicstyle=\ttfamily\footnotesize]
+%matplotlib widget
+from DPPUv2_interactive_viewer_v3 import DPPUv2InteractiveViewer
+
+# Initialize and launch viewer
+viewer = DPPUv2InteractiveViewer()
+viewer.display()
+
+# Optional: Customize slider ranges before instantiation
+DPPUv2InteractiveViewer.SLIDER_V_MAX_MAX = 30.0
+DPPUv2InteractiveViewer.SLIDER_ETA_MIN_MIN = -30.0
+viewer = DPPUv2InteractiveViewer()
+viewer.display()
+\end{lstlisting}
+
+\subsubsection{Operation instructions}
+
+\paragraph{Generating phase diagrams}
+\begin{enumerate}
+  \item Select topology, mode, and variant in the Configuration panel
+  \item Adjust the $\theta_{\NY}$ slider
+  \item Click the ``Draw Phase Diagram'' button
+\end{enumerate}
+
+\paragraph{Comparing potentials}
+\begin{enumerate}
+  \item Click any point on the phase diagram (registered as Point 1)
+  \item Select ``Point 2'' in Point Selection and click another point
+  \item Up to 3 points of $\Veff(r)$ are displayed overlaid in the right panel
+\end{enumerate}
+
+\paragraph{Exploring $\Tthree$ anisotropy}
+\begin{enumerate}
+  \item Select ``T3'' as topology
+  \item The Anisotropy panel becomes visible
+  \item Adjust $\alpha$ and $\beta$ sliders to set anisotropy ratios
+  \item Redraw the phase diagram
+\end{enumerate}
+
+\subsubsection{Widget layout}
+
+\begin{table}[H]
+\centering
+\caption{Interactive viewer widgets.}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Widget & Type & Range/Options \\
+\midrule
+$V$ slider & FloatSlider & $[0, V_{\max}]$, step 0.1 \\
+$\eta$ slider & FloatSlider & $[-10, 5]$, step 0.1 \\
+$\theta_{\NY}$ slider & FloatSlider & $[0, 5]$, step 0.1 \\
+Topology dropdown & Dropdown & S3, T3, Nil3 \\
+Variant dropdown & Dropdown & FULL, TT, REE \\
+Scale toggle & ToggleButton & Linear / Log \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%------------------------------------------------------------------------------
+\subsection{Figure Export Settings}
+\label{app:export}
+
+\subsubsection{Resolution and format}
+
+\begin{table}[H]
+\centering
+\caption{Figure export settings.}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Setting & Value & Notes \\
+\midrule
+Format & PNG & For raster figures \\
+DPI & 300 & Publication quality \\
+Figure size & Variable & Typically 8$\times$6 inches \\
+Font & Computer Modern & LaTeX compatible \\
+Font size & 12pt & Axis labels \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{LaTeX integration}
+
+Figures are generated with LaTeX rendering enabled:
+
+\begin{lstlisting}[language=Python, basicstyle=\ttfamily\footnotesize]
+import matplotlib.pyplot as plt
+
+plt.rcParams.update({
+    'text.usetex': True,
+    'font.family': 'serif',
+    'font.serif': ['Computer Modern'],
+    'font.size': 12,
+    'axes.labelsize': 14,
+    'legend.fontsize': 10,
+})
+\end{lstlisting}
+
+%------------------------------------------------------------------------------
+\subsection{List of Generated Figures}
+\label{app:figure_list}
+
+\begin{table}[H]
+\centering
+\caption{List of figures in this paper.}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Figure & Filename & Description \\
+\midrule
+\ref{fig:schematic} & \texttt{fig01\_Schematic\_Classification.png} & Type I/II/III schematic \\
+\ref{fig:variant_S3} & \texttt{fig03\_variant\_comparison\_S3.png} & $\Sthree$ variant comparison \\
+\ref{fig:decomposition_S3} & \texttt{fig04\_decomposition\_S3.png} & $\Sthree$ potential decomposition \\
+\ref{fig:variant_T3} & \texttt{fig05\_variant\_comparison\_T3.png} & $\Tthree$ variant comparison \\
+\ref{fig:decomposition_T3} & \texttt{fig06\_decomposition\_T3.png} & $\Tthree$ potential decomposition \\
+\ref{fig:variant_Nil3} & \texttt{fig07\_variant\_comparison\_Nil3.png} & $\Nilthree$ variant comparison \\
+\ref{fig:decomposition_Nil3} & \texttt{fig08\_decomposition\_Nil3.png} & $\Nilthree$ potential decomposition \\
+\ref{fig:phase_S3} & \texttt{fig09\_phase\_diagram\_S3-FULL.png} & $\Sthree$ phase diagram \\
+\ref{fig:phase_T3} & \texttt{fig10\_phase\_diagram\_T3-FULL.png} & $\Tthree$ phase diagram \\
+\ref{fig:phase_Nil3} & \texttt{fig11\_phase\_diagram\_Nil3-FULL.png} & $\Nilthree$ phase diagram \\
+\ref{fig:phase_matrix} & \texttt{fig12\_phase\_matrix\_0010.png} & Phase matrix ($\theta_{\NY}=1$) \\
+\ref{fig:phase_potential_S3} & \texttt{fig13\_Phase\_Potential\_S3.png} & $\Sthree$ phase-potential \\
+\ref{fig:phase_potential_T3} & \texttt{fig14\_Phase\_Potential\_T3.png} & $\Tthree$ phase-potential \\
+\ref{fig:phase_potential_Nil3} & \texttt{fig15\_Phase\_Potential\_Nil3.png} & $\Nilthree$ phase-potential \\
+\ref{fig:scaling_S3} & \texttt{fig16\_Scaling\_laws\_S3.png} & $\Sthree$ scaling laws \\
+\ref{fig:scaling_T3} & \texttt{fig17\_Scaling\_laws\_T3.png} & $\Tthree$ scaling laws \\
+\ref{fig:scaling_Nil3} & \texttt{fig18\_Scaling\_laws\_Nil3.png} & $\Nilthree$ scaling laws \\
+\bottomrule
+\end{tabular}
+\end{table}

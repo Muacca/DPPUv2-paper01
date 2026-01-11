@@ -1,0 +1,523 @@
+%==============================================================================
+% Section 2: Setup and Conventions
+%==============================================================================
+\section{Setup and Conventions}
+\label{sec:setup}
+
+This section summarizes the formulation of EC+NY used in this paper, the 
+premises of minisuperspace reduction, parameters and notation, and the 
+classification conventions (Type I/II/III) for numerical scanning. The main 
+results of this paper (phase diagrams, classification tables, representative 
+points) are obtained based on the conventions defined here.
+
+%------------------------------------------------------------------------------
+\subsection{Basic Variables and Notation for EC+NY}
+\label{sec:basic_variables}
+
+This paper treats Einstein--Cartan theory (with Euclidean signature) in the 
+first-order formalism (coframe/connection). The basic variables are the 
+coframe (tetrad 1-form) $\{e^a\}$ and the independent spin connection $\omega^{ab}$. 
+The torsion 2-form $T^a$ and curvature 2-form $R^{ab}$ are defined as
+\begin{align}
+  T^a &:= \dd e^a + \omega^a{}_b \wedgep e^b, \\
+  R^{ab} &:= \dd \omega^{ab} + \omega^a{}_c \wedgep \omega^{cb}.
+\end{align}
+
+\paragraph{EC connection and contortion:}
+The Einstein--Cartan connection $\Gamma^a_{\EC,bc}$ is expressed as the sum of 
+the Levi--Civita connection $\Gamma^a_{\LC,bc}$ and the contortion $K^a{}_{bc}$:
+\begin{equation}
+  \Gamma^a_{\EC,bc} = \Gamma^a_{\LC,bc} + K^a{}_{bc}.
+\end{equation}
+The contortion is determined from torsion as follows (following the convention 
+of Hehl et al.~\cite{Hehl1976}):
+\begin{equation}
+  K_{abc} = \frac{1}{2}\left( T_{abc} + T_{bca} - T_{cab} \right).
+  \label{eq:contortion}
+\end{equation}
+Here all indices are written in lowered form.
+
+\paragraph{Sign conventions:}
+This paper adopts the following conventions:
+\begin{itemize}
+  \item Frame metric: $\eta_{ab} = \mathrm{diag}(+1, +1, +1, +1)$ (Euclidean signature)
+  \item Riemann tensor (antisymmetric in 3rd and 4th indices):
+    \begin{equation}
+      R^{a}{}_{bcd} = \partial_c \Gamma^{a}{}_{bd} - \partial_d \Gamma^{a}{}_{bc} 
+                    + \Gamma^{a}{}_{ec}\Gamma^{e}{}_{bd} - \Gamma^{a}{}_{ed}\Gamma^{e}{}_{bc}
+    \end{equation}
+  \item Contortion: Following Hehl et al.~\cite{Hehl1976}, 
+        $K_{abc} = \frac{1}{2}(T_{abc} + T_{bca} - T_{cab})$
+  \item Levi--Civita symbol: $\varepsilon_{0123} = +1$
+\end{itemize}
+
+\noindent
+\textbf{Remark on index labels.}
+All internal indices $a,b,\ldots$ are \emph{Euclidean} frame labels.
+In particular, the label $a=0$ does \emph{not} denote Lorentzian time in this paper;
+it is simply one of the orthonormal directions on the homogeneous spatial section.
+The $S^1$ direction is labeled $a=3$.
+
+Hereafter, the wedge product is written as $\wedgep$. Details of index conventions 
+(distinction between internal indices $a,b,\ldots$ and coordinate indices) and 
+supplementary derivations are summarized in Appendix~\ref{app:theory}.
+
+%------------------------------------------------------------------------------
+\subsection{Nieh--Yan Density and Nieh--Yan Term}
+\label{sec:NY_density}
+
+The Nieh--Yan density (4-form) $N$ is a geometric quantity defined using the 
+coframe and torsion, expressed as an exact derivative:
+\begin{equation}
+  N = \dd( e^a \wedgep T_a ).
+\end{equation}
+The ``Nieh--Yan (NY) term'' in this paper refers to the contribution 
+$\theta_{\NY} N$ in the action, where $\theta_{\NY}$ is a coupling constant.
+
+\noindent
+In differential-form notation, the Nieh--Yan 4-form satisfies the identity
+\begin{equation}
+N \;=\; d\!\left(e^a \wedge T_a\right)
+\;=\; T^a \wedge T_a \;-\; e^a \wedge e^b \wedge R_{ab},
+\label{eq:NY_identity}
+\end{equation}
+which holds for an arbitrary coframe $e^a$ and independent connection $\omega^{ab}$.
+For a constant coupling $\theta_{\rm NY}$ on a compact manifold without boundary,
+$\int N$ is a boundary term and does not modify the bulk Euler--Lagrange equations.
+In minisuperspace reduction, however, the NY term can shift the reduced
+Euclidean action between homogeneous configurations once boundary conditions 
+along the $S^1$ direction are specified.
+Throughout this paper, we therefore treat $\theta_{\rm NY} N$ as part of the reduced
+action density defining the effective potential, while noting its boundary-term 
+character in the full 4D theory.
+
+\paragraph{Component decomposition of NY density:}
+In frame basis calculations, the NY density decomposes into two contributions:
+\begin{equation}
+  N = N_{\TT} - N_{\REE},
+\end{equation}
+where:
+\begin{itemize}
+  \item $N_{\TT}$: Torsion-torsion term, taking the form 
+        $\frac{1}{4}\varepsilon^{abcd} T^{e}{}_{ab} T_{ecd}$.
+  \item $N_{\REE}$: Riemann-torsion term, taking the form 
+        $\frac{1}{4}\varepsilon^{abcd} R_{abcd}$ (curvature from EC connection).
+\end{itemize}
+In this paper, we take the complete NY density \textbf{FULL} as the primary 
+object, while also using \textbf{TT} ($N_{\TT}$ only) and \textbf{REE} 
+($N_{\REE}$ only) as diagnostic comparisons.
+
+\noindent
+We emphasize that $N_{\rm TT}$ and $N_{\rm REE}$ are \emph{diagnostic} pieces 
+corresponding to the two terms in Eq.~\eqref{eq:NY_identity}:
+\begin{equation}
+N_{\rm TT} := T^a \wedge T_a, \qquad
+N_{\rm REE} := e^a \wedge e^b \wedge R_{ab}, \qquad
+N = N_{\rm TT} - N_{\rm REE}.
+\label{eq:NY_split}
+\end{equation}
+These are introduced to disentangle contributions within FULL, 
+not as independent fundamental theories.
+
+\paragraph{Note on exact derivative property:}
+The fact that the NY density can be written as an exact derivative implies that 
+its integral over a closed manifold may become a topological invariant. However, 
+in minisuperspace reduction, the boundary term contribution can become non-trivial 
+due to the symmetry of the ansatz. Within the scope of this work, we operationally 
+classify the influence on the phase structure of $\Veff(r)$ obtained through reduction.
+
+%------------------------------------------------------------------------------
+\subsection{Minisuperspace Reduction}
+\label{sec:reduction_scheme}
+
+\subsubsection{Basic strategy of reduction}
+
+The minisuperspace reduction in this paper is a procedure that substitutes an 
+ansatz assuming spatial homogeneity into the action and reduces it to an 
+effective action with finite degrees of freedom through spatial integration.
+
+Specifically, we decompose the 4-dimensional Euclidean manifold as 
+$\mathcal{M}_4 = \mathcal{M}_3 \times \Sone$, adopting a compact quotient of a 
+3-dimensional Lie group admitting left-invariant coframes for $\mathcal{M}_3$. 
+Let $L$ denote the circumference in the $\Sone$ direction, and characterize the 
+``size'' of $\mathcal{M}_3$ by a single scale parameter $r$.
+
+With this setup, the field degrees of freedom are reduced to the following 
+finite number of parameters:
+\begin{itemize}
+  \item Spatial scale variable $r$ (argument of the effective potential $\Veff(r)$)
+  \item A finite number of parameters specifying torsion amplitude 
+        (see Sec.~\ref{sec:torsion_ansatz})
+\end{itemize}
+
+\subsubsection{Coframe and structure constants}
+
+We introduce left-invariant coframes $\{\sigma^i\}$ ($i = 0, 1, 2$) on the 
+3-dimensional space $\mathcal{M}_3$ and construct the 4-dimensional coframe as
+\begin{equation}
+  \begin{aligned}
+    e^a &= r \, \sigma^i \quad (a = i = 0,1,2), \\
+    e^a &= L \, \dd\tau \quad (a = 3),
+  \end{aligned}
+\end{equation}
+where $\tau \in [0, 1)$ is the periodic coordinate in the $\Sone$ direction.
+
+The left-invariant coframes satisfy the Maurer--Cartan structure equation
+\begin{equation}
+  \dd\sigma^i = -\frac{1}{2} C^i{}_{jk} \, \sigma^j \wedgep \sigma^k.
+\end{equation}
+The structure constants $C^i{}_{jk}$ characterize the geometry of $\mathcal{M}_3$ 
+and take the following values for the three test beds treated in this paper:
+
+\begin{table}[H]
+\centering
+\caption{Structure constants and background Ricci scalar for each topology.}
+\label{tab:structure_constants}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Topology & Structure constants & Background Ricci scalar $R_{\LC}$ \\
+\midrule
+$\Sthree$ (SU(2)) & $C^{i}{}_{jk} = \frac{4}{r} \varepsilon_{ijk}$ & $+24/r^2$ (positive curvature) \\
+$\Tthree$ (Abelian) & $C^{i}{}_{jk} = 0$ & $0$ (flat) \\
+$\Nilthree$ (Heisenberg) & $C^{2}{}_{01} = -1/r$, $C^{2}{}_{10} = +1/r$, others 0 & $-1/(2r^2)$ (negative curvature) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Here $\varepsilon_{ijk}$ is the 3-dimensional Levi--Civita symbol.
+
+Note that the $r$-dependence of the structure constants results from adopting 
+the orthonormal frame $e^a = r \, \sigma^a$. Here $\sigma^a$ is the left-invariant 
+coframe of ``unit size,'' and rescaling by the physical scale $r$ introduces 
+the $1/r$ factor in the structure constants.
+
+\subsubsection{Torsion ansatz: Parametrization based on irreducible decomposition}
+\label{sec:torsion_ansatz}
+
+In Einstein--Cartan theory, the torsion tensor $T^a{}_{bc}$ is a geometric degree 
+of freedom independent of the coframe. Following the irreducible decomposition 
+of torsion in 4 dimensions (Hehl et al.~\cite{Hehl1976}), we introduce the 
+following two components:
+
+\paragraph{T1 component (totally antisymmetric / Axial):}
+As totally antisymmetric torsion in the spatial directions, we adopt
+\begin{equation}
+  T^{(1)}_{abc} = \frac{2\eta}{r} \, \varepsilon_{abc} \quad (a, b, c \in \{0, 1, 2\}).
+\end{equation}
+Here $\eta$ is a dimensionless parameter, scanned including its sign.
+
+This component corresponds to the pseudovector (axial vector) part of torsion 
+$S^\mu = \varepsilon^{\mu\nu\rho\sigma} T_{\nu\rho\sigma}$, with $S^3$ taking 
+a nonzero value.
+
+\paragraph{T2 component (vector trace):}
+Using a vector $V_\mu = (0, 0, 0, V)$ along the $\Sone$ direction, we adopt
+\begin{equation}
+  T^{(2)}_{abc} = \frac{1}{3} \left( \eta_{ac} V_b - \eta_{ab} V_c \right).
+\end{equation}
+Here $V > 0$ is a positive-valued parameter, and $\eta_{ab}$ is the frame metric 
+(in this paper, $\delta_{ab}$).
+
+This component corresponds to the vector trace part of torsion 
+$T_\mu = T^\lambda{}_{\mu\lambda}$.
+
+\paragraph{Mode definitions:}
+By combining T1 and T2, we define the following three computational modes:
+
+\begin{table}[H]
+\centering
+\caption{Torsion mode definitions.}
+\label{tab:modes}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Mode & T1 (Axial) & T2 (Vector) & Independent parameters \\
+\midrule
+AX & $\checkmark$ & --- & $\eta$ \\
+VT & --- & $\checkmark$ & $V$ \\
+MX & $\checkmark$ & $\checkmark$ & $\eta$, $V$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The main results of this paper are based on MX mode (mixed). AX and VT modes 
+are used for diagnostic purposes to disentangle the contribution of each 
+torsion component.
+
+%------------------------------------------------------------------------------
+\subsection{Parameters and Scanning Variables}
+\label{sec:parameters}
+
+\subsubsection{Parameter list}
+
+The main parameters used in this paper are summarized below:
+
+\paragraph{Geometric parameters:}
+\begin{itemize}
+  \item $r$: Spatial scale variable. Argument of $\Veff(r)$, scanned over $r > 0$.
+  \item $L$: Circumference in the $\Sone$ direction. Fixed at $L = 1$ in this paper.
+\end{itemize}
+
+\paragraph{Torsion parameters:}
+\begin{itemize}
+  \item $\eta$: Axial torsion amplitude. Scanned over $\eta \in [-10, 5]$ 
+        including sign.
+  \item $V$: Vector torsion amplitude. Scanned over $V \in [0, 5]$.
+\end{itemize}
+
+\paragraph{Coupling constants:}
+\begin{itemize}
+  \item $\kappa$: Gravitational coupling constant. Fixed at $\kappa = 1$ in this paper.
+  \item $\theta_{\NY}$: Nieh--Yan coupling. Scanned over $\theta_{\NY} \in [0, 5]$. 
+        For $\theta_{\NY} < 0$, the sign of the $B$ term ($r^2$ coefficient) in 
+        the effective potential is reversed, and the phase structure is mirrored 
+        in the $\eta$ direction, so it can be inferred from results in the 
+        positive range.
+\end{itemize}
+
+\subsubsection{Scanning strategy}
+
+For phase diagram generation, we primarily visualize slices of the $(V, \eta)$ 
+plane for representative values of $\theta_{\NY}$ (e.g., $\theta_{\NY} = 0, 1, 2$).
+
+For each parameter point, we search for extrema of $\Veff(r)$ in the allowed 
+region $[r_{\min}, r_{\max}] = [0.01, 10^6]$ and determine the Type I/II/III 
+classification (Sec.~\ref{sec:type_definition}).
+
+\subsubsection{Note on dimensional analysis}
+
+Since we fix $\kappa = L = 1$, all quantities are dimensionless. To restore 
+physical units, $r$ is measured in units of the Planck length 
+$\ell_P = \sqrt{\hbar G / c^3}$, and $\Veff$ in units of $\hbar c / \ell_P$. 
+However, the focus of this paper is on phase structure classification, and 
+we do not discuss absolute scales.
+
+%------------------------------------------------------------------------------
+\subsection{Definition of Effective Potential and ``Static Points''}
+\label{sec:effective_potential}
+
+In this work, we define the effective potential $\Veff(r)$ for $r$ from the 
+effective action $S_{\mathrm{eff}}$ obtained through reduction as follows.
+
+\paragraph{Derivation procedure:}
+\begin{enumerate}
+  \item Substitute the ansatz from Sec.~\ref{sec:reduction_scheme} into the EC+NY action
+  \item Perform spatial integration to obtain effective action 
+        $S_{\mathrm{eff}}[r]$ depending only on $r$
+  \item Define the effective potential as $\Veff(r) := -S_{\mathrm{eff}}[r]$
+\end{enumerate}
+
+With this sign convention, minima of $\Veff(r)$ correspond to maxima of the 
+action (dominant contributions in the Euclidean path integral).
+
+\paragraph{Definition of static points:}
+Points $r = r_0$ satisfying the extremum condition
+\begin{equation}
+  \frac{\dd\Veff}{\dd r} = 0
+\end{equation}
+are called ``static points.'' Furthermore, if
+\begin{equation}
+  \left.\frac{\dd^2 \Veff}{\dd r^2}\right|_{r=r_0} > 0
+\end{equation}
+is satisfied, $r_0$ is a local minimum and represents a stable static point.
+
+Hereafter, we operationally classify phases (Types) based on the shape of 
+$\Veff(r)$ (extrema and barriers).
+
+%------------------------------------------------------------------------------
+\subsection{Type I/II/III: Operational Definition of Phases}
+\label{sec:type_definition}
+
+In this paper, we define the following three types based on the shape of $\Veff(r)$. 
+``Phase'' is a convenient expression and refers to operational classification, 
+not thermodynamic phase transitions. Figure~\ref{fig:schematic} shows the 
+potential shapes for each phase.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/fig01_Schematic_Classification.png}
+  \caption{Schematic illustration of Type I/II/III classification based on 
+           effective potential shape.}
+  \label{fig:schematic}
+\end{figure}
+
+\paragraph{Type I: Metastable well with barrier}
+\begin{itemize}
+  \item $\Veff(r)$ has a local minimum $r_0$ within the allowed region
+  \item In the $r \to 0$ direction, there exists a region where $\Veff(r)$ 
+        takes values larger than $\Veff(r_0)$ (barrier)
+  \item Numerical criterion: Difference $\Delta V > 0$ between $\Veff$ at $r_0$ 
+        and maximum value for $r < r_0$
+\end{itemize}
+
+\paragraph{Type II: Rolling (no barrier)}
+\begin{itemize}
+  \item $\Veff(r)$ has a local minimum $r_0$ within the allowed region
+  \item However, no barrier exists in the $r \to 0$ direction 
+        ($\Delta V \approx 0$ or $\Veff$ monotonically decreasing)
+  \item Numerical criterion: $\dd\Veff/\dd r|_{r \to 0^+} < 0$ 
+        (downward slope near origin)
+\end{itemize}
+
+\paragraph{Type III: Unstable / boundary-attached}
+\begin{itemize}
+  \item No stable local minimum exists within the allowed region
+  \item Typical examples:
+    \begin{itemize}
+      \item Extremum search reaches $r_{\min}$ or $r_{\max}$ (bound hit)
+      \item Curvature condition $\dd^2 V/\dd r^2 > 0$ not satisfied at minimum
+      \item Numerical non-convergence
+    \end{itemize}
+\end{itemize}
+
+\textbf{Note:} The distinction between Type I/II depends on the behavior of 
+$\Veff$ near $r = 0$. In Type I, a ``wall'' exists near the origin requiring 
+quantum tunneling, while in Type II, classical rolling down is possible. 
+However, this paper does not treat dynamical evolution (tunneling rates, 
+Friedmann equations).
+
+%------------------------------------------------------------------------------
+\subsection{Numerical Criteria}
+\label{sec:numerical_criteria}
+
+\subsubsection{Search region and bound hit}
+
+Extremum search is performed over $r \in [r_{\min}, r_{\max}] = [0.01, 10^6]$. 
+If the search result reaches near the boundary
+\begin{equation}
+  r_0 < r_{\min} + \delta \quad \text{or} \quad r_0 > r_{\max} - \delta
+\end{equation}
+(with $\delta = 0.02$), it is classified as bound hit and assigned Type III.
+
+\subsubsection{Barrier height $\Delta V$ definition and threshold}
+
+For Type I, barrier height $\Delta V$ is defined as:
+\begin{equation}
+  \Delta V := \max_{r \in [r_{\min}, r_0]} \Veff(r) - \Veff(r_0).
+\end{equation}
+Type I is determined when $\Delta V > 0$ and 
+$\dd\Veff/\dd r|_{r \to 0^+} > 0$.
+
+\subsubsection{Curvature condition}
+
+The curvature at minimum $r_0$ is evaluated by numerical differentiation, and
+\begin{equation}
+  \left.\frac{\dd^2 \Veff}{\dd r^2}\right|_{r=r_0} > 0
+\end{equation}
+is confirmed. If this condition is not satisfied, it is classified as Type III.
+
+Detailed numerical parameters and edge case handling are summarized in 
+Appendix~\ref{app:numerical}.
+
+%------------------------------------------------------------------------------
+\subsection{Incorporation of Nieh--Yan: FULL and Diagnostic Comparisons (TT/REE)}
+\label{sec:NY_variants}
+
+The primary object of this work is the \textbf{FULL} case, which incorporates 
+the complete form of the NY density into the action. Additionally, we use 
+\textbf{TT} and \textbf{REE} as diagnostic comparisons to disentangle the 
+origin of FULL's contributions.
+
+\begin{table}[H]
+\centering
+\caption{NY variant definitions.}
+\label{tab:ny_variants}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Variant & NY density adopted & Purpose \\
+\midrule
+FULL & $N = N_{\TT} - N_{\REE}$ & Main result (complete NY effect) \\
+TT & $N_{\TT}$ only & Diagnosis of torsion-torsion contribution \\
+REE & $N_{\REE}$ only & Diagnosis of Riemann-torsion contribution \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Specific processing in calculations:}
+The engine (DPPUv2 Engine Core v3) computes $N_{\TT}$, $N_{\REE}$, and 
+$N_{\FULL}$ at each step, and selects the NY density to incorporate into 
+the Lagrangian according to the specified variant.
+
+\paragraph{Significance of diagnostic comparisons:}
+TT/REE are not proposed as independent fundamental theories but serve as 
+auxiliary comparisons for understanding which contributions drive the phase 
+structure of FULL. For example:
+\begin{itemize}
+  \item If phase boundaries differ significantly between TT and REE 
+        $\rightarrow$ Competition between both contributions determines 
+        phase structure
+  \item If TT and FULL are nearly identical $\rightarrow$ Torsion-torsion 
+        term is dominant
+\end{itemize}
+This diagnosis enables disentangling the geometric origin of topology dependence.
+
+%------------------------------------------------------------------------------
+\subsection{Overview of Computational Pipeline}
+\label{sec:pipeline}
+
+The numerical results of this work are obtained through the computational 
+pipeline shown in Figure~\ref{fig:pipeline}. The pipeline consists of two 
+major phases: the \textbf{theory building phase} (symbolic computation for 
+deriving $\Veff(r)$) and the \textbf{numerical search phase} (phase 
+classification through parameter scanning).
+
+\subsubsection{Phase 1: Theory building phase (symbolic computation)}
+
+\paragraph{Step 1: Geometric setup and connection calculation}
+Set structure constants $C^i{}_{jk}$ according to topology 
+(Sec.~\ref{sec:reduction_scheme}), compute the Levi--Civita connection via 
+the generalized Koszul formula. Derive contortion from the torsion ansatz 
+(Sec.~\ref{sec:torsion_ansatz}) and construct the EC connection. 
+Automatically verify metric compatibility and Riemann tensor antisymmetry 
+at each step.
+
+Details of derivation are in Appendix~\ref{app:theory}; engine specifications 
+and verification are in Appendix~\ref{app:reproducibility}.
+
+\paragraph{Step 2: Effective potential derivation}
+Compute Ricci scalar $R$, torsion scalar $T_{abc}T^{abc}$, and NY densities 
+($N_{\TT}$, $N_{\REE}$, $N_{\FULL}$) from the EC connection. Construct the 
+Lagrangian density
+\begin{equation}
+  \mathcal{L} = \frac{R}{2\kappa^2} + \theta_{\NY} N
+\end{equation}
+and obtain the effective action $S_{\mathrm{eff}}$ through angular integration. 
+The effective potential is extracted as $\Veff(r) = -S_{\mathrm{eff}}$.
+
+Analytical results for each topology and NY variant are summarized in 
+Appendix~\ref{app:theory}.
+
+\subsubsection{Phase 2: Numerical search phase (parameter scan)}
+
+\paragraph{Step 3: Extremum search and stability determination}
+For each parameter point $(V, \eta, \theta_{\NY})$, numerically search for 
+extrema of $\Veff(r)$ in the range $r \in [r_{\min}, r_{\max}]$. Use Brent's 
+method for extremum search and verify curvature condition 
+$\dd^2\Veff/\dd r^2 > 0$ by numerical differentiation.
+
+Details of search algorithm are in Appendix~\ref{app:numerical}.
+
+\paragraph{Step 4: Type classification and phase diagram generation}
+Classify each parameter point as Type I/II/III according to the criteria 
+in Sec.~\ref{sec:type_definition}--\ref{sec:numerical_criteria}. Output 
+classification results in CSV format and generate phase diagrams on the 
+$(V, \eta)$ plane.
+
+Type determination flowchart is in Appendix~\ref{app:numerical}; visualization 
+tools are in Appendix~\ref{app:visualization}.
+
+\subsubsection{Implementation and reproducibility}
+
+Calculations are implemented as symbolic computation using SymPy (DPPUv2 Engine 
+Core v3), with automatic execution of consistency checks at each step 
+(metric compatibility, three-stage verification of Riemann antisymmetry, etc.). 
+Parameter scanning is parallelized for speed.
+
+Engine specifications and sanity check list are in Appendix~\ref{app:reproducibility}; 
+code and data access information are in Appendix~\ref{app:access}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/Fig02_Computational_pipeline_overview.png}
+  \caption{Computational pipeline overview.}
+\label{fig:pipeline}
+\end{figure}

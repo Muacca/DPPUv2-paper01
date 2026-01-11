@@ -205,3 +205,69 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# LaTeX
+# Core LaTeX intermediate files
+*.aux
+*.lof
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+# Intermediate documents
+*.dvi
+*.xdv
+*-converted-to.*
+
+# Bibliography auxiliary files (bibtex/biblatex/biber)
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+# Build tool intermediate files
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# Build tool directories for auxiliary files
+latex.out/
+
+# Latexmk
+*.fdb_latexmk
+
+# LuaTeX
+*.log
+
+# Listings
+*.lol
+
+# Navigation files for hyperref package
+*.nav
+*.snm
+*.vrb
+
+# Glossary files
+*.acn
+*.acr
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.lzo
+*.lzs
+*.slg
+*.slo
+*.sls
+

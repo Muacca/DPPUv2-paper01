@@ -1,0 +1,234 @@
+%==============================================================================
+% Section 7: Geometric Interpretation and Utility as a Tool
+%==============================================================================
+\section{Geometric Interpretation and Utility as a Tool}
+\label{sec:interpretation}
+
+This section interprets the numerical results obtained in Secs.~\ref{sec:numerical}--\ref{sec:representative} 
+from a geometric perspective and discusses the applicability and limitations 
+of the diagnostic framework provided by this work.
+
+%------------------------------------------------------------------------------
+\subsection{Geometric Factors of Topology Dependence}
+\label{sec:geometric_factors}
+
+\subsubsection{Correspondence between structure constants and phase structure}
+
+We organize the correspondence between the characteristics of structure 
+constants $C^{i}{}_{jk}$ for the three test beds and the observed phase structure.
+
+\begin{table}[H]
+\centering
+\caption{Correspondence between structure constants and phase structure.}
+\label{tab:structure_phase}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X l>{\raggedright\arraybackslash}X@{}}
+\toprule
+Topology & Structure constant characteristics & Lie algebra & Phase structure characteristics \\
+\midrule
+$\Sthree$ & $C^{i}{}_{jk} = (4/r)\varepsilon_{ijk}$ (totally antisym.) & 
+            $\mathfrak{su}(2)$ (simple) & Complex, high $\theta_{\NY}$ sensitivity \\
+$\Tthree$ & $C^{i}{}_{jk} = 0$ (all zero) & Abelian & 
+            Threshold-dependent, activates at $\theta_{\NY} > 0.87$ \\
+$\Nilthree$ & $C^{2}{}_{01} = -1/r$, $C^{2}{}_{10} = +1/r$, others 0 & 
+              Heisenberg (nilpotent) & Intermediate, band + separate region \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+From this correspondence, it is suggested that the ``complexity'' of structure 
+constants (number of nonzero components and symmetry) correlates with the 
+complexity of phase structure.
+
+\subsubsection{Role of background curvature}
+
+The background Ricci scalar $R_{\LC}$ from the Levi--Civita connection affects 
+the effective potential through the $N_{\REE}$ component of the NY density.
+
+\paragraph{Positive curvature ($\Sthree$): $R_{\LC} = 24/r^2 > 0$}
+
+The factor $(\eta + 4)$ appearing in $N_{\REE} = -2V(\eta + 4)/r$ reflects 
+coupling with positive curvature. This factor breaks $\eta \to -\eta$ symmetry 
+and becomes a driving force for forming a wide stable region in the $\eta < 0$ 
+region.
+
+As a physical interpretation, in the positive curvature background, the 
+coupling of the axial component ($\eta$) of torsion with curvature produces 
+an ``effective negative contribution,'' promoting potential well formation.
+
+\paragraph{Zero curvature ($\Tthree$): $R_{\LC} = 0$}
+
+Since the background curvature is zero, the curvature coupling term in 
+$N_{\REE}$ vanishes, and $N_{\FULL} = N_{\REE} = -2V\eta/r$. However, with 
+the isotropic setting $R_1 = R_2 = R_3 = r$, this NY term contributes as the 
+$r^2$ coefficient in the effective potential, giving rise to $\theta_{\NY}$ 
+sensitivity.
+
+A characteristic of $\Tthree$ is that the coefficient $C = 9\eta^2$ of $r$ 
+is always non-negative. Therefore, Type I appearance requires $\theta_{\NY}$ 
+to exceed a threshold, with ``activation conditions'' being stricter compared 
+to $\Sthree$ or $\Nilthree$.
+
+$\eta \to -\eta$ symmetry is preserved for $\theta_{\NY} = 0$ but broken for 
+$\theta_{\NY} > 0$ due to sign reversal of $B = 6V\eta\kappa^2\theta_{\NY}$. 
+This breaking originates not from curvature coupling but from the projection 
+of the NY term onto the isotropic volume mode.
+
+\paragraph{Negative curvature ($\Nilthree$): $R_{\LC} = -1/(2r^2) < 0$}
+
+The factor $(1 - 3\eta)$ appearing in $N_{\REE} = 2V(1 - 3\eta)/(3r)$ 
+reflects coupling with negative curvature. Compared to the $(\eta + 4)$ of 
+$\Sthree$, the shift is smaller ($+1/3$ vs $+4$), and the symmetry-breaking 
+effect is moderate.
+
+The main band being limited to $\eta \in (-0.27, 0.93)$ originates from 
+$\Nilthree$'s structure constants being nonzero ``in only one direction.'' 
+This anisotropy makes the quadratic coefficient of $C(\eta)$ larger than 
+$\Sthree$'s ($36$ vs $9$), consequently narrowing the range of $\eta$ where 
+$C < 0$.
+
+\subsubsection{Isotropy and anisotropy}
+
+$\Sthree$ (SU(2)) is an isotropic homogeneous space where any two directions 
+can be mapped to each other by group action. On the other hand, $\Nilthree$ 
+(Heisenberg) is anisotropic, with the structure $[E_0, E_1] = (1/R)E_2$ 
+giving special treatment to the ``$E_2$ direction.''
+
+This anisotropy manifests in the effective potential as follows:
+\begin{itemize}
+  \item $\Sthree$: $C(\eta) = 9(\eta + 4)^2 - 36$ (large $\eta$ shift)
+  \item $\Nilthree$: $C(\eta) = 36(\eta - 1/3)^2 - 13$ (small $\eta$ shift, 
+        large coefficient)
+\end{itemize}
+
+For anisotropic topologies, the ``allowed range'' of torsion parameters 
+tends to be narrower than in isotropic cases.
+
+%------------------------------------------------------------------------------
+\subsection{Role of FULL Revealed by Diagnostic Comparison (TT/REE)}
+\label{sec:FULL_role}
+
+\subsubsection{Physical meaning of TT and REE}
+
+In the decomposition $N = N_{\TT} - N_{\REE}$ of the NY density, each component 
+carries different geometric information:
+
+\paragraph{$N_{\TT}$ (torsion-torsion term):}
+\begin{equation}
+  N_{\TT} = \frac{1}{4}\varepsilon^{abcd} T^{e}{}_{ab} T_{ecd}
+\end{equation}
+
+This represents ``self-interaction'' of torsion and does not depend on 
+background curvature. It takes the form $N_{\TT} \propto V\eta/r$ and is 
+an odd function of $\eta$.
+
+\paragraph{$N_{\REE}$ (Riemann-torsion term):}
+\begin{equation}
+  N_{\REE} = \frac{1}{4}\varepsilon^{abcd} R_{abcd}
+\end{equation}
+
+This is the contribution of curvature from the EC connection (including torsion) 
+and contains coupling with background curvature. It has different $\eta$ 
+dependence for each topology:
+\begin{itemize}
+  \item $\Sthree$: $N_{\REE} \propto V(\eta + 4)/r$
+  \item $\Tthree$: $N_{\REE} \propto V\eta/r$
+  \item $\Nilthree$: $N_{\REE} \propto V(1 - 3\eta)/r$
+\end{itemize}
+
+\subsubsection{Reason why FULL is optimal}
+
+From the comparison in Figure~\ref{fig:phase_matrix}, FULL was observed to 
+have the widest stable region for $\Sthree$. This is due to the following 
+mechanism:
+
+The $r^2$ term coefficient in FULL, $B \propto (\eta - 4)$, arises as the 
+``difference'' between TT's $B \propto \eta$ and REE's $B \propto (\eta + 4)$:
+\begin{equation}
+  (\eta - 4) = \eta - (\eta + 4) + 2\eta = 2\eta - 4.
+\end{equation}
+
+This combination maximizes the range of $\eta$ where $B < 0$ (the entire 
+region $\eta < 4$).
+
+Physically, $N_{\TT}$ and $N_{\REE}$ ``compete with opposite signs,'' 
+realizing a wide stable region that cannot be achieved individually. 
+This suggests that the exact derivative structure $N = \dd(e^a \wedgep T_a)$ 
+of the NY term carries geometric information different from simple torsion 
+squared terms or curvature terms.
+
+\subsubsection{Degeneracy and threshold effect in $\Tthree$}
+
+For $\Tthree$, $N_{\FULL} = N_{\REE} = -2V\eta/r$, meaning FULL and REE 
+coincide completely. This is because background curvature is zero, causing 
+the curvature-dependent part of $N_{\TT}$ and $N_{\REE}$ to vanish, with 
+their difference becoming a constant multiple.
+
+However, with the isotropic setting, the NY term contributes to the effective 
+potential as the $r^2$ coefficient $B$, so for all 3 variants, Type I appears 
+when $\theta_{\NY}$ exceeds the threshold $> 0.87$. TT has twice the coefficient 
+of FULL/REE, which may slightly shift the threshold, but the qualitative 
+phase boundary structure is similar.
+
+%------------------------------------------------------------------------------
+\subsection{Usage as a Reusable Diagnostic Tool}
+\label{sec:diagnostic_tool}
+
+\subsubsection{Input and output specifications}
+
+The diagnostic framework provided by this work has the following input/output 
+specifications:
+
+\paragraph{Input:}
+\begin{itemize}
+  \item Topology: $\mathcal{M}_3 \in \{\Sthree, \Tthree, \Nilthree\}$ 
+        (or specified by structure constants $C^{i}{}_{jk}$)
+  \item Parameters: $(V, \eta, \theta_{\NY})$
+  \item NY variant: FULL / TT / REE
+\end{itemize}
+
+\paragraph{Output:}
+\begin{itemize}
+  \item Type classification: I (stable with barrier) / II (rolling) / 
+        III (unstable)
+  \item Stable radius: $r_0$ (for Type I/II)
+  \item Barrier height: $\Delta V$ (for Type I)
+  \item Effective potential: Analytical expression for $\Veff(r)$
+\end{itemize}
+
+\subsubsection{Application example: Use for parameter design}
+
+When constructing cosmological models based on EC+NY theory, this diagnostic 
+framework can be used for the following purposes:
+
+\paragraph{Identification of stable regions:}
+For a given topology and NY variant, read the parameter range realizing 
+Type I or Type II from phase diagrams.
+
+\paragraph{Prediction of critical conditions:}
+Use the analytical boundary conditions derived in Sec.~\ref{sec:mechanisms} 
+(e.g., $\eta = -2, -6$ for $\Sthree$) to predict parameters where Type 
+transitions occur.
+
+\paragraph{Evaluation of stability quality:}
+Quantitatively evaluate the ``robustness'' of metastable states from 
+$\log_{10}(\Delta V)$ values. Larger $\Delta V$ means stronger suppression 
+of decay by quantum tunneling.
+
+\subsubsection{Extension to other topologies}
+
+This diagnostic framework can be extended to any 3-dimensional Lie group 
+admitting left-invariant coframes. Specifically:
+
+\begin{enumerate}
+  \item Specify structure constants $C^{i}{}_{jk}$
+  \item Execute the computational pipeline from Sec.~\ref{sec:pipeline}
+  \item Derive effective potential $\Veff(r)$
+  \item Compute Type classification and stability metrics
+\end{enumerate}
+
+Among Thurston's eight geometries, those with compact quotients 
+($\Sthree$, $\mathbb{E}^3$, $\mathrm{Nil}$, $\mathrm{Sol}$, 
+$\widetilde{SL_2(\mathbb{R})}$, $\mathbb{H}^2 \times \mathbb{R}$, 
+$S^2 \times \mathbb{R}$) can in principle be treated with this framework. 
+However, $S^2 \times \mathbb{R}$ is not parallelizable, requiring caution 
+in constructing a global coframe.

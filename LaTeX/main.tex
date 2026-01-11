@@ -1,0 +1,206 @@
+%==============================================================================
+% Topology-Dependent Phase Classification of Effective Potentials
+% in Einstein--Cartan + Nieh--Yan Minisuperspace
+%==============================================================================
+\documentclass[12pt,a4paper]{article}
+
+%------------------------------------------------------------------------------
+% Packages
+%------------------------------------------------------------------------------
+% Math
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{mathtools}
+\usepackage{bm}
+
+% Graphics and figures
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
+
+% Tables
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+
+% TikZ for diagrams
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, fit, backgrounds}
+
+% Layout and formatting
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% References and links
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{cleveref}
+
+% Code listings (for appendices)
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  language=Python
+}
+
+% section break
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\clearpage}
+
+% Misc
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+%------------------------------------------------------------------------------
+% Custom commands
+%------------------------------------------------------------------------------
+% Math shortcuts
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Veff}{V_{\mathrm{eff}}}
+\newcommand{\Ric}{R}
+\newcommand{\LC}{\mathrm{LC}}
+\newcommand{\EC}{\mathrm{EC}}
+\newcommand{\NY}{\mathrm{NY}}
+\newcommand{\TT}{\mathrm{TT}}
+\newcommand{\REE}{\mathrm{REE}}
+\newcommand{\FULL}{\mathrm{FULL}}
+
+% Topology notation
+\newcommand{\Sthree}{S^3}
+\newcommand{\Tthree}{T^3}
+\newcommand{\Nilthree}{\mathrm{Nil}^3}
+\newcommand{\Sone}{S^1}
+
+% Differential forms
+\newcommand{\wedgep}{\wedge}
+
+%------------------------------------------------------------------------------
+% Title and authors
+%------------------------------------------------------------------------------
+\title{Topology-Dependent Phase Classification of Effective Potentials\\
+in Einstein--Cartan + Nieh--Yan Minisuperspace}
+
+\author{Muacca}
+
+\date{\today}
+
+%==============================================================================
+\begin{document}
+%==============================================================================
+
+\maketitle
+
+%------------------------------------------------------------------------------
+% Abstract
+%------------------------------------------------------------------------------
+\begin{abstract}
+We study Einstein--Cartan (EC) gravity supplemented with the Nieh--Yan (NY) term 
+in a Euclidean--signature minisuperspace framework, and classify the resulting 
+effective potential into distinct ``phases.'' Based on the presence or absence 
+of local minima and barriers in the effective potential, we define three types: 
+(I) metastable well with barrier, (II) barrier-free rolling, and 
+(III) unstable/boundary-attached configurations.
+
+While the Nieh--Yan density (a 4-form) can be written as an exact derivative, 
+it is geometrically defined through the coframe and torsion. To facilitate 
+meaningful comparison, we evaluate topology dependence under a unified ansatz. 
+We adopt spatial sections that admit left-invariant coframes, enabling 
+systematic description within a common minisuperspace framework.
+
+As concrete test beds, we consider: (i) $\Sthree$, (ii) $\Tthree$, and 
+(iii) $\Nilthree$. For the NY term, we focus on the complete form (FULL) 
+as the primary object, while also examining TT (torsion-torsion component only) 
+and REE (the remaining component) as diagnostic comparisons to disentangle 
+the contributions within FULL.
+
+Our investigation addresses two main questions: (1) How does the phase 
+(Type I/II/III) of the effective potential depend on topology? 
+(2) Can we identify, through numerical scanning, critical conditions 
+corresponding to well formation/disappearance and barrier collapse, 
+and organize their geometric dependence?
+
+Our scanning results suggest the following:
+\begin{itemize}
+  \item The phase structure of the effective potential varies systematically 
+        with topology.
+  \item Within the NY term, some contributions exhibit relative insensitivity 
+        to topology, while others appear selectively depending on geometric conditions.
+\end{itemize}
+\end{abstract}
+
+%------------------------------------------------------------------------------
+% Main text
+%------------------------------------------------------------------------------
+\input{sections/sec1}  % Introduction
+\input{sections/sec2}  % Setup and conventions
+\input{sections/sec3}  % Topology-specific reductions
+\input{sections/sec4}  % Numerical results
+\input{sections/sec5}  % Mechanisms and interpretation
+\input{sections/sec6}  % Representative points and stability quality
+\input{sections/sec7}  % Interpretation and utility
+\input{sections/sec8}  % Conclusions and outlook
+
+%------------------------------------------------------------------------------
+% Acknowledgments
+%------------------------------------------------------------------------------
+\section*{Acknowledgments}
+
+The author acknowledges the use of the following AI tools during manuscript preparation: 
+Claude Opus 4.5 (Anthropic; accessed 2025-12), Gemini 3 Pro (Google; accessed 2025-12), 
+Grok 4.1 Thinking (xAI; accessed 2025-12), and GPT-5.2 Thinking via ChatGPT (OpenAI; accessed 2025-12). 
+These tools were used for language editing (including Japanese-English translation), outlining and 
+improving exposition, drafting and reviewing auxiliary code (scripts and pseudocode) that was 
+subsequently tested and validated by the author, and proposing candidate consistency checks and 
+alternative derivations to be independently verified by the author. 
+They were additionally used for literature discovery support (keyword generation and 
+preliminary summaries of candidate papers); 
+all references and factual claims were verified by the author using primary sources.
+
+The AI tools did not determine the scientific claims of this work and were not used to generate or 
+modify research data or evidentiary figures. 
+The author takes full responsibility for the content and for any remaining errors.
+
+This work was developed within the informal collaborative project \textbf{DPPU}
+(\textbf{D}onut-like topology, \textbf{P}lanck-scale compactness,
+\textbf{P}recession dynamics, \textbf{U}niverse).
+
+%------------------------------------------------------------------------------
+% Appendices
+%------------------------------------------------------------------------------
+\appendix
+\input{appendices/appA}  % Theoretical details
+\input{appendices/appB}  % Reproducibility and verification
+\input{appendices/appC}  % Numerical computation details
+\input{appendices/appD}  % Visualization tools
+\input{appendices/appE}  % Volume rescaling invariance in T3×S1
+\input{appendices/appF}  % Code and data access
+
+%------------------------------------------------------------------------------
+% References
+%------------------------------------------------------------------------------
+\bibliographystyle{unsrt}
+% \bibliography{references}  % Uncomment when bibliography file is available
+
+% Placeholder references
+\begin{thebibliography}{99}
+\bibitem{Hehl1976}
+F.~W.~Hehl, P.~von der Heyde, G.~D.~Kerlick, and J.~M.~Nester,
+``General relativity with spin and torsion: Foundations and prospects,''
+Rev.\ Mod.\ Phys.\ \textbf{48}, 393 (1976).
+
+\bibitem{Chandia1997}
+O.~Chandia and J.~Zanelli,
+``Topological invariants, instantons, and the chiral anomaly on spaces with torsion,''
+Phys.\ Rev.\ D \textbf{55}, 7580 (1997).
+
+\bibitem{NiehYan1982}
+H.~T.~Nieh and M.~L.~Yan,
+``An identity in Riemann-Cartan geometry,''
+J.\ Math.\ Phys.\ \textbf{23}, 373 (1982).
+\end{thebibliography}
+
+%==============================================================================
+\end{document}
+%==============================================================================

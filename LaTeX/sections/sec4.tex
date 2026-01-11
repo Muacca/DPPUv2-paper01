@@ -1,0 +1,298 @@
+%==============================================================================
+% Section 4: Numerical Results: Phase Diagrams and Boundaries
+%==============================================================================
+\section{Numerical Results: Phase Diagrams and Boundaries}
+\label{sec:numerical}
+
+This section presents the results of numerical scanning on the effective 
+potentials derived in Sec.~\ref{sec:reductions}. We first explain the Type 
+classification procedure and how to read phase diagrams, then show the phase 
+diagrams for each topology. The mechanisms of phase boundary formation and 
+geometric interpretation are discussed in Sec.~\ref{sec:mechanisms}.
+
+%------------------------------------------------------------------------------
+\subsection{Type Classification Procedure}
+\label{sec:classification_procedure}
+
+\subsubsection{Search region and numerical method}
+
+For each parameter point $(V, \eta, \theta_{\NY})$, we numerically search for 
+extrema of $\Veff(r)$ in the range $r \in [r_{\min}, r_{\max}] = [0.01, 10^6]$. 
+We use Brent's method (\texttt{scipy.optimize.minimize\_scalar}) for extremum 
+search and verify the curvature condition $\dd^2 V/\dd r^2 > 0$ by numerical 
+differentiation.
+
+\subsubsection{Type determination criteria}
+
+Based on the definitions in Sec.~\ref{sec:type_definition}, we determine Types 
+using the following criteria:
+
+\begin{itemize}
+  \item \textbf{Type I (stable with barrier)}: A local minimum $r_0$ exists 
+        within the allowed region, and a barrier ($\Delta V > 0$) exists in 
+        the $r \to 0$ direction
+  \item \textbf{Type II (rolling)}: A local minimum $r_0$ exists within the 
+        allowed region, but no barrier in the $r \to 0$ direction 
+        ($\dd\Veff/\dd r|_{r \to 0^+} < 0$)
+  \item \textbf{Type III (unstable)}: No stable local minimum exists within 
+        the allowed region, or search reaches boundary ($r_{\min}$ or $r_{\max}$)
+\end{itemize}
+
+\subsubsection{Scan resolution}
+
+The scan resolution is 51 points in the $V$ direction, 151 points in the 
+$\eta$ direction, and 51 points in the $\theta_{\NY}$ direction (range $[0, 5]$), 
+giving approximately 390,000 evaluations per topology. Note that this paper 
+primarily presents results for $\theta_{\NY} \lesssim 2$. The uncertainty in 
+boundary positions is on the order of the grid spacing 
+($\Delta\eta \approx 0.1$, $\Delta V \approx 0.1$).
+
+%------------------------------------------------------------------------------
+\subsection{How to Read Phase Diagrams}
+\label{sec:reading_diagrams}
+
+In the phase diagrams of this paper, Type classification is displayed on the 
+$(V, \eta)$ plane using the following visual conventions:
+
+\begin{itemize}
+  \item \textbf{Colored region (no hatching)}: Type I (metastable well with barrier)
+  \item \textbf{Colored region (with hatching)}: Type II (rolling, no barrier)
+  \item \textbf{White region}: Type III (unstable / boundary-attached)
+\end{itemize}
+
+The color gradient represents the logarithmic value of the stable radius 
+$\log_{10}(r_0)$, ranging from purple (small) to yellow (large). White contour 
+lines show the logarithmic barrier height/well depth $\log_{10}(\Delta V)$.
+
+%------------------------------------------------------------------------------
+\subsection{Phase Diagrams by Topology: FULL Variant}
+\label{sec:phase_diagrams}
+
+\subsubsection{$\Sthree \times \Sone$}
+
+Figure~\ref{fig:phase_S3} shows the phase diagrams for $\Sthree$-FULL at 
+$\theta_{\NY} = 0, 1, 2$.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig09_phase_diagram_S3-FULL.png}
+  \caption{Phase diagram: $\Sthree \times \Sone$ ($\theta_{\NY} = 0, 1, 2$).}
+  \label{fig:phase_S3}
+\end{figure}
+
+\paragraph{For $\theta_{\NY} = 0$:}
+\begin{itemize}
+  \item $\eta \gtrsim -2$: Type III (white) dominates
+  \item $-6 \lesssim \eta \lesssim -2$: Band-like region of Type II (hatched)
+  \item $\eta \lesssim -6$: Type III again
+\end{itemize}
+
+\paragraph{For $\theta_{\NY} = 1$:}
+\begin{itemize}
+  \item $\eta \gtrsim 0.5$: Type III (white)
+  \item $-2 \lesssim \eta \lesssim 0.5$: Type I (no hatching)
+  \item $-6 \lesssim \eta \lesssim -2$: Band-like region of Type II (hatched)
+  \item $\eta \lesssim -6$: Type I (no hatching) reappears
+\end{itemize}
+
+\paragraph{For $\theta_{\NY} = 2$:}
+\begin{itemize}
+  \item Stable region (Type I + II) expands toward $\eta > 0$
+  \item I/III boundary moves to around $\eta \approx 2$
+  \item Type II band also expands
+\end{itemize}
+
+\paragraph{Key observations:}
+\begin{enumerate}
+  \item $\theta_{\NY} = 0$: Only main band of Type II
+  \item $\theta_{\NY} > 0$: Type I region appears and expands
+  \item $\eta \to -\eta$ symmetry is broken
+\end{enumerate}
+
+\subsubsection{$\Tthree \times \Sone$}
+
+Figure~\ref{fig:phase_T3} shows the phase diagrams for $\Tthree$-FULL at 
+$\theta_{\NY} = 0, 1, 2$.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig10_phase_diagram_T3-FULL.png}
+  \caption{Phase diagram: $\Tthree \times \Sone$ ($\theta_{\NY} = 0, 1, 2$).}
+  \label{fig:phase_T3}
+\end{figure}
+
+\paragraph{For $\theta_{\NY} = 0$:}
+\begin{itemize}
+  \item Entire region is Type III (monotonically increasing)
+  \item No stable minimum exists
+\end{itemize}
+
+\paragraph{For $\theta_{\NY} = 1$:}
+\begin{itemize}
+  \item Type I (stable well) appears in wide region of $\eta < 0$
+  \item $\eta \gtrsim 0$ is entirely Type III
+\end{itemize}
+
+\paragraph{For $\theta_{\NY} = 2$:}
+\begin{itemize}
+  \item Type I region expands further
+  \item Contour lines of $r_0$ extend in negative $\eta$ direction
+\end{itemize}
+
+\paragraph{Key observations:}
+\begin{enumerate}
+  \item $\theta_{\NY} = 0$: Entire region Type III
+  \item $\theta_{\NY} > 0$: Type I appears
+  \item $\eta \to -\eta$ symmetry is broken
+\end{enumerate}
+
+\subsubsection{$\Nilthree \times \Sone$}
+
+Figure~\ref{fig:phase_Nil3} shows the phase diagrams for $\Nilthree$-FULL at 
+$\theta_{\NY} = 0, 1, 2$.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig11_phase_diagram_Nil3-FULL.png}
+  \caption{Phase diagram: $\Nilthree \times \Sone$ ($\theta_{\NY} = 0, 1, 2$).}
+  \label{fig:phase_Nil3}
+\end{figure}
+
+\paragraph{For $\theta_{\NY} = 0$:}
+\begin{itemize}
+  \item $-0.3 \lesssim \eta \lesssim 1$: Narrow stable band (Type II)
+  \item $\eta < -0.3$ and $\eta > 1$: Type III (white) dominates almost 
+        the entire region
+\end{itemize}
+
+\paragraph{For $\theta_{\NY} = 1$:}
+\begin{itemize}
+  \item Main band ($-0.3 < \eta < 1$) is maintained
+  \item \textbf{Separate stable region (Type I)} appears at $\eta \lesssim -4$
+  \item Main band and separate stable region are separated by Type III region
+\end{itemize}
+
+\paragraph{For $\theta_{\NY} = 2$:}
+\begin{itemize}
+  \item Lower stable region expands, distributing widely at $\eta \lesssim -0.5$
+  \item Width of main band ($-0.3 < \eta < 1$) gradually decreases in 
+        large $V$ region
+\end{itemize}
+
+\paragraph{Key observations:}
+\begin{enumerate}
+  \item $\theta_{\NY} = 0$: Only main band of Type II
+  \item $\theta_{\NY} > 0$: Type I region appears and expands
+  \item $\eta \to -\eta$ symmetry is broken
+\end{enumerate}
+
+%------------------------------------------------------------------------------
+\subsection{Summary of $\theta_{\NY}$ Dependence}
+\label{sec:theta_dependence}
+
+Tables~\ref{tab:boundary_S3}--\ref{tab:boundary_Nil3} summarize the 
+$\theta_{\NY}$ dependence of phase boundaries for each topology.
+
+\begin{table}[H]
+\centering
+\caption{$\Sthree$: $\theta_{\NY}$ dependence of phase boundary positions 
+(FULL variant).}
+\label{tab:boundary_S3}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Type & $\theta_{\NY} = 0$ & $\theta_{\NY} = 1$ & $\theta_{\NY} = 2$ \\
+\midrule
+Type I region & None & $\eta < -6$, $-2 < \eta < 0.5$ & Expanded \\
+Type II (main band) & $-6 \lesssim \eta \lesssim -2$ & 
+                      $-6 \lesssim \eta \lesssim -2$ & 
+                      $-6 \lesssim \eta \lesssim -2$ \\
+Type III region & $\eta \lesssim -6$, $-2 \lesssim \eta$ & 
+                  $0.5 \lesssim \eta$ & Shrunk \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{$\Tthree$: $\theta_{\NY}$ dependence of phase boundary positions 
+(FULL variant).}
+\label{tab:boundary_T3}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Type & $\theta_{\NY} = 0$ & $\theta_{\NY} = 1$ & $\theta_{\NY} = 2$ \\
+\midrule
+Type I region & None & $\eta \lesssim 0$ & $\eta \lesssim 0$ \\
+Type II region & None & None & None \\
+Type III region & Entire & $0 \lesssim \eta$ & $0 \lesssim \eta$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{$\Nilthree$: $\theta_{\NY}$ dependence of phase boundary positions 
+(FULL variant).}
+\label{tab:boundary_Nil3}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Type & $\theta_{\NY} = 0$ & $\theta_{\NY} = 1$ & $\theta_{\NY} = 2$ \\
+\midrule
+Type I region & None & $\eta \lesssim -4$ & $\eta < -0.5$ \\
+Type II (main band) & $-0.3 \lesssim \eta \lesssim 1$ & 
+                      $-0.3 \lesssim \eta \lesssim 1$ & 
+                      $-0.3 \lesssim \eta \lesssim 1$ \\
+Type III region & $\eta \lesssim -0.3$, $1 \lesssim \eta$ & 
+                  $-4 \lesssim \eta \lesssim -0.3$, $1 \lesssim \eta$ & 
+                  $-0.5 \lesssim \eta \lesssim -0.3$, $1 \lesssim \eta$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Key observations:}
+\begin{enumerate}
+  \item \textbf{$\Sthree$}: Shows strong dependence on $\theta_{\NY}$, with 
+        stable region expanding toward $\eta > 0$
+  \item \textbf{$\Tthree$}: Entire region is Type III for 
+        $\theta_{\NY} \lesssim 0.9$, but Type I appears in $\eta < 0$ for 
+        $\theta_{\NY} \gtrsim 0.9$
+  \item \textbf{$\Nilthree$}: Main band is insensitive to $\theta_{\NY}$, 
+        but stable region in $\eta < 0$ grows with $\theta_{\NY}$
+\end{enumerate}
+
+%------------------------------------------------------------------------------
+\subsection{Comparison with TT/REE Variants}
+\label{sec:variant_comparison}
+
+Figure~\ref{fig:phase_matrix} shows the phase diagram matrix for 
+3 topologies $\times$ 3 variants at $\theta_{\NY} = 1.0$.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig12_phase_matrix_0010.png}
+  \caption{Phase diagram matrix: $\theta_{\NY} = 1.0$.}
+  \label{fig:phase_matrix}
+\end{figure}
+
+\paragraph{$\Sthree$:}
+\begin{itemize}
+  \item Phase boundary positions clearly differ among FULL, TT, REE
+  \item FULL has the widest stable region
+  \item TT and REE have narrower stable regions than FULL
+\end{itemize}
+
+\paragraph{$\Tthree$:}
+\begin{itemize}
+  \item FULL and REE have completely identical phase diagrams 
+        (because $N_{\FULL} = N_{\REE}$)
+  \item TT differs by a factor of 2 in coefficient, but phase boundary 
+        positions are similar
+  \item For $\theta_{\NY} \gtrsim 0.9$, Type I region appears in $\eta < 0$ 
+        for all variants
+\end{itemize}
+
+\paragraph{$\Nilthree$:}
+\begin{itemize}
+  \item Moderate differences observed among the 3 variants
+  \item Main band positions are nearly identical
+  \item Shape and extent of lower stable region differ
+\end{itemize}

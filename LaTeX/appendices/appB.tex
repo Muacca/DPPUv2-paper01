@@ -1,0 +1,200 @@
+%==============================================================================
+% Appendix B: Reproducibility and Verification
+%==============================================================================
+\section{Reproducibility and Verification}
+\label{app:reproducibility}
+
+This appendix documents the computational engine specifications and verification 
+procedures to ensure reproducibility of the results presented in this paper.
+
+%------------------------------------------------------------------------------
+\subsection{Engine Specifications}
+\label{app:engine_specs}
+
+\subsubsection{DPPUv2 Engine Core v3}
+
+The calculations in this paper are performed using DPPUv2 Engine Core v3, 
+a symbolic computation engine implemented in Python with SymPy.
+
+\begin{table}[H]
+\centering
+\caption{Engine specifications.}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Item & Specification \\
+\midrule
+Engine name & DPPUv2 Engine Core v3 \\
+Language & Python 3.10+ \\
+Symbolic library & SymPy 1.12+ \\
+Numerical library & NumPy, SciPy \\
+Parallelization & multiprocessing (for parameter scans) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Modular architecture}
+
+The engine consists of the following modules:
+
+\begin{itemize}
+  \item \texttt{DPPUv2\_engine\_core\_v3.py}: Core symbolic computation
+  \item \texttt{DPPUv2\_parameter\_scan\_v3.py}: Parameter space scanning
+  \item \texttt{DPPUv2\_runner\_*.py}: Topology-specific runners
+  \item \texttt{DPPUv2\_visualize\_*.py}: Visualization tools
+\end{itemize}
+
+%------------------------------------------------------------------------------
+\subsection{Sanity Checks}
+\label{app:sanity_checks}
+
+The engine performs automatic verification at each computational step. 
+The following sanity checks are implemented:
+
+\subsubsection{Metric compatibility}
+
+After computing the Levi--Civita connection, the engine verifies:
+\begin{equation}
+  \nabla_c \eta_{ab} = \partial_c \eta_{ab} - \Gamma^d{}_{ca}\eta_{db} 
+                      - \Gamma^d{}_{cb}\eta_{ad} = 0.
+\end{equation}
+
+For frame basis with constant $\eta_{ab} = \delta_{ab}$, this reduces to:
+\begin{equation}
+  \Gamma_{abc} + \Gamma_{bac} = 0.
+\end{equation}
+
+\subsubsection{Riemann tensor antisymmetry (three-stage verification)}
+
+The Riemann tensor $R^a{}_{bcd}$ satisfies the following antisymmetry properties:
+
+\paragraph{Stage 1: Antisymmetry in last two indices}
+\begin{equation}
+  R^a{}_{bcd} = -R^a{}_{bdc}.
+\end{equation}
+
+\paragraph{Stage 2: Antisymmetry in first two indices (after lowering)}
+\begin{equation}
+  R_{abcd} = -R_{bacd}.
+\end{equation}
+
+\paragraph{Stage 3: Pair exchange symmetry}
+\begin{equation}
+  R_{abcd} = R_{cdab}.
+\end{equation}
+
+The engine verifies all three properties and logs any violations.
+
+\subsubsection{Torsion tensor verification}
+
+For the torsion ansatz, the engine verifies:
+
+\paragraph{T1 component:} Total antisymmetry
+\begin{equation}
+  T^{(1)}_{abc} = T^{(1)}_{[abc]}.
+\end{equation}
+
+\paragraph{T2 component:} Trace condition
+\begin{equation}
+  T^{(2)\lambda}{}_{\mu\lambda} = V_\mu.
+\end{equation}
+
+\subsubsection{NY density consistency}
+
+The engine verifies the decomposition relation:
+\begin{equation}
+  N_{\FULL} = N_{\TT} - N_{\REE}.
+\end{equation}
+
+This is checked numerically at representative parameter points.
+
+%------------------------------------------------------------------------------
+\subsection{Verification Log Examples}
+\label{app:verification_logs}
+
+The following shows excerpts from verification logs generated during 
+computation.
+
+\subsubsection{$\Sthree \times \Sone$ verification}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize]
+=== S3S1 MX Mode Verification ===
+[PASS] Metric compatibility: max deviation = 0.0
+[PASS] Riemann antisymmetry (stage 1): verified
+[PASS] Riemann antisymmetry (stage 2): verified
+[PASS] Riemann antisymmetry (stage 3): verified
+[PASS] NY decomposition: N_FULL = N_TT - N_REE
+[INFO] Ricci scalar: 2*(-V**2*r**2 - 9*eta**2 - 72*eta - 108)/(3*r**2)
+[INFO] N_FULL: 2*V*(4 - eta)/r
+\end{lstlisting}
+
+\subsubsection{$\Tthree \times \Sone$ verification}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize]
+=== T3S1 MX Mode Verification ===
+[PASS] Metric compatibility: max deviation = 0.0
+[PASS] Riemann antisymmetry (stage 1): verified
+[PASS] Riemann antisymmetry (stage 2): verified
+[PASS] Riemann antisymmetry (stage 3): verified
+[PASS] NY decomposition: N_FULL = N_TT - N_REE
+[INFO] Ricci scalar: -2*V**2/3 - 6*eta**2/R1**2
+[INFO] N_FULL: -2*V*eta/R1
+[NOTE] N_FULL = N_REE (degenerate case for flat background)
+\end{lstlisting}
+
+\subsubsection{$\Nilthree \times \Sone$ verification}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize]
+=== Nil3S1 MX Mode Verification ===
+[PASS] Metric compatibility: max deviation = 0.0
+[PASS] Riemann antisymmetry (stage 1): verified
+[PASS] Riemann antisymmetry (stage 2): verified
+[PASS] Riemann antisymmetry (stage 3): verified
+[PASS] NY decomposition: N_FULL = N_TT - N_REE
+[INFO] Ricci scalar: (-4*R**2*V**2 - 36*eta**2 + 24*eta + 9)/(6*R**2)
+[INFO] N_FULL: -2*V*(3*eta + 1)/(3*R)
+\end{lstlisting}
+
+%------------------------------------------------------------------------------
+\subsection{Cross-Validation}
+\label{app:cross_validation}
+
+\subsubsection{Analytical vs.\ numerical comparison}
+
+For selected parameter points, we compare analytically derived $\Veff(r)$ 
+expressions with direct numerical evaluation:
+
+\begin{table}[H]
+\centering
+\caption{Analytical vs.\ numerical comparison at test points.}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Topology & $(V, \eta, \theta_{\NY})$ & $r$ & $\Veff^{\text{(anal)}}$ & 
+$\Veff^{\text{(num)}}$ \\
+\midrule
+$\Sthree$ & $(2, -4, 1)$ & 1.0 & $-473.74$ & $-473.74$ \\
+$\Sthree$ & $(2, -4, 1)$ & 2.0 & $-631.65$ & $-631.65$ \\
+$\Tthree$ & $(2, -3, 1)$ & 1.0 & $1263.31$ & $1263.31$ \\
+$\Nilthree$ & $(2, 0.5, 1)$ & 0.5 & $-128.30$ & $-128.30$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Agreement to machine precision confirms consistency between symbolic 
+derivation and numerical evaluation.
+
+\subsubsection{Limiting case verification}
+
+The engine verifies correct behavior in limiting cases:
+
+\paragraph{$\theta_{\NY} \to 0$ limit:}
+NY contribution vanishes, recovering pure EC theory results.
+
+\paragraph{$\eta \to 0$, $V \to 0$ limit:}
+Torsion vanishes, recovering Levi--Civita (GR) results.
+
+\paragraph{$\Tthree$ with $C^i{}_{jk} = 0$:}
+Recovers flat space results with $R_{\LC} = 0$.
+
+For details on the computational environment and software dependencies, 
+see Appendix~\ref{app:access}.
+

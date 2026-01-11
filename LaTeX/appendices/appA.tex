@@ -1,0 +1,227 @@
+%==============================================================================
+% Appendix A: Theoretical Details
+%==============================================================================
+\section{Theoretical Details}
+\label{app:theory}
+
+This appendix describes the detailed derivation process of calculations 
+summarized in Sec.~\ref{sec:setup}.
+
+%------------------------------------------------------------------------------
+\subsection{Index Conventions}
+\label{app:index_conventions}
+
+\begin{itemize}
+  \item \textbf{Internal indices (frame indices)}: $a, b, c, \ldots = 0, 1, 2, 3$
+  \item \textbf{Spatial internal indices}: $i, j, k, \ldots = 0, 1, 2$
+  \item \textbf{Frame metric}: $\eta_{ab} = \mathrm{diag}(+1, +1, +1, +1)$ (Euclidean)
+\end{itemize}
+
+%------------------------------------------------------------------------------
+\subsection{Derivation of Levi--Civita Connection}
+\label{app:LC_connection}
+
+For orthonormal left-invariant frames $\{e^a\}$, the Levi-Civita connection 
+is computed via the generalized Koszul formula:
+\begin{equation}
+  \Gamma^{a}{}_{bc} = \frac{1}{2}\left( C^{a}{}_{bc} + C_{cb}{}^a - C_{b}{}^a{}_c \right).
+  \label{eq:koszul}
+\end{equation}
+
+\subsubsection{$\Sthree$ (SU(2))}
+
+With $C^{i}{}_{jk} = \frac{4}{r}\varepsilon_{ijk}$, the nonzero components are:
+\begin{equation}
+  \Gamma^{0}{}_{12} = -\Gamma^{0}{}_{21} = \frac{2}{r}, \quad
+  \Gamma^{1}{}_{20} = -\Gamma^{1}{}_{02} = \frac{2}{r}, \quad
+  \Gamma^{2}{}_{01} = -\Gamma^{2}{}_{10} = \frac{2}{r}.
+\end{equation}
+
+\subsubsection{$\Tthree$ (Abelian)}
+
+With $C^{i}{}_{jk} = 0$: $\Gamma^{a}{}_{bc} = 0$ for all components.
+
+\subsubsection{$\Nilthree$ (Heisenberg)}
+
+With $C^{2}{}_{01} = -1/r$, $C^{2}{}_{10} = +1/r$, the nonzero components are:
+\begin{equation}
+  \Gamma^{0}{}_{12} = \Gamma^{0}{}_{21} = \frac{1}{2r}, \quad
+  \Gamma^{1}{}_{02} = \Gamma^{1}{}_{20} = -\frac{1}{2r}, \quad
+  \Gamma^{2}{}_{01} = -\Gamma^{2}{}_{10} = -\frac{1}{2r}.
+\end{equation}
+
+%------------------------------------------------------------------------------
+\subsection{Calculation of Contortion}
+\label{app:contortion}
+
+Following Hehl et al.\ convention:
+\begin{equation}
+  K_{abc} = \frac{1}{2}\left( T_{abc} + T_{bca} - T_{cab} \right).
+\end{equation}
+
+\subsubsection{T1 component (axial)}
+
+For $T^{(1)}{}_{abc} = \frac{2\eta}{r}\varepsilon_{abc}$ (totally antisymmetric):
+\begin{equation}
+  K^{(1)}{}_{abc} = \frac{3\eta}{r}\varepsilon_{abc}.
+\end{equation}
+
+\subsubsection{T2 component (vector trace)}
+
+For $T^{(2)}{}_{abc} = \frac{1}{3}(\eta_{ac}V_b - \eta_{ab}V_c)$ with $V_\mu = (0,0,0,V)$:
+\begin{equation}
+  K^{(2)}{}_{abc} = \frac{1}{6}\left( 2\eta_{ac}V_b - \eta_{ab}V_c - \eta_{bc}V_a \right).
+\end{equation}
+
+%------------------------------------------------------------------------------
+\subsection{Effective Potential Formulas}
+\label{app:Veff_formulas}
+
+\subsubsection{$\Sthree \times \Sone$}
+
+Scalar quantities:
+\begin{align}
+  R &= \frac{2(-V^2 r^2 - 9\eta^2 - 72\eta - 108)}{3r^2}, \\
+  N_{\TT} &= -\frac{4V\eta}{r}, \quad 
+  N_{\REE} = -\frac{2V(\eta + 4)}{r}, \quad 
+  N_{\FULL} = \frac{2V(4 - \eta)}{r}.
+\end{align}
+
+Effective potential (FULL):
+\begin{equation}
+  \Veff^{(\Sthree)}(r) = \frac{2\pi^2 L}{3\kappa^2} r 
+  \left[ V^2 r^2 + 6V\kappa^2\theta_{\NY}(\eta - 4)r + 9(\eta + 4)^2 - 36 \right].
+\end{equation}
+
+\subsubsection{$\Tthree \times \Sone$}
+
+With isotropic setting $R_1 = R_2 = R_3 = r$:
+\begin{align}
+  R &= -\frac{2V^2}{3} - \frac{6\eta^2}{r^2}, \\
+  N_{\FULL} &= N_{\REE} = -\frac{2V\eta}{r}, \quad N_{\TT} = -\frac{4V\eta}{r}.
+\end{align}
+
+Effective potential (FULL):
+\begin{equation}
+  \Veff^{(\Tthree)}(r) = \frac{16\pi^4 L}{3\kappa^2} r 
+  \left[ V^2 r^2 + 6V\eta\kappa^2\theta_{\NY} r + 9\eta^2 \right].
+\end{equation}
+
+\subsubsection{$\Nilthree \times \Sone$}
+
+Scalar quantities:
+\begin{align}
+  R &= \frac{-4V^2 r^2 - 36\eta^2 + 24\eta + 9}{6r^2}, \\
+  N_{\TT} &= -\frac{4V\eta}{r}, \quad 
+  N_{\REE} = \frac{2V(1 - 3\eta)}{3r}, \quad 
+  N_{\FULL} = -\frac{2V(3\eta + 1)}{3r}.
+\end{align}
+
+Effective potential (FULL):
+\begin{equation}
+  \Veff^{(\Nilthree)}(r) = \frac{4\pi^4 L}{3\kappa^2} r 
+  \left[ 4V^2 r^2 + 8V\kappa^2\theta_{\NY}(3\eta + 1)r + 36\left(\eta - \frac{1}{3}\right)^2 - 13 \right].
+\end{equation}
+
+%------------------------------------------------------------------------------
+\subsection{Coefficient Summary}
+\label{app:coefficients}
+
+Writing $\Veff(r) = \mathcal{N} \cdot r \cdot (Ar^2 + Br + C)$:
+
+\begin{table}[H]
+\centering
+\caption{Coefficient $B$ (with $\kappa = 1$).}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & FULL & TT & REE \\
+\midrule
+$\Sthree$ & $6V\theta_{\NY}(\eta - 4)$ & $12V\eta\theta_{\NY}$ & $6V\theta_{\NY}(\eta + 4)$ \\
+$\Tthree$ & $6V\eta\theta_{\NY}$ & $12V\eta\theta_{\NY}$ & $6V\eta\theta_{\NY}$ \\
+$\Nilthree$ & $8V\theta_{\NY}(3\eta + 1)$ & $48V\eta\theta_{\NY}$ & $8V\theta_{\NY}(3\eta - 1)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Coefficient $C$ (topology-dependent, variant-independent).}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Topology & $C(\eta)$ & $C = 0$ roots \\
+\midrule
+$\Sthree$ & $9(\eta + 4)^2 - 36$ & $\eta = -2, -6$ \\
+$\Tthree$ & $9\eta^2$ & $\eta = 0$ \\
+$\Nilthree$ & $36(\eta - 1/3)^2 - 13$ & $\eta \approx -0.27, 0.94$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%------------------------------------------------------------------------------
+\subsection{Analytical Derivation of Critical Conditions}
+\label{app:critical_conditions}
+
+\subsubsection{Minimum existence condition}
+
+For $\Veff(r) = \mathcal{N} r(Ar^2 + Br + C)$ with $A > 0$, the condition 
+$\dd\Veff/\dd r = 0$ gives:
+\begin{equation}
+  3Ar^2 + 2Br + C = 0.
+\end{equation}
+
+The solutions are:
+\begin{equation}
+  r_\pm = \frac{-B \pm \sqrt{B^2 - 3AC}}{3A}.
+  \label{eq:r_critical}
+\end{equation}
+
+Positive real solutions exist when:
+\begin{equation}
+  B < 0 \quad \text{and} \quad B^2 > 3AC.
+\end{equation}
+
+\subsubsection{Type I/II boundary}
+
+The sign of $\dd\Veff/\dd r|_{r \to 0^+}$ is determined by $C$:
+\begin{equation}
+  C > 0 \Rightarrow \text{Type I}, \quad C < 0 \Rightarrow \text{Type II}.
+\end{equation}
+
+For $\Sthree$: $C = 0$ at $\eta = -2, -6$ (I/II boundaries).
+
+\subsubsection{$\theta_{\NY}$ threshold for $\Tthree$}
+
+For $\Tthree$ with $C = 9\eta^2 > 0$ (for $\eta \neq 0$), the condition 
+$B^2 > 3AC$ requires:
+\begin{equation}
+  36V^2\eta^2\theta_{\NY}^2 > 27V^2\eta^2 \quad \Rightarrow \quad 
+  \theta_{\NY} > \frac{\sqrt{3}}{2} \approx 0.87.
+\end{equation}
+
+%------------------------------------------------------------------------------
+\subsection{Sign Conventions}
+\label{app:sign_conventions}
+
+The sign conventions adopted throughout this paper are summarized below:
+
+\begin{table}[H]
+\centering
+\caption{Sign conventions used in this work.}
+\label{tab:sign_conventions}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Quantity & Convention & Reference \\
+\midrule
+Frame metric & $\eta_{ab} = \mathrm{diag}(+1,+1,+1,+1)$ & Euclidean signature \\
+Levi--Civita symbol & $\varepsilon_{0123} = +1$ & Standard \\
+Structure constants & $\dd\sigma^i = -\frac{1}{2}C^i{}_{jk}\sigma^j \wedge \sigma^k$ & Maurer-Cartan \\
+Contortion & $K_{abc} = \frac{1}{2}(T_{abc} + T_{bca} - T_{cab})$ & Hehl et al.\ (1976) \\
+Riemann tensor & $R^{a}{}_{bcd} = \partial_c\Gamma^{a}{}_{bd} - \partial_d\Gamma^{a}{}_{bc}$ & Antisymmetric in \\
+ & $\quad + \Gamma^{a}{}_{ec}\Gamma^{e}{}_{bd} - \Gamma^{a}{}_{ed}\Gamma^{e}{}_{bc}$ & 3rd \& 4th indices \\
+EC connection & $\Gamma^{a}_{\mathrm{EC}} = \Gamma^{a}_{\mathrm{LC}} + K^a$ & Standard definition \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The contortion sign pattern is $(+1, +1, -1)$, consistent with Hehl et al.\ (1976) 
+and the computational engine (DPPUv2 Engine Core v3) used in this work.

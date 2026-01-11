@@ -1,0 +1,139 @@
+%==============================================================================
+% Section 1: Introduction
+%==============================================================================
+\section{Introduction}
+\label{sec:introduction}
+
+%------------------------------------------------------------------------------
+\subsection{Background: Correspondence Between Geometric Input and Phase Structure of Effective Potentials}
+\label{sec:background}
+
+In theories where the coframe and connection are treated as independent variables, 
+curvature and torsion are introduced on equal footing as geometric degrees of freedom. 
+In particular, Einstein--Cartan (EC) theory and its extensions allow torsion and 
+topological densities to appear in the action, potentially making the structure 
+of the reduced effective theory sensitive to geometric input.
+
+Meanwhile, minisuperspace reduction based on symmetry assumptions provides a 
+powerful procedure for mapping infinite-dimensional field theories to 
+finite-dimensional systems. However, even within the same reduction framework, 
+how differences in spatial topology or structure constants of homogeneous spaces 
+affect the shape of the effective potential $\Veff(r)$---including the presence 
+or absence of minima and barriers, and transitions to rolling behavior---has not 
+been systematically organized.
+
+For this reason, it is important to classify and visualize, in a reproducible manner, 
+the correspondence between geometric input and the phase structure of the reduced 
+effective potential. This work organizes this correspondence using representative 
+homogeneous spaces as test beds, presenting the results as phase diagrams and 
+representative points.
+
+%------------------------------------------------------------------------------
+\subsection{Our Approach: Treating EC+NY as a ``Phase Classification Problem for Effective Potentials''}
+\label{sec:approach}
+
+In this work, we take EC+NY (Einstein--Cartan gravity with the Nieh--Yan term) as 
+our object of study and classify the phases of the effective potential in a 
+Euclidean-signature minisuperspace from the perspective of topology dependence. 
+In EC theory, torsion is naturally introduced as geometry, and while the NY density 
+(a 4-form) can be written as an exact derivative, it is geometrically defined 
+through the coframe and torsion. Therefore, by comparing how the effective potential 
+changes when varying the spatial topology under the same minisuperspace ansatz, 
+we diagnose the phase structure provided by EC+NY from the viewpoint of geometric input.
+
+Although EC+NY originates as a gravitational theory, the focus of this paper is 
+on systematically organizing the influence of geometric input (topology, structure 
+constants, torsion, and NY contributions) on the phase structure after reduction.
+
+%------------------------------------------------------------------------------
+\subsection{Scope: Three Homogeneous Spaces as Test Beds}
+\label{sec:scope}
+
+To enable comparison from the perspective of topology dependence, we adopt spatial 
+sections that possess homogeneity and can be uniformly described using left-invariant 
+coframes. Specifically, as three representative examples with contrasting properties 
+in structure constants and curvature, we adopt:
+\begin{enumerate}[label=(\roman*)]
+  \item $\Sthree$ (SU(2); isotropic positive curvature),
+  \item $\Tthree$ (flat),
+  \item $\Nilthree$ (compact quotient of the Heisenberg group; anisotropic geometry).
+\end{enumerate}
+These serve as a minimal set for comparing how ``geometric data (structure constants, 
+curvature characteristics)'' affect the phase structure of the effective potential 
+under the same reduction procedure.
+
+%------------------------------------------------------------------------------
+\subsection{Deliverables: Type Classification, Critical Conditions, Phase Diagrams, and Representative Points}
+\label{sec:deliverables}
+
+The central output of this work is an operational classification based on the 
+shape of $\Veff(r)$. Specifically, we introduce three types:
+\begin{itemize}
+  \item[(I)] Metastable well with barrier,
+  \item[(II)] Barrier-free rolling,
+  \item[(III)] Unstable/boundary-attached,
+\end{itemize}
+and visualize how these are arranged in parameter space for each topology as 
+phase diagrams. Furthermore, we identify critical conditions corresponding to 
+well formation/disappearance and barrier collapse through numerical scanning, 
+and organize their geometric dependence.
+
+For the NY term, we take the complete form (FULL) as the primary object, while 
+also using TT and REE as diagnostic comparisons to disentangle the contributions 
+(definitions in Sec.~\ref{sec:setup}). Note that TT/REE are not proposed as 
+independent fundamental theories but serve as auxiliary comparisons for 
+understanding the effects of FULL.
+
+Through this approach, we provide a reproducible diagnostic pipeline that returns 
+the phase (Type I/II/III) and critical boundaries of $\Veff(r)$ for given geometric 
+input (topology, parameters). The resulting phase diagrams, representative points, 
+and critical conditions can be used as foundational data for explicitly incorporating 
+topology dependence in EC+NY minisuperspace analysis.
+
+%------------------------------------------------------------------------------
+\subsection{Paper Organization}
+\label{sec:organization}
+
+The organization of this paper is as follows. Section~\ref{sec:setup} summarizes 
+the formulation of EC+NY and minisuperspace reduction, as well as the definitions 
+and numerical criteria for Type I/II/III. Section~\ref{sec:reductions} presents 
+the reduction results for $\Sthree$, $\Tthree$, and $\Nilthree$, showing the form 
+of the effective potential. Section~\ref{sec:numerical} presents numerical scanning 
+results as phase diagrams. Section~\ref{sec:mechanisms} interprets the phase 
+diagram features based on the analytical structure of the effective potential. 
+Section~\ref{sec:representative} summarizes representative points and stability 
+metrics (minimum position, barrier height, etc.). Section~\ref{sec:interpretation} 
+discusses geometric interpretation and the utility of this framework. 
+Section~\ref{sec:conclusions} presents conclusions and future prospects.
+
+%------------------------------------------------------------------------------
+\subsection{Scope and Limitations}
+\label{sec:limitations}
+
+This work focuses on phase classification of effective potentials based on 
+minisuperspace reduction. The following items are outside the scope of this paper 
+and are discussed as future research directions in Sec.~\ref{sec:conclusions}.
+
+\paragraph{Dynamical evolution:}
+We do not treat time evolution including Friedmann-type constraint equations, 
+nor quantitative calculations of tunneling rates via WKB approximation. 
+The distinction between Type I/II is an operational classification based on 
+the shape of $\Veff(r)$ and does not provide actual transition probabilities.
+
+\paragraph{Quantum corrections:}
+We do not consider quantum corrections at one-loop or higher, nor renormalization 
+group running of coupling constants. The results of this work are based on the 
+classical (tree-level) effective potential.
+
+\paragraph{Matter field coupling:}
+We do not include interactions with matter fields such as spinor or scalar fields. 
+We focus on the geometric structure of pure EC+NY theory.
+
+\paragraph{Inhomogeneous perturbations:}
+We do not analyze inhomogeneous fluctuations beyond the minisuperspace ansatz 
+(spatial homogeneity). Consequently, our results are limited to the homogeneous sector.
+
+\paragraph{Analytic continuation to Lorentzian signature:}
+This work performs calculations in Euclidean signature $(+,+,+,+)$. 
+Wick rotation to Lorentzian signature $(-,+,+,+)$ and interpretation in 
+real-time cosmology are not discussed in detail in this paper.

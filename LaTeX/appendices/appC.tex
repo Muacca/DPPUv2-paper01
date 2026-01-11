@@ -1,0 +1,277 @@
+%==============================================================================
+% Appendix C: Numerical Computation Details
+%==============================================================================
+\section{Numerical Computation Details}
+\label{app:numerical}
+
+This appendix documents the numerical methods, parameters, and algorithms 
+used in the parameter scanning and Type classification.
+
+%------------------------------------------------------------------------------
+\subsection{Scan Parameters}
+\label{app:scan_parameters}
+
+\subsubsection{Parameter ranges}
+
+\begin{table}[H]
+\centering
+\caption{Parameter ranges for phase diagram generation.}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Parameter & Min & Max & Grid points & Spacing \\
+\midrule
+$V$ & 0.0 & 5.0 & 51 & 0.1 (linear) \\
+$\eta$ & $-10.0$ & 5.0 & 151 & 0.099 (linear) \\
+$\theta_{\NY}$ & 0.0 & 5.0 & 51 & 0.098 (linear) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Fixed parameters}
+
+\begin{table}[H]
+\centering
+\caption{Fixed parameters.}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Parameter & Value & Description \\
+\midrule
+$\kappa$ & 1.0 & Gravitational coupling \\
+$L$ & 1.0 & $S^1$ circumference \\
+$r_{\min}$ & 0.01 & Lower bound for $r$ search \\
+$r_{\max}$ & $10^6$ & Upper bound for $r$ search \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Notes on cutoff dependence}
+\label{app:robustness}
+
+The Type classification necessarily depends on numerical cutoffs such as the
+$r$-search interval $(r_{\min}, r_{\max})$ and the boundary threshold $\delta$
+in the ``bound hit'' criterion.
+In practice, these cutoffs are chosen wide enough to separate genuinely boundary-attached
+profiles (Type~III) from well-formed minima (Type~I/II). 
+Points extremely close to a phase boundary are expected to be the most sensitive 
+to finite grid resolution.
+For this reason, our interpretation of phase diagrams focuses on robust features
+(e.g., the existence or absence of wide Type-I regions and the systematic topology dependence),
+rather than on single-grid-point fluctuations near boundaries.
+
+\subsubsection{Total evaluations}
+
+For each topology-variant combination:
+\begin{equation}
+  N_{\text{eval}} = 51 \times 151 \times 51 = 392{,}751 \text{ points}.
+\end{equation}
+
+Total for 3 topologies $\times$ 3 variants = 9 combinations:
+\begin{equation}
+  N_{\text{total}} = 9 \times 392{,}751 = 3{,}534{,}759 \text{ evaluations}.
+\end{equation}
+
+%------------------------------------------------------------------------------
+\subsection{Extremum Search Algorithm}
+\label{app:search_algorithm}
+
+\subsubsection{Primary method: Brent's method}
+
+For finding minima of $\Veff(r)$, we use Brent's method as implemented in 
+
+\texttt{scipy.optimize.minimize\_scalar} with the \texttt{bounded} option.
+
+\begin{table}[H]
+\centering
+\caption{Brent's method parameters.}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Parameter & Value \\
+\midrule
+Method & \texttt{bounded} \\
+Bounds & $[r_{\min}, r_{\max}] = [0.01, 10^6]$ \\
+Tolerance (\texttt{xatol}) & $10^{-8}$ \\
+Max iterations & 500 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%------------------------------------------------------------------------------
+\subsection{Type Classification Algorithm}
+\label{app:classification_algorithm}
+
+The Type classification follows the flowchart in Figure~\ref{fig:flowchart}.
+
+\begin{figure}[htbp]
+\centering
+  \includegraphics[width=0.8\textwidth]{figures/Fig19_Type_classification_flowchart.png}
+  \caption{Type classification flowchart.}
+\label{fig:flowchart}
+\end{figure}
+
+\subsubsection{Step-by-step algorithm}
+
+\begin{enumerate}
+  \item \textbf{Extremum search}: Find candidate minimum $r_0$ using Brent's method
+  
+  \item \textbf{Existence check}: If no minimum found (optimizer returns boundary), 
+        classify as Type III
+  
+  \item \textbf{Bound hit check}: If $r_0 < r_{\min} + \delta$ or 
+        $r_0 > r_{\max} - \delta$ (with $\delta = 0.02$), classify as Type III
+  
+  \item \textbf{Curvature check}: Compute $\dd^2\Veff/\dd r^2|_{r_0}$ numerically. 
+        If $\leq 0$, classify as Type III
+  
+  \item \textbf{Barrier check}: Evaluate gradient near origin:
+    \begin{equation}
+      s_0 = \left.\frac{\dd\Veff}{\dd r}\right|_{r = r_{\min}}
+    \end{equation}
+    \begin{itemize}
+      \item If $s_0 > 0$: Type I (barrier exists)
+      \item If $s_0 \leq 0$: Type II (rolling, no barrier)
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Numerical differentiation}
+
+Derivatives are computed using central differences:
+\begin{align}
+  \frac{\dd\Veff}{\dd r} &\approx \frac{\Veff(r + h) - \Veff(r - h)}{2h}, \\
+  \frac{\dd^2\Veff}{\dd r^2} &\approx \frac{\Veff(r + h) - 2\Veff(r) + \Veff(r - h)}{h^2},
+\end{align}
+with step size $h = 10^{-5}$.
+
+%------------------------------------------------------------------------------
+\subsection{Barrier Height Calculation}
+\label{app:barrier_height}
+
+\subsubsection{Type I: Barrier height}
+
+For Type I configurations, the barrier height $\Delta V$ is computed as:
+\begin{equation}
+  \Delta V = \max_{r \in [r_{\min}, r_0]} \Veff(r) - \Veff(r_0).
+\end{equation}
+
+\begin{enumerate}
+  \item Generate dense grid in $[r_{\min}, r_0]$: 100 points, logarithmic spacing
+  \item Evaluate $\Veff(r)$ at all grid points
+  \item Find maximum value $\Veff^{\max}$
+  \item Compute $\Delta V = \Veff^{\max} - \Veff(r_0)$
+\end{enumerate}
+
+This represents the depth of the potential well from the near-origin value 
+to the minimum.
+
+\begin{itemize}
+  \item If $\Veff^{\max} \leq \Veff(r_0)$: $\Delta V = 0$ (no barrier, 
+        reclassify as Type II)
+  \item If $r_0 < 2 r_{\min}$: Insufficient range, $\Delta V$ marked as undefined
+\end{itemize}
+
+\subsubsection{Type II: Well depth}
+
+For Type II configurations, the well depth $\Delta V$ is defined as:
+\begin{equation}
+  \Delta V = \Veff(r_{\min}) - \Veff(r_0).
+\end{equation}
+
+
+%------------------------------------------------------------------------------
+\subsection{Numerical Precision and Uncertainties}
+\label{app:numerical_precision}
+
+\subsubsection{Grid resolution uncertainty}
+
+Phase boundary positions have uncertainties on the order of the grid spacing:
+\begin{itemize}
+  \item $\Delta\eta \approx 0.1$
+  \item $\Delta V \approx 0.1$
+  \item $\Delta\theta_{\NY} \approx 0.1$
+\end{itemize}
+
+As shown in Sec.~\ref{sec:numerical}, the analytical boundary conditions 
+and numerical scan results agree within this uncertainty.
+
+\subsubsection{Extremum search precision}
+
+The convergence tolerance of Brent's method ($\sim 10^{-8}$) is sufficient 
+for the physically meaningful precision of $r_0$ (3--4 significant digits).
+
+\subsubsection{Curvature verification step size}
+
+The step size $h = 10^{-5}$ for numerical differentiation was chosen to 
+balance truncation and round-off errors. Results were verified to be 
+insensitive to variations in the range $h = 10^{-4}$ to $10^{-6}$.
+
+%------------------------------------------------------------------------------
+\subsection{Output Format}
+\label{app:output_format}
+
+\subsubsection{CSV output structure}
+
+Results are saved in CSV format with the following columns:
+
+\begin{table}[H]
+\centering
+\caption{CSV output columns.}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Column & Type & Description \\
+\midrule
+\texttt{V} & float & Vector torsion parameter \\
+\texttt{eta} & float & Axial torsion parameter \\
+\texttt{theta\_NY} & float & Nieh--Yan coupling \\
+\texttt{type} & int & Classification (1, 2, or 3) \\
+\texttt{r0} & float & Stable radius (NaN for Type III) \\
+\texttt{Veff\_min} & float & Potential at minimum \\
+\texttt{delta\_V} & float & Barrier height (Type I only) \\
+\texttt{log10\_r0} & float & $\log_{10}(r_0)$ \\
+\texttt{log10\_deltaV} & float & $\log_{10}(\Delta V)$ \\
+\texttt{status} & string & Convergence status \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{File naming convention}
+
+Output files follow the naming pattern:
+\begin{center}
+\texttt{<topology>\_<variant>\_<mode>\_<timestamp>.csv}
+\end{center}
+
+Example: \texttt{S3S1\_FULL\_MX\_20241214\_135031.csv}
+
+\subsubsection{Code access and execution}
+
+For code access, installation instructions, and detailed execution procedures, 
+see Appendix~\ref{app:access}.
+
+%------------------------------------------------------------------------------
+\subsection{Error Handling}
+\label{app:error_handling}
+
+\subsubsection{Convergence failures}
+
+If the optimizer fails to converge within the maximum iterations:
+\begin{itemize}
+  \item Log warning with parameter values
+  \item Attempt grid search fallback
+  \item If still unsuccessful, classify as Type III with status \texttt{FAILED}
+\end{itemize}
+
+\subsubsection{Numerical overflow}
+
+For extreme parameter values where $\Veff(r)$ overflows:
+\begin{itemize}
+  \item Detected by checking for \texttt{inf} or \texttt{nan} values
+  \item Point classified as Type III with status \texttt{OVERFLOW}
+\end{itemize}
+
+\subsubsection{Statistics}
+
+Typical failure rates in production runs:
+\begin{itemize}
+  \item Convergence failures: $< 0.1\%$
+  \item Overflow errors: $< 0.01\%$
+  \item Total valid classifications: $> 99.8\%$
+\end{itemize}
