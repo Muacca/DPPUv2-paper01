@@ -203,11 +203,12 @@ Scan results are provided as CSV files with naming convention:
 Example files included in the repository:
 
 \begin{itemize}
-  \item \texttt{S3S1\_FULL\_MX\_20241214\_135031.csv}
-  \item \texttt{S3S1\_TT\_MX\_20241214\_135031.csv}
-  \item \texttt{S3S1\_REE\_MX\_20241214\_135031.csv}
-  \item \texttt{T3S1\_FULL\_MX\_20241214\_135031.csv}
-  \item (etc., 9 files total)
+  \item \texttt{dppu\_scan\_all\_20260211\_091303.csv}
+  \item \texttt{dppu\_scan\_S3S1\_FULL\_MX\_20260211\_091303.csv}
+  \item \texttt{dppu\_scan\_S3S1\_TT\_MX\_20260211\_091303.csv}
+  \item \texttt{dppu\_scan\_S3S1\_REE\_MX\_20260211\_091303.csv}
+  \item \texttt{dppu\_scan\_T3S1\_FULL\_MX\_20260211\_091303.csv}
+  \item (etc., 10 files total)
 \end{itemize}
 
 \subsubsection{Verification logs}
@@ -215,9 +216,9 @@ Example files included in the repository:
 Log files documenting sanity checks:
 
 \begin{itemize}
-  \item \texttt{S3S1\_*\_20241214\_135031.log}
-  \item \texttt{T3S1\_*\_20241214\_135031.log}
-  \item \texttt{Nil3S1\_*\_20241214\_135031.log}
+  \item \texttt{S3S1\_*\_20260211\_084126.log}
+  \item \texttt{T3S1\_*\_20260211\_084126.log}
+  \item \texttt{Nil3S1\_*\_20260211\_084126.log}
 \end{itemize}
 
 These logs contain:
@@ -274,11 +275,12 @@ v1.0 & 2025-11 & Initial implementation (teleparallel gravity base) \\
 v2.0 & 2025-12 & Migration to Einstein--Cartan framework; $\Sthree \times \Sone$ implementation \\
 v3.0 & 2025-12 & Mode/Variant enumeration; 3-stage Riemann verification; \\
      &         & $\Tthree \times \Sone$ and $\Nilthree \times \Sone$ added \\
+v3.1 & 2026-02 & fix: E4\_7\_riemann\_tensor\_frame\ sign bug; \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-All results in this paper are based on v3.0.
+All results in this paper are based on v3.1.
 
 %------------------------------------------------------------------------------
 \subsection{Citation}
@@ -290,12 +292,11 @@ If you use this code or data in your research, please cite:
 \small
 Muacca, ``Topology-Dependent Phase Classification of Effective Potentials 
 in Einstein--Cartan + Nieh--Yan Minisuperspace,'' 
-arXiv:[to be assigned] (2026).
 \end{quote}
 
 The Zenodo DOI for the code repository is:
 \begin{center}
-\texttt{10.5281/zenodo.[to be assigned]}
+\texttt{10.5281/zenodo.18213677}
 \end{center}
 
 %------------------------------------------------------------------------------

@@ -14,6 +14,8 @@ DPPUv2 Phase 1 provides tools for:
 - Phase diagram generation and visualization
 - Batch execution across all parameter combinations
 
+![Phase diagram example](image/phase_matrix_0010.png "Phase diagram example")
+
 ## Core Scripts
 
 ### Engine and Topology Runners

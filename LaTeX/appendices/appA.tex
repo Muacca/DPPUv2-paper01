@@ -81,16 +81,16 @@ For $T^{(2)}{}_{abc} = \frac{1}{3}(\eta_{ac}V_b - \eta_{ab}V_c)$ with $V_\mu = (
 
 Scalar quantities:
 \begin{align}
-  R &= \frac{2(-V^2 r^2 - 9\eta^2 - 72\eta - 108)}{3r^2}, \\
-  N_{\TT} &= -\frac{4V\eta}{r}, \quad 
-  N_{\REE} = -\frac{2V(\eta + 4)}{r}, \quad 
-  N_{\FULL} = \frac{2V(4 - \eta)}{r}.
+  R &= \frac{2(-V^2 r^2 - 9\eta^2 + 36)}{3r^2}, \\
+  N_{\TT} &= -\frac{4V\eta}{r}, \quad
+  N_{\REE} = -\frac{2V\eta}{r}, \quad
+  N_{\FULL} = -\frac{2V\eta}{r}.
 \end{align}
 
 Effective potential (FULL):
 \begin{equation}
-  \Veff^{(\Sthree)}(r) = \frac{2\pi^2 L}{3\kappa^2} r 
-  \left[ V^2 r^2 + 6V\kappa^2\theta_{\NY}(\eta - 4)r + 9(\eta + 4)^2 - 36 \right].
+  \Veff^{(\Sthree)}(r) = \frac{2\pi^2 L}{3\kappa^2} r
+  \left[ V^2 r^2 + 6V\eta\kappa^2\theta_{\NY} r + 9\eta^2 - 36 \right].
 \end{equation}
 
 \subsubsection{$\Tthree \times \Sone$}
@@ -111,16 +111,16 @@ Effective potential (FULL):
 
 Scalar quantities:
 \begin{align}
-  R &= \frac{-4V^2 r^2 - 36\eta^2 + 24\eta + 9}{6r^2}, \\
-  N_{\TT} &= -\frac{4V\eta}{r}, \quad 
-  N_{\REE} = \frac{2V(1 - 3\eta)}{3r}, \quad 
-  N_{\FULL} = -\frac{2V(3\eta + 1)}{3r}.
+  R &= \frac{-4V^2 r^2 - 36\eta^2 - 3}{6r^2}, \\
+  N_{\TT} &= -\frac{4V\eta}{r}, \quad
+  N_{\REE} = -\frac{2V\eta}{r}, \quad
+  N_{\FULL} = -\frac{2V\eta}{r}.
 \end{align}
 
 Effective potential (FULL):
 \begin{equation}
-  \Veff^{(\Nilthree)}(r) = \frac{4\pi^4 L}{3\kappa^2} r 
-  \left[ 4V^2 r^2 + 8V\kappa^2\theta_{\NY}(3\eta + 1)r + 36\left(\eta - \frac{1}{3}\right)^2 - 13 \right].
+  \Veff^{(\Nilthree)}(r) = \frac{4\pi^4 L}{3\kappa^2} r
+  \left[ 4V^2 r^2 + 24V\eta\kappa^2\theta_{\NY} r + 36\eta^2 + 3 \right].
 \end{equation}
 
 %------------------------------------------------------------------------------
@@ -136,9 +136,9 @@ Writing $\Veff(r) = \mathcal{N} \cdot r \cdot (Ar^2 + Br + C)$:
 \toprule
  & FULL & TT & REE \\
 \midrule
-$\Sthree$ & $6V\theta_{\NY}(\eta - 4)$ & $12V\eta\theta_{\NY}$ & $6V\theta_{\NY}(\eta + 4)$ \\
+$\Sthree$ & $6V\eta\theta_{\NY}$ & $12V\eta\theta_{\NY}$ & $6V\eta\theta_{\NY}$ \\
 $\Tthree$ & $6V\eta\theta_{\NY}$ & $12V\eta\theta_{\NY}$ & $6V\eta\theta_{\NY}$ \\
-$\Nilthree$ & $8V\theta_{\NY}(3\eta + 1)$ & $48V\eta\theta_{\NY}$ & $8V\theta_{\NY}(3\eta - 1)$ \\
+$\Nilthree$ & $24V\eta\theta_{\NY}$ & $48V\eta\theta_{\NY}$ & $24V\eta\theta_{\NY}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -150,9 +150,9 @@ $\Nilthree$ & $8V\theta_{\NY}(3\eta + 1)$ & $48V\eta\theta_{\NY}$ & $8V\theta_{\
 \toprule
 Topology & $C(\eta)$ & $C = 0$ roots \\
 \midrule
-$\Sthree$ & $9(\eta + 4)^2 - 36$ & $\eta = -2, -6$ \\
+$\Sthree$ & $9\eta^2 - 36$ & $\eta = -2, +2$ \\
 $\Tthree$ & $9\eta^2$ & $\eta = 0$ \\
-$\Nilthree$ & $36(\eta - 1/3)^2 - 13$ & $\eta \approx -0.27, 0.94$ \\
+$\Nilthree$ & $36\eta^2 + 3$ & None (always positive) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -187,7 +187,7 @@ The sign of $\dd\Veff/\dd r|_{r \to 0^+}$ is determined by $C$:
   C > 0 \Rightarrow \text{Type I}, \quad C < 0 \Rightarrow \text{Type II}.
 \end{equation}
 
-For $\Sthree$: $C = 0$ at $\eta = -2, -6$ (I/II boundaries).
+For $\Sthree$: $C = 0$ at $\eta = -2, +2$ (I/II boundaries).
 
 \subsubsection{$\theta_{\NY}$ threshold for $\Tthree$}
 

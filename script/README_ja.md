@@ -14,6 +14,8 @@ DPPUv2 Phase 1は以下の機能を提供します：
 - 相図の生成と可視化
 - 全パラメータ組み合わせの一括実行
 
+![相図の例](image/phase_matrix_0010.png "相図の例")
+
 ## コアスクリプト
 
 ### エンジンとトポロジーランナー
@@ -189,10 +191,10 @@ python DPPUv2_visualize_phasemap_v3.py results_data.csv
   - enumベースの型安全なモード管理
   - インフラストラクチャの分離（logger/checkpoint はオプション）
 
-## 著者
+## 作者
 
 Muacca
 
 ## ライセンス
 
-リポジトリ直下のLICENSEファイルを参照してください。
+リポジトリルートのLICENSEファイルを参照してください。

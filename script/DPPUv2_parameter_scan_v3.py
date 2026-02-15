@@ -11,8 +11,12 @@ NY Variants: FULL, TT, REE
 
 Output: CSV files with stability classification (type-I/type-II/type-III)
 
+v3.1
+- fix: E4_7_riemann_tensor_frame sign bug
+
 Author: Muacca
-Date: 2025-12-17
+Version: 3.1
+Date: 2026-02-11
 """
 
 import numpy as np
@@ -42,7 +46,8 @@ R_MAX = 1000000.0
 R_BOUNDARY_THRESHOLD = 0.02  # If r0 < this or > R_MAX - this, consider unstable
 
 # ==============================================================================
-# Potential Functions (from v3 engine logs, 2025-12-14)
+# Potential Functions
+# [Updated 2026-02-11: Riemann tensor bug fix applied - see 20260211_coefficient_comparison_report.md]
 # ==============================================================================
 
 # --- S³×S¹ ---
@@ -50,39 +55,42 @@ R_BOUNDARY_THRESHOLD = 0.02  # If r0 < this or > R_MAX - this, consider unstable
 def V_S3_FULL(r, V_param, eta, theta):
     """
     S³xS¹ with FULL Nieh-Yan (N = TT - Ree)
-    V(r) = 2*pi²*L*r*(V²r² + 6*V*κ²*θ*(η-4)*r + 9η² + 72η + 108) / (3κ²)
+    V(r) = 2*pi²*L*r*(V²r² + 6*V*η*κ²*θ*r + 9η² - 36) / (3κ²)
+    [Updated 2026-02-11: Riemann tensor bug fix applied]
     """
     if r <= 0:
         return 1e50
     term1 = V_param**2 * r**2
-    term2 = 6 * V_param * KAPPA**2 * theta * (eta - 4) * r
-    term3 = 9 * eta**2 + 72 * eta + 108
+    term2 = 6 * V_param * eta * KAPPA**2 * theta * r
+    term3 = 9 * eta**2 - 36
     return (2 * PI**2 * L * r * (term1 + term2 + term3)) / (3 * KAPPA**2)
 
 
 def V_S3_TT(r, V_param, eta, theta):
     """
     S³xS¹ with TT-only Nieh-Yan
-    V(r) = 2*pi²*L*r*(V²r² + 12*V*η*κ²*θ*r + 9η² + 72η + 108) / (3κ²)
+    V(r) = 2*pi²*L*r*(V²r² + 12*V*η*κ²*θ*r + 9η² - 36) / (3κ²)
+    [Updated 2026-02-11: Riemann tensor bug fix applied]
     """
     if r <= 0:
         return 1e50
     term1 = V_param**2 * r**2
     term2 = 12 * V_param * eta * KAPPA**2 * theta * r
-    term3 = 9 * eta**2 + 72 * eta + 108
+    term3 = 9 * eta**2 - 36
     return (2 * PI**2 * L * r * (term1 + term2 + term3)) / (3 * KAPPA**2)
 
 
 def V_S3_REE(r, V_param, eta, theta):
     """
     S³xS¹ with Ree-only Nieh-Yan
-    V(r) = 2*pi²*L*r*(V²r² + 6*V*κ²*θ*(η+4)*r + 9η² + 72η + 108) / (3κ²)
+    V(r) = 2*pi²*L*r*(V²r² + 6*V*η*κ²*θ*r + 9η² - 36) / (3κ²)
+    [Updated 2026-02-11: Riemann tensor bug fix applied]
     """
     if r <= 0:
         return 1e50
     term1 = V_param**2 * r**2
-    term2 = 6 * V_param * KAPPA**2 * theta * (eta + 4) * r
-    term3 = 9 * eta**2 + 72 * eta + 108
+    term2 = 6 * V_param * eta * KAPPA**2 * theta * r
+    term3 = 9 * eta**2 - 36
     return (2 * PI**2 * L * r * (term1 + term2 + term3)) / (3 * KAPPA**2)
 
 
@@ -141,44 +149,42 @@ def V_T3_REE(r, V_param, eta, theta):
 def V_Nil3_FULL(r, V_param, eta, theta):
     """
     Nil³xS¹ with FULL Nieh-Yan
-    V(r) = 4*pi⁴*L*R*(4R²V² + 8*R*V*κ²*θ*(3η+1) + 36η² - 24η - 9) / (3κ²)
+    V(r) = 4*pi⁴*L*R*(4R²V² + 24*R*V*η*κ²*θ + 36η² + 3) / (3κ²)
+    [Updated 2026-02-11: Riemann tensor bug fix applied]
     """
     if r <= 0:
         return 1e50
     term1 = 4 * V_param**2 * r**2
-    term2 = 8 * V_param * KAPPA**2 * theta * (3 * eta + 1) * r
-    term3 = 36 * eta**2 - 24 * eta - 9
+    term2 = 24 * V_param * eta * KAPPA**2 * theta * r
+    term3 = 36 * eta**2 + 3
     return (4 * PI**4 * L * r * (term1 + term2 + term3)) / (3 * KAPPA**2)
 
 
 def V_Nil3_TT(r, V_param, eta, theta):
     """
     Nil³xS¹ with TT-only Nieh-Yan
-    V(r) = 4*pi⁴*L*R*(4R²V² + 48*R*V*η*κ²*θ + 36η² - 24η - 9) / (3κ²)
-    
-    Note: From log, the action was:
-    -4*pi**4*L*R*(-4*R**2*V**2 - 48*R*V*eta*kappa**2*theta_NY - 36*eta**2 + 24*eta + 9)/(3*kappa**2)
-    So V = -S gives:
-    4*pi**4*L*R*(4*R**2*V**2 + 48*R*V*eta*kappa**2*theta_NY + 36*eta**2 - 24*eta - 9)/(3*kappa**2)
+    V(r) = 4*pi⁴*L*R*(4R²V² + 48*R*V*η*κ²*θ + 36η² + 3) / (3κ²)
+    [Updated 2026-02-11: Riemann tensor bug fix applied]
     """
     if r <= 0:
         return 1e50
     term1 = 4 * V_param**2 * r**2
     term2 = 48 * V_param * eta * KAPPA**2 * theta * r
-    term3 = 36 * eta**2 - 24 * eta - 9
+    term3 = 36 * eta**2 + 3
     return (4 * PI**4 * L * r * (term1 + term2 + term3)) / (3 * KAPPA**2)
 
 
 def V_Nil3_REE(r, V_param, eta, theta):
     """
     Nil³xS¹ with Ree-only Nieh-Yan
-    V(r) = 4*pi⁴*L*R*(4R²V² + 8*R*V*κ²*θ*(3η-1) + 36η² - 24η - 9) / (3κ²)
+    V(r) = 4*pi⁴*L*R*(4R²V² + 24*R*V*η*κ²*θ + 36η² + 3) / (3κ²)
+    [Updated 2026-02-11: Riemann tensor bug fix applied]
     """
     if r <= 0:
         return 1e50
     term1 = 4 * V_param**2 * r**2
-    term2 = 8 * V_param * KAPPA**2 * theta * (3 * eta - 1) * r
-    term3 = 36 * eta**2 - 24 * eta - 9
+    term2 = 24 * V_param * eta * KAPPA**2 * theta * r
+    term3 = 36 * eta**2 + 3
     return (4 * PI**4 * L * r * (term1 + term2 + term3)) / (3 * KAPPA**2)
 
 

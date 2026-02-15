@@ -1,0 +1,266 @@
+%==============================================================================
+% Appendix G: Errata and Revision History (v1 → v2)
+%==============================================================================
+\section{Errata and Revision History (v1 $\to$ v2)}
+\label{app:errata}
+
+This appendix documents the corrections made between v1 and v2 of this paper,
+including the origin of the error, its impact on formulas and results,
+and the qualitative changes in physical conclusions.
+
+%------------------------------------------------------------------------------
+\subsection{Origin of the Error}
+\label{app:errata_origin}
+
+A sign error was identified in the Riemann tensor computation within the
+symbolic engine (\texttt{DPPUv2\_engine\_core\_v3.py}).
+
+In the Riemann tensor definition
+\begin{equation}
+  R(X, Y)Z = [\nabla_X, \nabla_Y]Z - \nabla_{[X,Y]}Z,
+\end{equation}
+the commutator term $-\nabla_{[e_c, e_d]} e_b$ requires careful treatment
+of the sign convention for structure constants.
+Under the DPPU convention $[e_c, e_d] = -C^{e}{}_{cd}\, e_e$, we have
+\begin{equation}
+  -\nabla_{[e_c, e_d]} e_b
+  = -\nabla_{(-C^{e}{}_{cd}\, e_e)} e_b
+  = +C^{e}{}_{cd}\, \Gamma^{a}{}_{be}\, e_a.
+\end{equation}
+The v1 code implemented this term with a minus sign ($-C^{e}{}_{cd}\, \Gamma^{a}{}_{be}$),
+effectively applying the overall minus sign twice.
+This bug affects all topologies with nonzero structure constants
+($\Sthree$ and $\Nilthree$) but not $\Tthree$ ($C^{i}{}_{jk} = 0$).
+
+The error was detected during Stage 2D of DPPUv2 development when the
+Weyl scalar $C^2$ was found to be identically zero for $\Nilthree$ and
+squashed $\Sthree$---a result that is geometrically impossible for
+non-conformally flat manifolds.
+The fix corresponds to the code version update v3.0 $\to$ v3.1
+(see App.~\ref{app:version_history}).
+
+%------------------------------------------------------------------------------
+\subsection{Verification of the Fix}
+\label{app:errata_verification}
+
+The corrected code was verified against known analytical results:
+
+\begin{table}[H]
+\centering
+\caption{Verification of key quantities before and after the sign fix.}
+\label{tab:errata_verification}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Quantity & Before fix (v1) & After fix (v2) & Expected \\
+\midrule
+$\Sthree$ Ricci scalar $R_{\LC}$ & $-72/r^2$ & $+24/r^2$ & $+24/r^2$ \\
+Weyl $C^2$ ($\Nilthree$) & $0$ & $\neq 0$ & $\neq 0$ \\
+Weyl $C^2$ (squashed $\Sthree$, $\varepsilon \neq 0$) & $0$ & $\neq 0$ & $\neq 0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All sanity checks described in App.~\ref{app:reproducibility}---metric compatibility,
+Riemann antisymmetry (3-stage), torsion tensor verification, and
+Nieh--Yan density consistency---pass with the corrected code.
+
+%------------------------------------------------------------------------------
+\subsection{Impact on Formulas}
+\label{app:errata_formulas}
+
+The effective potential has the general form
+$\Veff(r) = N \cdot r \left[ A r^2 + B r + C \right]$,
+where $A = V^2$ (or $4V^2$ for $\Nilthree$), $B$ is the torsion-driven
+coefficient proportional to $\theta_{\NY}$, and $C$ is the geometric coefficient
+determined by the topology.
+
+\subsubsection{Nieh--Yan density}
+
+\begin{table}[H]
+\centering
+\caption{Nieh--Yan density $N$ before and after the fix.
+After the fix, all three variants reduce to the same topology-independent form
+$N \propto -V\eta/r$ for each topology.}
+\label{tab:errata_NY}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Topology & Variant & v1 & v2 \\
+\midrule
+\multirow{3}{*}{$\Sthree$}
+  & TT   & $\displaystyle -\frac{4V\eta}{r}$           & $\displaystyle -\frac{4V\eta}{r}$ (unchanged) \\[6pt]
+  & REE  & $\displaystyle -\frac{2V(\eta + 4)}{r}$     & $\displaystyle -\frac{2V\eta}{r}$ \\[6pt]
+  & FULL & $\displaystyle \frac{2V(4 - \eta)}{r}$      & $\displaystyle -\frac{2V\eta}{r}$ \\[6pt]
+\midrule
+\multirow{3}{*}{$\Nilthree$}
+  & TT   & $\displaystyle -\frac{4V\eta}{r}$                    & $\displaystyle -\frac{4V\eta}{r}$ (unchanged) \\[6pt]
+  & REE  & $\displaystyle \frac{2V(1 - 3\eta)}{3r}$             & $\displaystyle -\frac{2V\eta}{r}$ \\[6pt]
+  & FULL & $\displaystyle -\frac{2V(3\eta + 1)}{3r}$            & $\displaystyle -\frac{2V\eta}{r}$ \\[6pt]
+\bottomrule
+\end{tabular}
+\end{table}
+
+A notable consequence is the identity $N_{\FULL} = N_{\REE}$ for all topologies
+in v2. This is not a numerical coincidence but a structural result:
+since $N_{\FULL} = N_{\TT} + N_{\REE}$ and the Levi--Civita Pontryagin density
+$\varepsilon^{abcd} R^{\LC}_{abcd}$ vanishes identically on $M_3 \times \Sone$
+product geometries, we have $N_{\FULL} - N_{\REE} = 0$.
+In v1, the sign error introduced a spurious topology-dependent
+``curvature coupling shift'' (e.g., $\eta + 4$ for $\Sthree$,
+$3\eta + 1$ for $\Nilthree$) that broke this identity.
+
+\subsubsection{Coefficient $B$ (torsion-driven term)}
+
+\begin{table}[H]
+\centering
+\caption{Coefficient $B$ before and after the fix.}
+\label{tab:errata_B}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Topology & Variant & v1 & v2 \\
+\midrule
+\multirow{3}{*}{$\Sthree$}
+  & FULL & $6V\theta_{\NY}(\eta - 4)$   & $6V\eta\theta_{\NY}$ \\
+  & TT   & $12V\eta\theta_{\NY}$        & $12V\eta\theta_{\NY}$ (unchanged) \\
+  & REE  & $6V\theta_{\NY}(\eta + 4)$   & $6V\eta\theta_{\NY}$ \\
+\midrule
+\multirow{3}{*}{$\Nilthree$}
+  & FULL & $8V\theta_{\NY}(3\eta + 1)$  & $24V\eta\theta_{\NY}$ \\
+  & TT   & $48V\eta\theta_{\NY}$        & $48V\eta\theta_{\NY}$ (unchanged) \\
+  & REE  & $8V\theta_{\NY}(3\eta - 1)$  & $24V\eta\theta_{\NY}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In v2, all three variants have $B \propto \eta$ for each topology,
+differing only in a numerical prefactor. In particular,
+$B_{\TT} = 2\, B_{\FULL} = 2\, B_{\REE}$ holds universally.
+
+\subsubsection{Coefficient $C$ (geometric term)}
+
+\begin{table}[H]
+\centering
+\caption{Coefficient $C$ and its $C = 0$ roots (Type I/II boundary) before and after the fix.}
+\label{tab:errata_C}
+\begin{tabular}{@{}lllll@{}}
+\toprule
+Topology & v1 $C$ & v1 roots & v2 $C$ & v2 roots \\
+\midrule
+$\Sthree$   & $9(\eta + 4)^2 - 36$           & $\eta = -2,\; -6$          & $9\eta^2 - 36$  & $\eta = -2,\; +2$ \\
+$\Tthree$   & $9\eta^2$                       & $\eta = 0$                 & $9\eta^2$       & $\eta = 0$ (unchanged) \\
+$\Nilthree$ & $36(\eta - \tfrac{1}{3})^2 - 13$ & $\eta \approx -0.27,\; 0.94$ & $36\eta^2 + 3$  & None ($C > 0$ always) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Ricci scalar}
+
+\begin{table}[H]
+\centering
+\caption{Ricci scalar $R$ before and after the fix.}
+\label{tab:errata_ricci}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Topology & v1 & v2 \\
+\midrule
+$\Sthree$   & $\displaystyle \frac{2(-V^2 r^2 - 9\eta^2 - 72\eta - 108)}{3r^2}$
+            & $\displaystyle \frac{2(-V^2 r^2 - 9\eta^2 + 36)}{3r^2}$ \\[8pt]
+$\Tthree$   & \multicolumn{2}{c}{(unchanged)} \\[4pt]
+$\Nilthree$ & $\displaystyle \frac{-4V^2 r^2 - 36\eta^2 + 24\eta + 9}{6r^2}$
+            & $\displaystyle \frac{-4V^2 r^2 - 36\eta^2 - 3}{6r^2}$ \\[8pt]
+\bottomrule
+\end{tabular}
+\end{table}
+
+%------------------------------------------------------------------------------
+\subsection{Impact on Physical Conclusions}
+\label{app:errata_physics}
+
+The corrections lead to several qualitative changes in the physical
+interpretation presented in this paper.
+
+\subsubsection{Disappearance of curvature coupling in $N$}
+
+In v1, the Nieh--Yan density $N_{\REE}$ contained topology-dependent shifts
+(e.g., $\eta + 4$ for $\Sthree$), interpreted as ``coupling'' between torsion
+and background curvature. In v2, $N_{\REE} = -2V\eta/r$ is
+topology-independent. The apparent curvature coupling was an artifact of
+the sign error; topology dependence enters $\Veff$ solely through the
+geometric coefficient $C$ via the Einstein--Hilbert term.
+
+\subsubsection{Symmetric phase boundaries for $\Sthree$}
+
+The Type I/II boundary (where $C = 0$) shifts from $\eta = -2,\; -6$
+(asymmetric about $\eta = -4$) to $\eta = \pm 2$ (symmetric about $\eta = 0$).
+This restores a natural $\eta \to -\eta$ symmetry at $\theta_{\NY} = 0$,
+which is broken only when torsion ($\theta_{\NY} > 0$) is introduced via
+the $B \propto \eta$ term.
+
+\subsubsection{$\Nilthree$ coefficient $C$ is always positive}
+
+In v1, $C_{\Nilthree}$ had a negative region ($\eta \in (-0.27,\; 0.94)$),
+allowing ``narrow main band'' Type II stability driven purely by geometry.
+In v2, $C_{\Nilthree} = 36\eta^2 + 3 > 0$ for all $\eta$, meaning
+$\Nilthree$ can never achieve geometric-only stability without torsion.
+This is consistent with the physical expectation that negative curvature
+acts as a ``penalty'' for compactification.
+
+\subsubsection{Convergence of construction variants}
+
+In v1, the three NY variants (FULL, TT, REE) had qualitatively different
+$B$ coefficients with different functional forms, leading to distinct stability
+regions. The v1 discussion argued that FULL provided the ``optimal'' (widest)
+stability region due to its intermediate $B$ value.
+
+In v2, FULL and REE are identical ($N_{\FULL} = N_{\REE}$), while TT has
+exactly twice the coefficient ($B_{\TT} = 2 B_{\FULL}$). The distinction
+between variants is now purely quantitative (numerical prefactor), not
+qualitative (functional form). The v1 claim of FULL optimality has been
+revised accordingly.
+
+%------------------------------------------------------------------------------
+\subsection{Summary of Affected Sections and Figures}
+\label{app:errata_sections}
+
+\begin{table}[H]
+\centering
+\caption{Summary of sections and appendices modified in v2.}
+\label{tab:errata_sections}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Section & Content & Nature of change \\
+\midrule
+Sec.~\ref{sec:reductions}  & Topology-specific reductions   & All $\Sthree$ and $\Nilthree$ formulas updated \\
+Sec.~\ref{sec:numerical}   & Phase diagrams and boundaries  & Phase boundary values and tables updated \\
+Sec.~\ref{sec:mechanisms}  & Type transition mechanisms      & Coefficient analysis rewritten \\
+Sec.~\ref{sec:representative} & Representative points        & All $\Sthree$ and $\Nilthree$ points recalculated \\
+Sec.~\ref{sec:interpretation} & Geometric interpretation     & Curvature coupling discussion revised \\
+Sec.~\ref{sec:conclusions} & Conclusions                     & Summary updated to reflect corrected results \\
+App.~\ref{app:theory}      & Theoretical details             & Formulas and coefficient tables corrected \\
+App.~\ref{app:reproducibility} & Verification                & Updated to reflect v3.1 results \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All figures involving $\Sthree$ and $\Nilthree$ (11 out of 18 figures)
+have been regenerated using the corrected engine (v3.1).
+The five $\Tthree$ figures are unchanged.
+The five $\Tthree$ figures were also regenerated using the same engine (v3.1). 
+Each graph has also been revised due to changes in the representative points.
+
+%------------------------------------------------------------------------------
+\subsection{Conclusion}
+\label{app:errata_conclusion}
+
+The sign error in the Riemann tensor calculation affected all formulas involving
+nonzero structure constants ($\Sthree$ and $\Nilthree$), but not $\Tthree$.
+While the correction changes many quantitative results, the overall framework---the
+three-type classification scheme (Type I/II/III), the role of the Nieh--Yan term
+in generating torsion-driven stability, and the systematic topology dependence of
+the effective potential---remains valid.
+
+The most significant qualitative change is the simplification of the Nieh--Yan
+density to a topology-independent form, which reveals a cleaner picture:
+torsion provides a universal stabilization mechanism ($B \propto \eta$),
+while background curvature enters independently through $C$, either lowering
+the barrier ($\Sthree$, positive curvature) or raising it ($\Nilthree$,
+negative curvature).

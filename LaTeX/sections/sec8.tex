@@ -43,8 +43,8 @@ Qualitatively different phase structures were observed for each topology:
 Exhibits the most complex phase structure. For $\theta_{\NY} = 0$, only a 
 band-like Type II region exists, but for $\theta_{\NY} > 0$, Type I regions 
 appear and the stable region expands significantly with increasing $\theta_{\NY}$. 
-Varying $\eta$ from positive to negative produces a re-transition of 
-Type I $\to$ Type II $\to$ Type I.
+Varying $\eta$ from negative to positive produces a transition of 
+Type I $\to$ Type II $\to$ Type III.
 
 \paragraph{$\Tthree \times \Sone$:}
 Exhibits threshold-dependent phase structure. The entire parameter region 
@@ -54,39 +54,37 @@ is broken for $\theta_{\NY} > 0$, with stable regions forming only on the
 $\eta < 0$ side.
 
 \paragraph{$\Nilthree \times \Sone$:}
-Exhibits intermediate complexity. The Type II region is limited to a narrow 
-main band at $\eta \in (-0.3, 1.0)$, and for $\theta_{\NY} > 0$, a separate 
-Type I region appears in the $\eta < 0$ region.
+Exhibits behaviors characteristic of negative curvature. For $\theta_{\NY} = 0$,
+the entire region is Type III (unstable) same as $\Tthree$.
+For $\theta_{\NY} > 0$, Type I regions appear in $\eta < 0$, but stability is
+inhibited near the origin ("leakage" of Type III), This residual instability
+suggests a negative curvature-related suppression of stabilization.
 
 \subsubsection{Geometric origin of phase structure}
 
-The following geometric factors were identified as origins of topology dependence:
+The phase structure is determined by the competition between the geometric coefficient 
+$C$ and the torsion coefficient $B$.
 
-\paragraph{Coupling with background curvature:}
-Background Ricci scalar $R_{\LC}$ affects the effective potential through the 
-$N_{\REE}$ component of the NY density. $\Sthree$ (positive curvature) and 
-$\Nilthree$ (negative curvature) have continuous $\theta_{\NY}$ sensitivity 
-due to curvature coupling. $\Tthree$ (zero curvature) lacks curvature coupling 
-and shows threshold-type response (rapid activation at $\theta_{\NY} > 0.87$).
+\paragraph{Decisive Role of Spatial Curvature:}
+The spatial curvature determines the baseline of $C$:
+\begin{itemize}
+  \item $\Sthree$ (Positive Curvature): Contributes $-36$ to $C$, allowing $C < 0$ and 
+        geometric stability (Type II) even without torsion.
+  \item $\Nilthree$ (Negative Curvature): Contributes $+3$ to $C$, enforcing $C > 0$ 
+        and inhibiting stability near the origin ("negative curvature penalty").
+  \item $\Tthree$ (Zero Curvature): $C \ge 0$, stability is strictly torsion-driven.
+\end{itemize}
 
-\paragraph{Symmetry breaking:}
-$\eta \to -\eta$ symmetry is preserved for all topologies when $\theta_{\NY} = 0$ 
-but broken for $\theta_{\NY} > 0$. For $\Sthree$ and $\Nilthree$, curvature 
-coupling terms are the origin; for $\Tthree$, the projection of the NY term 
-onto the isotropic volume mode is the origin of symmetry breaking.
+\paragraph{Symmetry Breaking:}
+$\eta \to -\eta$ symmetry is broken for all topologies when $\theta_{\NY} > 0$ 
+due to the linear dependence $B \propto \eta$. Stability is generally favored 
+in the $\eta < 0$ region where $B$ contributes negatively to the potential.
 
-\paragraph{Complexity of structure constants:}
-The more complex the structure constants of the Lie algebra (more nonzero 
-components, higher symmetry), the more complex the phase structure tends to be.
+\subsubsection{Uniformity of Construction Variants}
 
-\subsubsection{Elucidation of FULL's role through TT/REE diagnosis}
-
-By decomposing the NY density into $N_{\TT}$ (torsion-torsion) and $N_{\REE}$ 
-(Riemann-torsion), we diagnosed the role of each contribution. FULL has the 
-widest stable region in $\Sthree$ because $N_{\TT}$ and $N_{\REE}$ ``compete 
-with opposite signs,'' maximizing the range of $\eta$ where the $r^2$ term 
-coefficient $B < 0$. For $\Tthree$, the $N_{\REE}$ component degenerates, 
-weakening the NY term effect.
+We found that all three NY variants (FULL, TT, REE) share the same qualitative
+phase structure, driven by the linear dependence $B \propto \eta$.
+This suggest that the stabilization mechanism is robust in the NY term.
 
 %------------------------------------------------------------------------------
 \subsection{Limitations of This Work}

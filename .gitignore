@@ -247,9 +247,6 @@ latex.out/
 # Latexmk
 *.fdb_latexmk
 
-# LuaTeX
-*.log
-
 # Listings
 *.lol
 
