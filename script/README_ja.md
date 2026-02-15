@@ -14,7 +14,7 @@ DPPUv2 Phase 1は以下の機能を提供します：
 - 相図の生成と可視化
 - 全パラメータ組み合わせの一括実行
 
-![相図の例](image/phase_matrix_0010.png "相図の例")
+![相図の例](../LaTeX/figures/fig13_phase_matrix_08to09.png "相図の例")
 
 ## コアスクリプト
 
@@ -198,3 +198,4 @@ Muacca
 ## ライセンス
 
 リポジトリルートのLICENSEファイルを参照してください。
+
