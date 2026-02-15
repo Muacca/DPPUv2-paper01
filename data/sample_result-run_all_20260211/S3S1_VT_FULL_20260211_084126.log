@@ -1,0 +1,91 @@
+======================================================================
+DPPUv2 Engine Core v3.0
+======================================================================
+Started: 2026-02-11 08:41:29
+
+  ======================================================================
+  EXECUTION CONFIGURATION
+  ======================================================================
+  Mode: VT
+  NY Variant: FULL
+  ======================================================================
+[08:41:29] STEP E4.1: Setup parameters and symbolic variables for S3xS1
+  Mode: VT
+  NY Variant: FULL
+  Topology: S3xS1
+  Basis: Strictly Orthonormal Frame (Anholonomic)
+  Mode VT: Vector-trace-only (T2)
+  [SUCCESS] Setup complete
+  Duration: 0.01s
+[08:41:29] STEP E4.2: Define Frame Metric, Volume, and Structure Constants for S3xS1
+  Setting up Frame Metric and Structure Constants...
+  [SUCCESS] Metric and structure constants defined
+  Duration: 0.00s
+[08:41:29] STEP E4.3: Compute Frame Connection (Spin Connection) from Structure Constants via GENERAL Koszul Formula
+  Computing Frame Connection Γ^a_bc via general Koszul formula...
+    Gamma^0_{12} = 2/r
+    Gamma^0_{21} = -2/r
+    Gamma^1_{02} = -2/r
+    Gamma^1_{20} = 2/r
+    Gamma^2_{01} = 2/r
+    Gamma^2_{10} = -2/r
+    Metric compatibility (Γ_abc + Γ_bac = 0): VERIFIED
+  [SUCCESS] Frame Connection computed
+  Duration: 0.06s
+[08:41:29] STEP E4.4: Construct Torsion Tensor in Frame Basis
+  Constructing Torsion T_abc (Mode: VT)...
+    Adding T2 (Vector Trace)...
+  [SUCCESS] Torsion constructed
+  Duration: 0.00s
+[08:41:29] STEP E4.5: Compute Contortion K_abc in Frame Basis
+  Computing Contortion...
+  [SUCCESS] Contortion computed
+  Duration: 0.01s
+[08:41:29] STEP E4.6: Compute EC Connection
+  Computing EC Connection...
+  [SUCCESS] EC Connection computed
+  Duration: 0.00s
+[08:41:29] STEP E4.7: Compute Riemann Tensor R^a_bcd in Frame Basis
+  Computing Riemann Tensor...
+  Verifying Riemann antisymmetry (STRICT 3-level mode)...
+  [SUCCESS] Riemann antisymmetry: PASSED (all PROVED_ZERO)
+  [SUCCESS] Riemann Tensor computed and verified
+  Duration: 0.06s
+[08:41:30] STEP E4.8: Compute Ricci Scalar R = R^a_baa
+  Computing Ricci Scalar...
+  Ricci Scalar R = -2*V**2/3 + 24/r**2
+  Duration: 0.02s
+[08:41:30] STEP E4.9: Compute Torsion Scalar T = T_{abc} T^{abc}
+  Computing Torsion Scalar...
+  Torsion Scalar T = 2*V**2/3
+  Duration: 0.01s
+[08:41:30] STEP E4.10: Compute NY density (all 3 variants, then select)
+  Computing Nieh-Yan Density (variant: FULL)...
+    N_TT = 0
+    N_Ree = 0
+    N_full = N_TT - N_Ree = 0
+  >>> ADOPTED_NY: N_full
+  [SUCCESS] NY computation complete (variant: FULL)
+  Duration: 0.00s
+[08:41:30] STEP E4.11: Construct Lagrangian
+  Constructing Lagrangian...
+  L = R/(2*kappa^2) + theta_NY*N
+  Duration: 0.01s
+[08:41:30] STEP E4.12: Integrate Action
+  Integrating Action...
+  Total Action = 2*pi**2*L*r*(-V**2*r**2 + 36)/(3*kappa**2)
+  Duration: 0.01s
+[08:41:30] STEP E4.13: Extract Potential V(r)
+  Extracting Potential...
+  Effective Potential V(r) = -2*pi**2*L*r*(-V**2*r**2 + 36)/(3*kappa**2)
+  Duration: 0.00s
+[08:41:30] STEP E4.14: Analyze Stability
+  Stability Analysis...
+  dV/dr = 2*pi**2*L*(V**2*r**2 - 12)/kappa**2
+  Duration: 0.01s
+[08:41:30] STEP E4.15: Summary
+  Computation complete. Check log for details.
+  Duration: 0.00s
+
+Completed: 2026-02-11 08:41:30
+Total runtime: 0.2s (0.0 min)

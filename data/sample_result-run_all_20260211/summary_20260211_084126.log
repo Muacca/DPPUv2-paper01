@@ -1,0 +1,46 @@
+================================================================================
+DPPUv2 v3.0 All modes and all topologies batch execution
+================================================================================
+start timestamp: 2026年 2月 11日 水曜日 08:41:26    
+output dir: run_results_20260211_084126
+================================================================================
+
+[S3S1] Starting tests...
+  [1] S3S1 AX TT : PASS
+  [2] S3S1 AX REE : PASS
+  [3] S3S1 AX FULL : PASS
+  [4] S3S1 VT TT : PASS
+  [5] S3S1 VT REE : PASS
+  [6] S3S1 VT FULL : PASS
+  [7] S3S1 MX TT : PASS
+  [8] S3S1 MX REE : PASS
+  [9] S3S1 MX FULL : PASS
+[T3S1] Starting tests...
+  [10] T3S1 AX TT : PASS
+  [11] T3S1 AX REE : PASS
+  [12] T3S1 AX FULL : PASS
+  [13] T3S1 VT TT : PASS
+  [14] T3S1 VT REE : PASS
+  [15] T3S1 VT FULL : PASS
+  [16] T3S1 MX TT : PASS
+  [17] T3S1 MX REE : PASS
+  [18] T3S1 MX FULL : PASS
+[Nil3S1] Starting tests...
+  [19] Nil3S1 AX TT : PASS
+  [20] Nil3S1 AX REE : PASS
+  [21] Nil3S1 AX FULL : PASS
+  [22] Nil3S1 VT TT : PASS
+  [23] Nil3S1 VT REE : PASS
+  [24] Nil3S1 VT FULL : PASS
+  [25] Nil3S1 MX TT : PASS
+  [26] Nil3S1 MX REE : PASS
+  [27] Nil3S1 MX FULL : PASS
+================================================================================
+Execution completion summary
+================================================================================
+end timestamp: 2026年 2月 11日 水曜日 08:41:42    
+Total number of cases: 27
+PASSED: 27
+FALIED: 0
+================================================================================
+
