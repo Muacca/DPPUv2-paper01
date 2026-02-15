@@ -14,7 +14,7 @@ DPPUv2 Phase 1 provides tools for:
 - Phase diagram generation and visualization
 - Batch execution across all parameter combinations
 
-![Phase diagram example](../LaTeX/figures/fig13_Phase_matrix_08to09.png "Phase diagram example")
+![Phase diagram example](../LaTeX/figures/fig13_phase_matrix_08to09.png "Phase diagram example")
 
 ## Core Scripts
 
@@ -198,5 +198,6 @@ Muacca
 ## License
 
 See LICENSE file in the repository root.
+
 
 
