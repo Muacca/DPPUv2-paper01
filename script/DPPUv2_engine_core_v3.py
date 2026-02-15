@@ -10,6 +10,9 @@ MAJOR CHANGES from v2.0:
 4. Infrastructure separation: logger/checkpoint are optional
 5. Enum-based mode management
 
+v3.1
+- fix: E4_7_riemann_tensor_frame sign bug
+
 Purpose: Provides computation logic for Einstein-Cartan + Nieh-Yan
          with strict self-checking for paper publication.
 
@@ -19,8 +22,8 @@ References:
 - Nieh & Yan (1982): J. Math. Phys. 23, 373
 
 Author: Muacca
-Version: 3.0
-Date: 2025-12-14
+Version: 3.1
+Date: 2026-02-11
 """
 
 import sys
@@ -744,7 +747,7 @@ class BaseFrameEngine:
                             term += Gamma[a,e,c] * Gamma[e,b,d]
                             term -= Gamma[a,e,d] * Gamma[e,b,c]
                         for e in range(dim):
-                            term -= Gamma[a,b,e] * C[e,c,d]
+                            term += Gamma[a,b,e] * C[e,c,d]
                         
                         if term != 0:
                             Riemann[a,b,c,d] = simplify(term)

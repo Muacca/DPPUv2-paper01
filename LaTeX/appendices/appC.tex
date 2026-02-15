@@ -21,8 +21,8 @@ used in the parameter scanning and Type classification.
 Parameter & Min & Max & Grid points & Spacing \\
 \midrule
 $V$ & 0.0 & 5.0 & 51 & 0.1 (linear) \\
-$\eta$ & $-10.0$ & 5.0 & 151 & 0.099 (linear) \\
-$\theta_{\NY}$ & 0.0 & 5.0 & 51 & 0.098 (linear) \\
+$\eta$ & $-10.0$ & 5.0 & 151 & 0.1 (linear) \\
+$\theta_{\NY}$ & 0.0 & 5.0 & 51 & 0.1 (linear) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -103,7 +103,7 @@ The Type classification follows the flowchart in Figure~\ref{fig:flowchart}.
 
 \begin{figure}[htbp]
 \centering
-  \includegraphics[width=0.8\textwidth]{figures/Fig19_Type_classification_flowchart.png}
+  \includegraphics[width=0.8\textwidth]{figures/Fig20_Type_classification_flowchart.png}
   \caption{Type classification flowchart.}
 \label{fig:flowchart}
 \end{figure}
@@ -236,10 +236,10 @@ Column & Type & Description \\
 
 Output files follow the naming pattern:
 \begin{center}
-\texttt{<topology>\_<variant>\_<mode>\_<timestamp>.csv}
+\texttt{dppu\_scan\_<topology>\_<variant>\_<mode>\_<timestamp>.csv}
 \end{center}
 
-Example: \texttt{S3S1\_FULL\_MX\_20241214\_135031.csv}
+Example: \texttt{dppu\_scan\_S3S1\_FULL\_MX\_20260211\_091303csv}
 
 \subsubsection{Code access and execution}
 

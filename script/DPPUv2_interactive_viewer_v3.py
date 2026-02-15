@@ -330,9 +330,9 @@ class DPPUv2InteractiveViewer:
     SLIDER_ETA_MAX_DEFAULT = 5.0
     
     # Potential Plot Range - Slider Limits
-    SLIDER_R_MAX_MIN = 1  # log scale (10^1)
+    SLIDER_R_MAX_MIN = -2  # log scale (10^-2)
     SLIDER_R_MAX_MAX = 6  # log scale (10^6)
-    SLIDER_R_MAX_DEFAULT = 100.0
+    SLIDER_R_MAX_DEFAULT = 10.0
     
     SLIDER_VEFF_MIN_MIN = 0  # log scale (10^0)
     SLIDER_VEFF_MIN_MAX = 8  # log scale (10^8)

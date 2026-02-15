@@ -30,7 +30,7 @@ $\Sthree$ & $C^{i}{}_{jk} = (4/r)\varepsilon_{ijk}$ (totally antisym.) &
 $\Tthree$ & $C^{i}{}_{jk} = 0$ (all zero) & Abelian & 
             Threshold-dependent, activates at $\theta_{\NY} > 0.87$ \\
 $\Nilthree$ & $C^{2}{}_{01} = -1/r$, $C^{2}{}_{10} = +1/r$, others 0 & 
-              Heisenberg (nilpotent) & Intermediate, band + separate region \\
+              Heisenberg (nilpotent) & Intermediate, Negative curvature-related suppression \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -41,67 +41,50 @@ complexity of phase structure.
 
 \subsubsection{Role of background curvature}
 
-The background Ricci scalar $R_{\LC}$ from the Levi--Civita connection affects 
-the effective potential through the $N_{\REE}$ component of the NY density.
+The background Ricci scalar $R_{\LC}$ from the Levi--Civita connection affects
+the effective potential through the Einstein--Hilbert term $R/(2\kappa^2)$,
+which determines the geometric coefficient $C$ in each topology.
+(Note that $N_{\REE} = -2V\eta/r$ is topology-independent after the
+torsion reduction, so background curvature enters $\Veff$ solely via
+the Ricci scalar.)
 
-\paragraph{Positive curvature ($\Sthree$): $R_{\LC} = 24/r^2 > 0$}
+\paragraph{Positive curvature ($\Sthree$): Lowers the barrier}
 
-The factor $(\eta + 4)$ appearing in $N_{\REE} = -2V(\eta + 4)/r$ reflects 
-coupling with positive curvature. This factor breaks $\eta \to -\eta$ symmetry 
-and becomes a driving force for forming a wide stable region in the $\eta < 0$ 
-region.
+For $\Sthree$ ($R_{\LC} = +24/r^2$), the positive curvature contributes a negative constant $-36$
+to the geometric coefficient $C = 9\eta^2 - 36$.
+This "lowering" of the barrier allows $C$ to become negative for small $\eta$,
+creating a potential well even without torsion. This is the origin of the
+robust stability of spherical space.
 
-As a physical interpretation, in the positive curvature background, the 
-coupling of the axial component ($\eta$) of torsion with curvature produces 
-an ``effective negative contribution,'' promoting potential well formation.
+\paragraph{Zero curvature ($\Tthree$): Neutral baseline}
 
-\paragraph{Zero curvature ($\Tthree$): $R_{\LC} = 0$}
+For $\Tthree$ ($R_{\LC} = 0$), $C = 9\eta^2 \ge 0$.
+The baseline is neutral. Stability is possible but requires the torsion term $B$
+to actively dig the well, necessitating $\theta_{\NY} > \theta_{crit}$.
 
-Since the background curvature is zero, the curvature coupling term in 
-$N_{\REE}$ vanishes, and $N_{\FULL} = N_{\REE} = -2V\eta/r$. However, with 
-the isotropic setting $R_1 = R_2 = R_3 = r$, this NY term contributes as the 
-$r^2$ coefficient in the effective potential, giving rise to $\theta_{\NY}$ 
-sensitivity.
+\paragraph{Negative curvature ($\Nilthree$): Raises the barrier}
 
-A characteristic of $\Tthree$ is that the coefficient $C = 9\eta^2$ of $r$ 
-is always non-negative. Therefore, Type I appearance requires $\theta_{\NY}$ 
-to exceed a threshold, with ``activation conditions'' being stricter compared 
-to $\Sthree$ or $\Nilthree$.
-
-$\eta \to -\eta$ symmetry is preserved for $\theta_{\NY} = 0$ but broken for 
-$\theta_{\NY} > 0$ due to sign reversal of $B = 6V\eta\kappa^2\theta_{\NY}$. 
-This breaking originates not from curvature coupling but from the projection 
-of the NY term onto the isotropic volume mode.
-
-\paragraph{Negative curvature ($\Nilthree$): $R_{\LC} = -1/(2r^2) < 0$}
-
-The factor $(1 - 3\eta)$ appearing in $N_{\REE} = 2V(1 - 3\eta)/(3r)$ 
-reflects coupling with negative curvature. Compared to the $(\eta + 4)$ of 
-$\Sthree$, the shift is smaller ($+1/3$ vs $+4$), and the symmetry-breaking 
-effect is moderate.
-
-The main band being limited to $\eta \in (-0.27, 0.93)$ originates from 
-$\Nilthree$'s structure constants being nonzero ``in only one direction.'' 
-This anisotropy makes the quadratic coefficient of $C(\eta)$ larger than 
-$\Sthree$'s ($36$ vs $9$), consequently narrowing the range of $\eta$ where 
-$C < 0$.
+For $\Nilthree$ ($R_{\LC} = -1/2r^2$), the negative curvature contributes a positive constant $+3$
+to $C = 36\eta^2 + 3$.
+This "raising" of the barrier makes stabilization harder, specifically forbidding it
+near $\eta=0$ where the torsion term is weak. This "negative curvature-related suppression"
+is a distinct geometric fingerprint.
 
 \subsubsection{Isotropy and anisotropy}
 
-$\Sthree$ (SU(2)) is an isotropic homogeneous space where any two directions 
-can be mapped to each other by group action. On the other hand, $\Nilthree$ 
-(Heisenberg) is anisotropic, with the structure $[E_0, E_1] = (1/R)E_2$ 
+$\Sthree$ (SU(2)) is an isotropic homogeneous space where any two directions
+can be mapped to each other by group action. On the other hand, $\Nilthree$
+(Heisenberg) is anisotropic, with the structure $[E_0, E_1] = (1/R)E_2$
 giving special treatment to the ``$E_2$ direction.''
 
-This anisotropy manifests in the effective potential as follows:
+The anisotropy manifests in the effective potential as follows:
 \begin{itemize}
-  \item $\Sthree$: $C(\eta) = 9(\eta + 4)^2 - 36$ (large $\eta$ shift)
-  \item $\Nilthree$: $C(\eta) = 36(\eta - 1/3)^2 - 13$ (small $\eta$ shift, 
-        large coefficient)
+  \item $\Sthree$: $C(\eta) = 9\eta^2 - 36$ (allows $C < 0$ for $|\eta| < 2$)
+  \item $\Nilthree$: $C(\eta) = 36\eta^2 + 3$ (always positive, larger coefficient)
 \end{itemize}
 
-For anisotropic topologies, the ``allowed range'' of torsion parameters 
-tends to be narrower than in isotropic cases.
+For anisotropic topologies like $\Nilthree$, stable minima require larger
+$\theta_{\NY}$ values to overcome the always-positive $C$ term.
 
 %------------------------------------------------------------------------------
 \subsection{Role of FULL Revealed by Diagnostic Comparison (TT/REE)}
@@ -126,48 +109,70 @@ an odd function of $\eta$.
   N_{\REE} = \frac{1}{4}\varepsilon^{abcd} R_{abcd}
 \end{equation}
 
-This is the contribution of curvature from the EC connection (including torsion) 
-and contains coupling with background curvature. It has different $\eta$ 
-dependence for each topology:
+This is the contribution of curvature from the EC connection (including torsion).
+All three topologies have the same simplified form:
 \begin{itemize}
-  \item $\Sthree$: $N_{\REE} \propto V(\eta + 4)/r$
+  \item $\Sthree$: $N_{\REE} \propto V\eta/r$
   \item $\Tthree$: $N_{\REE} \propto V\eta/r$
-  \item $\Nilthree$: $N_{\REE} \propto V(1 - 3\eta)/r$
+  \item $\Nilthree$: $N_{\REE} \propto V\eta/r$
 \end{itemize}
 
-\subsubsection{Reason why FULL is optimal}
+\subsubsection{Unified form for $B$ }
 
-From the comparison in Figure~\ref{fig:phase_matrix}, FULL was observed to 
-have the widest stable region for $\Sthree$. This is due to the following 
-mechanism:
+The three variants (FULL, TT, REE) have similar $B$ forms. For all topologies:
+\begin{itemize}
+  \item FULL: $B \propto \eta$
+  \item TT: $B \propto 2\eta$
+  \item REE: $B \propto \eta$
+\end{itemize}
 
-The $r^2$ term coefficient in FULL, $B \propto (\eta - 4)$, arises as the 
-``difference'' between TT's $B \propto \eta$ and REE's $B \propto (\eta + 4)$:
+All variants share the same sign condition: $B < 0$ for $\eta < 0$,
+when $\theta_{\NY} > 0$.
+
+The exact derivative structure $N = \dd(e^a \wedgep T_a)$ of the NY term
+still carries geometric information, but the topology-dependent differences
+now appear primarily in the coefficient $C$ rather than in the form of $B$.
+
+\subsubsection{Structural origin of $N_{\FULL} = N_{\REE}$}
+
+All three topologies have $N_{\FULL} = N_{\REE} = -2V\eta/r$.
+This identity is not a numerical coincidence but a structural consequence
+of the $\mathcal{M}_3 \times \Sone$ product geometry and the NY Lagrangian.
+
+Since $N_{\FULL} = N_{\TT} - N_{\REE}$ by definition, the identity
+$N_{\FULL} = N_{\REE}$ is equivalent to $N_{\TT} = 2 N_{\REE}$.
+To see why this holds for all topologies, consider the decomposition of
+$N_{\REE}$:
 \begin{equation}
-  (\eta - 4) = \eta - (\eta + 4) + 2\eta = 2\eta - 4.
+  N_{\REE} = \frac{1}{4}\varepsilon^{abcd} R^{\mathrm{EC}}_{abcd}
+  = \frac{1}{4}\varepsilon^{abcd} R^{\LC}_{abcd}
+  + (\text{contortion-dependent terms}).
 \end{equation}
+In the $\mathcal{M}_3 \times \Sone$ product geometry, the Levi--Civita
+Riemann tensor $R^{\LC}_{abcd}$ is supported entirely on the spatial
+$\mathcal{M}_3$ directions (indices $0,1,2$), with all components
+involving the $\Sone$ direction (index $3$) vanishing. The totally
+antisymmetric tensor $\varepsilon^{abcd}$ in four dimensions, however,
+requires all four distinct indices, forcing one to be the $\Sone$ direction.
+Consequently,
+\begin{equation}
+  \varepsilon^{abcd} R^{\LC}_{abcd} = 0
+  \label{eq:LC_pontryagin_vanish}
+\end{equation}
+identically for all topologies. This eliminates the topology-dependent
+contribution to $N_{\REE}$, leaving only contortion (torsion) terms that
+depend on $(V, \eta)$ but not on the spatial geometry. Since $N_{\TT}$
+is also purely torsional by construction, both components---and hence
+$N_{\FULL}$---are topology-independent.
 
-This combination maximizes the range of $\eta$ where $B < 0$ (the entire 
-region $\eta < 4$).
-
-Physically, $N_{\TT}$ and $N_{\REE}$ ``compete with opposite signs,'' 
-realizing a wide stable region that cannot be achieved individually. 
-This suggests that the exact derivative structure $N = \dd(e^a \wedgep T_a)$ 
-of the NY term carries geometric information different from simple torsion 
-squared terms or curvature terms.
-
-\subsubsection{Degeneracy and threshold effect in $\Tthree$}
-
-For $\Tthree$, $N_{\FULL} = N_{\REE} = -2V\eta/r$, meaning FULL and REE 
-coincide completely. This is because background curvature is zero, causing 
-the curvature-dependent part of $N_{\TT}$ and $N_{\REE}$ to vanish, with 
-their difference becoming a constant multiple.
-
-However, with the isotropic setting, the NY term contributes to the effective 
-potential as the $r^2$ coefficient $B$, so for all 3 variants, Type I appears 
-when $\theta_{\NY}$ exceeds the threshold $> 0.87$. TT has twice the coefficient 
-of FULL/REE, which may slightly shift the threshold, but the qualitative 
-phase boundary structure is similar.
+This result has an important physical implication: the stabilization
+driven by the NY term is a property of the torsion sector alone, with
+topology entering the effective potential exclusively through the
+Einstein--Hilbert (geometric) coefficient $C$. The phase diagrams
+(Figs.~\ref{fig:phase_matrix_04to05}--\ref{fig:phase_matrix_08to09})
+confirm this separation: all three NY variants produce qualitatively
+similar phase boundaries, differing only in the numerical prefactor
+of $B$ ($B_{\TT} = 2 B_{\FULL}$).
 
 %------------------------------------------------------------------------------
 \subsection{Usage as a Reusable Diagnostic Tool}
@@ -206,7 +211,7 @@ Type I or Type II from phase diagrams.
 
 \paragraph{Prediction of critical conditions:}
 Use the analytical boundary conditions derived in Sec.~\ref{sec:mechanisms} 
-(e.g., $\eta = -2, -6$ for $\Sthree$) to predict parameters where Type 
+(e.g., $\eta = 2, -2$ for $\Sthree$) to predict parameters where Type 
 transitions occur.
 
 \paragraph{Evaluation of stability quality:}
