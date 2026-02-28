@@ -14,7 +14,6 @@ DPPUv2 Phase 1 provides tools for:
 - Phase diagram generation and visualization
 - Batch execution across all parameter combinations
 
-![Phase diagram example](../LaTeX/figures/fig13_phase_matrix_08to09.png "Phase diagram example")
 
 ## Core Scripts
 
@@ -72,8 +71,8 @@ See [bin/README.md](bin/README.md) for detailed usage instructions.
 ### `docs/` - Documentation
 
 Technical documentation and conventions:
-- [DPPUv2_engine_core_v3_CONVENTIONS](docs/DPPUv2_engine_core_v3_CONVENTIONS.md) - Engine core conventions and specifications
-- [DPPUv2_SymPy_guideline_v1](docs/DPPUv2_SymPy_guideline_v1.md) - SymPy usage guidelines and best practices
+- [DPPUv2 Engine CONVENTIONS](docs/CONVENTIONS.md) - DPPUv2 Engine conventions and specifications
+- [DPPUv2 SymPy guideline](docs/SymPy_guideline.md) - SymPy usage guidelines and best practices
 
 ### `sample_result/` - Sample run_all/scan execution results
 
@@ -198,6 +197,3 @@ Muacca
 ## License
 
 See LICENSE file in the repository root.
-
-
-

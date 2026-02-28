@@ -7,6 +7,13 @@
 %------------------------------------------------------------------------------
 % Packages
 %------------------------------------------------------------------------------
+
+% Fonts / encoding (helps text extraction)
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage[final]{microtype}
+
 % Math
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{mathtools}
@@ -32,7 +39,12 @@
 \usepackage{setspace}
 \onehalfspacing
 
+% Misc (xcolor should come before hyperref)
+\usepackage{xcolor}
+\usepackage{enumitem}
+
 % References and links
+\definecolor{linkblue}{RGB}{0,0,180}
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 \usepackage{cleveref}
 
@@ -48,10 +60,6 @@
 % section break
 \usepackage{titlesec}
 \newcommand{\sectionbreak}{\clearpage}
-
-% Misc
-\usepackage{enumitem}
-\usepackage{xcolor}
 
 %------------------------------------------------------------------------------
 % Custom commands
@@ -84,13 +92,19 @@ in Einstein--Cartan + Nieh--Yan Minisuperspace}
 
 \author{Muacca}
 
-\date{\today}
+\date{}
 
 %==============================================================================
 \begin{document}
 %==============================================================================
 
 \maketitle
+
+\begin{center}
+Version: v2\\
+First release: 2026-01-11\\
+Revised: 2026-02-15
+\end{center}
 
 %------------------------------------------------------------------------------
 % Abstract

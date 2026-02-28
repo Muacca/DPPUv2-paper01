@@ -14,8 +14,6 @@ DPPUv2 Phase 1は以下の機能を提供します：
 - 相図の生成と可視化
 - 全パラメータ組み合わせの一括実行
 
-![相図の例](../LaTeX/figures/fig13_phase_matrix_08to09.png "相図の例")
-
 ## コアスクリプト
 
 ### エンジンとトポロジーランナー
@@ -72,8 +70,8 @@ DPPUv2 Phase 1は以下の機能を提供します：
 ### `docs/` - ドキュメント
 
 技術ドキュメントと規約：
-- [DPPUv2_engine_core_v3_CONVENTIONS](docs/DPPUv2_engine_core_v3_CONVENTIONS_ja.md) - エンジンコアの規約と仕様
-- [DPPUv2_SymPy_guideline_v1](docs/DPPUv2_SymPy_guideline_v1_ja.md) - SymPy使用ガイドラインとベストプラクティス
+- [DPPUv2 Engine CONVENTIONS](docs/CONVENTIONS_ja.md) - DPPUv2 エンジンの規約と仕様
+- [DPPUv2 SymPy guideline](docs/SymPy_guideline_ja.md) - SymPy使用ガイドラインとベストプラクティス
 
 ### `sample_result/` - run_all/scan 実行結果サンプル
 
@@ -198,4 +196,3 @@ Muacca
 ## ライセンス
 
 リポジトリルートのLICENSEファイルを参照してください。
-
