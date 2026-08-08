@@ -1,5 +1,7 @@
 # DPPUv2 Paper 01: Topology-Dependent Phase Classification of Effective Potentials in Einstein-Cartan Gravity
 
+[10.5281/zenodo.18213677](https://doi.org/10.5281/zenodo.18213677)
+
 [日本語版 README](README_ja.md)
 
 ![Phase diagram example](data/image/ALL/phase_matrix_0010.png "Phase diagram example")
