@@ -1,227 +1,96 @@
-%==============================================================================
-% Appendix A: Theoretical Details
-%==============================================================================
-\section{Theoretical Details}
-\label{app:theory}
-
-This appendix describes the detailed derivation process of calculations 
-summarized in Sec.~\ref{sec:setup}.
-
-%------------------------------------------------------------------------------
-\subsection{Index Conventions}
-\label{app:index_conventions}
-
-\begin{itemize}
-  \item \textbf{Internal indices (frame indices)}: $a, b, c, \ldots = 0, 1, 2, 3$
-  \item \textbf{Spatial internal indices}: $i, j, k, \ldots = 0, 1, 2$
-  \item \textbf{Frame metric}: $\eta_{ab} = \mathrm{diag}(+1, +1, +1, +1)$ (Euclidean)
-\end{itemize}
-
-%------------------------------------------------------------------------------
-\subsection{Derivation of Levi--Civita Connection}
-\label{app:LC_connection}
-
-For orthonormal left-invariant frames $\{e^a\}$, the Levi-Civita connection 
-is computed via the generalized Koszul formula:
+\section{Connection components and the code-input dictionary}\label{appA}
+\subsection{Levi--Civita connection}
+Indices and structure coefficients follow Section~\ref{sec2}.
+The nonzero components on $S^3$ are
 \begin{equation}
-  \Gamma^{a}{}_{bc} = \frac{1}{2}\left( C^{a}{}_{bc} + C_{cb}{}^a - C_{b}{}^a{}_c \right).
-  \label{eq:koszul}
+\Gamma^{\mathrm{LC}}_{012}=-\Gamma^{\mathrm{LC}}_{021}
+=\Gamma^{\mathrm{LC}}_{120}=-\Gamma^{\mathrm{LC}}_{102}
+=\Gamma^{\mathrm{LC}}_{201}=-\Gamma^{\mathrm{LC}}_{210}
+=\frac2r.
+\tag{A-01}\label{eq:A-01}
 \end{equation}
-
-\subsubsection{$\Sthree$ (SU(2))}
-
-With $C^{i}{}_{jk} = \frac{4}{r}\varepsilon_{ijk}$, the nonzero components are:
+All components vanish on $T^3$. For Nil, the nonzero components are
 \begin{equation}
-  \Gamma^{0}{}_{12} = -\Gamma^{0}{}_{21} = \frac{2}{r}, \quad
-  \Gamma^{1}{}_{20} = -\Gamma^{1}{}_{02} = \frac{2}{r}, \quad
-  \Gamma^{2}{}_{01} = -\Gamma^{2}{}_{10} = \frac{2}{r}.
+\Gamma^{\mathrm{LC}}_{012}=\Gamma^{\mathrm{LC}}_{021}=\frac1{2R},
+\quad
+\Gamma^{\mathrm{LC}}_{102}=\Gamma^{\mathrm{LC}}_{120}=-\frac1{2R},
+\quad
+\Gamma^{\mathrm{LC}}_{201}=-\Gamma^{\mathrm{LC}}_{210}=-\frac1{2R}.
+\tag{A-02}\label{eq:A-02}
 \end{equation}
+They satisfy
+$C+\Gamma^{\mathrm{LC}}_{\cdot cb}-\Gamma^{\mathrm{LC}}_{\cdot bc}=0$.
+The spatial scale is constant with respect to frame position.
 
-\subsubsection{$\Tthree$ (Abelian)}
-
-With $C^{i}{}_{jk} = 0$: $\Gamma^{a}{}_{bc} = 0$ for all components.
-
-\subsubsection{$\Nilthree$ (Heisenberg)}
-
-With $C^{2}{}_{01} = -1/r$, $C^{2}{}_{10} = +1/r$, the nonzero components are:
+\subsection{Contortion from geometric torsion}
+Substituting the axial and vector parts in \eqref{eq:M2-03} gives
 \begin{equation}
-  \Gamma^{0}{}_{12} = \Gamma^{0}{}_{21} = \frac{1}{2r}, \quad
-  \Gamma^{1}{}_{02} = \Gamma^{1}{}_{20} = -\frac{1}{2r}, \quad
-  \Gamma^{2}{}_{01} = -\Gamma^{2}{}_{10} = -\frac{1}{2r}.
+K^{\mathrm{ax}}_{ijk}[T]=-\frac{\eta}{s}\varepsilon_{ijk},
+\qquad
+K^{\mathrm{vec}}_{abc}[T]
+=-\frac13(\delta_{ac}V_b-\delta_{bc}V_a).
+\tag{A-03}\label{eq:A-03}
 \end{equation}
+Cyclic permutations of the axial component are even, so the three-term
+combination in the contortion formula reduces to $T_{ijk}$.
+For the vector component, the $\delta_{ab}V_c$ terms cancel.
+Both contortion components are antisymmetric in their first two indices.
 
-%------------------------------------------------------------------------------
-\subsection{Calculation of Contortion}
-\label{app:contortion}
-
-Following Hehl et al.\ convention:
+\subsection{The input array}
+Denote the torsion input array of the accompanying code by $\tau_{abc}$.
+The code constructs the connection using
 \begin{equation}
-  K_{abc} = \frac{1}{2}\left( T_{abc} + T_{bca} - T_{cab} \right).
+K^{\mathrm{code}}_{abc}[\tau]
+=\frac12(\tau_{abc}+\tau_{bca}-\tau_{cab}),\qquad
+\Gamma^{\mathrm{code}}=\Gamma^{\mathrm{LC}}+K^{\mathrm{code}}.
+\tag{A-04}\label{eq:A-04}
 \end{equation}
-
-\subsubsection{T1 component (axial)}
-
-For $T^{(1)}{}_{abc} = \frac{2\eta}{r}\varepsilon_{abc}$ (totally antisymmetric):
+The geometric torsion reconstructed from this connection by the Cartan
+equation is $T=-\tau$. The same-connection correspondence is therefore
 \begin{equation}
-  K^{(1)}{}_{abc} = \frac{3\eta}{r}\varepsilon_{abc}.
+\tau=-T,\qquad
+\eta_\tau=-\eta,\qquad V_\tau=-V,\qquad
+K^{\mathrm{code}}[-T]=K[T].
+\tag{A-05}\label{eq:A-05}
 \end{equation}
+Simultaneously converting the corresponding parameters gives the same
+connection, curvature, and action in both descriptions.
+This does not mean reversing $K$ alone, or reversing $\eta$ while leaving
+$V$ fixed.
 
-\subsubsection{T2 component (vector trace)}
+In code-input variables, axial contortion is
+$+\eta_\tau\varepsilon_{ijk}/s$, and vector contortion is
+$+(\delta_{ac}(V_\tau)_b-\delta_{bc}(V_\tau)_a)/3$.
+Both axial and vector geometric-torsion components have the opposite
+sign, while $\eta^2,V^2,V\eta$ are unchanged.
 
-For $T^{(2)}{}_{abc} = \frac{1}{3}(\eta_{ac}V_b - \eta_{ab}V_c)$ with $V_\mu = (0,0,0,V)$:
+\subsection{Scales and input domains}
+An input interval $\eta_\tau\in[p,q]$ maps to $\eta\in[-q,-p]$,
+and $V_\tau\in[v_-,v_+]$ maps to $V\in[-v_+,-v_-]$.
+When plotting axes in ascending order, the associated data order
+must also be reversed.
+
+For the actual sphere radius,
 \begin{equation}
-  K^{(2)}{}_{abc} = \frac{1}{6}\left( 2\eta_{ac}V_b - \eta_{ab}V_c - \eta_{bc}V_a \right).
+a=\frac r2,\qquad
+\frac{2\eta}{r}=\frac{2\chi}{a},\qquad
+\chi=\frac{\eta}{2}=-\frac{\eta_\tau}{2}.
+\tag{A-06}\label{eq:A-06}
 \end{equation}
-
-%------------------------------------------------------------------------------
-\subsection{Effective Potential Formulas}
-\label{app:Veff_formulas}
-
-\subsubsection{$\Sthree \times \Sone$}
-
-Scalar quantities:
-\begin{align}
-  R &= \frac{2(-V^2 r^2 - 9\eta^2 + 36)}{3r^2}, \\
-  N_{\TT} &= -\frac{4V\eta}{r}, \quad
-  N_{\REE} = -\frac{2V\eta}{r}, \quad
-  N_{\FULL} = -\frac{2V\eta}{r}.
-\end{align}
-
-Effective potential (FULL):
+For torus circumferences,
 \begin{equation}
-  \Veff^{(\Sthree)}(r) = \frac{2\pi^2 L}{3\kappa^2} r
-  \left[ V^2 r^2 + 6V\eta\kappa^2\theta_{\NY} r + 9\eta^2 - 36 \right].
+\ell_i=2\pi R_i,\qquad
+\frac{2\eta}{R_1}=\frac{2\zeta}{\ell_1},\qquad
+\zeta=2\pi\eta=-2\pi\eta_\tau.
+\tag{A-07}\label{eq:A-07}
 \end{equation}
+For Nil, the adopted lattice is fixed and $R$ is the common scale.
+In all three geometries, $L$ is the actual circle circumference and
+the coordinate $u$ has period one.
 
-\subsubsection{$\Tthree \times \Sone$}
-
-With isotropic setting $R_1 = R_2 = R_3 = r$:
-\begin{align}
-  R &= -\frac{2V^2}{3} - \frac{6\eta^2}{r^2}, \\
-  N_{\FULL} &= N_{\REE} = -\frac{2V\eta}{r}, \quad N_{\TT} = -\frac{4V\eta}{r}.
-\end{align}
-
-Effective potential (FULL):
-\begin{equation}
-  \Veff^{(\Tthree)}(r) = \frac{16\pi^4 L}{3\kappa^2} r 
-  \left[ V^2 r^2 + 6V\eta\kappa^2\theta_{\NY} r + 9\eta^2 \right].
-\end{equation}
-
-\subsubsection{$\Nilthree \times \Sone$}
-
-Scalar quantities:
-\begin{align}
-  R &= \frac{-4V^2 r^2 - 36\eta^2 - 3}{6r^2}, \\
-  N_{\TT} &= -\frac{4V\eta}{r}, \quad
-  N_{\REE} = -\frac{2V\eta}{r}, \quad
-  N_{\FULL} = -\frac{2V\eta}{r}.
-\end{align}
-
-Effective potential (FULL):
-\begin{equation}
-  \Veff^{(\Nilthree)}(r) = \frac{4\pi^4 L}{3\kappa^2} r
-  \left[ 4V^2 r^2 + 24V\eta\kappa^2\theta_{\NY} r + 36\eta^2 + 3 \right].
-\end{equation}
-
-%------------------------------------------------------------------------------
-\subsection{Coefficient Summary}
-\label{app:coefficients}
-
-Writing $\Veff(r) = \mathcal{N} \cdot r \cdot (Ar^2 + Br + C)$:
-
-\begin{table}[H]
-\centering
-\caption{Coefficient $B$ (with $\kappa = 1$).}
-\begin{tabular}{@{}lccc@{}}
-\toprule
- & FULL & TT & REE \\
-\midrule
-$\Sthree$ & $6V\eta\theta_{\NY}$ & $12V\eta\theta_{\NY}$ & $6V\eta\theta_{\NY}$ \\
-$\Tthree$ & $6V\eta\theta_{\NY}$ & $12V\eta\theta_{\NY}$ & $6V\eta\theta_{\NY}$ \\
-$\Nilthree$ & $24V\eta\theta_{\NY}$ & $48V\eta\theta_{\NY}$ & $24V\eta\theta_{\NY}$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{Coefficient $C$ (topology-dependent, variant-independent).}
-\begin{tabular}{@{}lcc@{}}
-\toprule
-Topology & $C(\eta)$ & $C = 0$ roots \\
-\midrule
-$\Sthree$ & $9\eta^2 - 36$ & $\eta = -2, +2$ \\
-$\Tthree$ & $9\eta^2$ & $\eta = 0$ \\
-$\Nilthree$ & $36\eta^2 + 3$ & None (always positive) \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-%------------------------------------------------------------------------------
-\subsection{Analytical Derivation of Critical Conditions}
-\label{app:critical_conditions}
-
-\subsubsection{Minimum existence condition}
-
-For $\Veff(r) = \mathcal{N} r(Ar^2 + Br + C)$ with $A > 0$, the condition 
-$\dd\Veff/\dd r = 0$ gives:
-\begin{equation}
-  3Ar^2 + 2Br + C = 0.
-\end{equation}
-
-The solutions are:
-\begin{equation}
-  r_\pm = \frac{-B \pm \sqrt{B^2 - 3AC}}{3A}.
-  \label{eq:r_critical}
-\end{equation}
-
-Positive real solutions exist when:
-\begin{equation}
-  B < 0 \quad \text{and} \quad B^2 > 3AC.
-\end{equation}
-
-\subsubsection{Type I/II boundary}
-
-The sign of $\dd\Veff/\dd r|_{r \to 0^+}$ is determined by $C$:
-\begin{equation}
-  C > 0 \Rightarrow \text{Type I}, \quad C < 0 \Rightarrow \text{Type II}.
-\end{equation}
-
-For $\Sthree$: $C = 0$ at $\eta = -2, +2$ (I/II boundaries).
-
-\subsubsection{$\theta_{\NY}$ threshold for $\Tthree$}
-
-For $\Tthree$ with $C = 9\eta^2 > 0$ (for $\eta \neq 0$), the condition 
-$B^2 > 3AC$ requires:
-\begin{equation}
-  36V^2\eta^2\theta_{\NY}^2 > 27V^2\eta^2 \quad \Rightarrow \quad 
-  \theta_{\NY} > \frac{\sqrt{3}}{2} \approx 0.87.
-\end{equation}
-
-%------------------------------------------------------------------------------
-\subsection{Sign Conventions}
-\label{app:sign_conventions}
-
-The sign conventions adopted throughout this paper are summarized below:
-
-\begin{table}[H]
-\centering
-\caption{Sign conventions used in this work.}
-\label{tab:sign_conventions}
-\begin{tabular}{@{}lll@{}}
-\toprule
-Quantity & Convention & Reference \\
-\midrule
-Frame metric & $\eta_{ab} = \mathrm{diag}(+1,+1,+1,+1)$ & Euclidean signature \\
-Levi--Civita symbol & $\varepsilon_{0123} = +1$ & Standard \\
-Structure constants & $\dd\sigma^i = -\frac{1}{2}C^i{}_{jk}\sigma^j \wedge \sigma^k$ & Maurer-Cartan \\
-Contortion & $K_{abc} = \frac{1}{2}(T_{abc} + T_{bca} - T_{cab})$ & Hehl et al.\ (1976) \\
-Riemann tensor & $R^{a}{}_{bcd} = \partial_c\Gamma^{a}{}_{bd} - \partial_d\Gamma^{a}{}_{bc}$ & Antisymmetric in \\
- & $\quad + \Gamma^{a}{}_{ec}\Gamma^{e}{}_{bd} - \Gamma^{a}{}_{ed}\Gamma^{e}{}_{bc}$ & 3rd \& 4th indices \\
-EC connection & $\Gamma^{a}_{\mathrm{EC}} = \Gamma^{a}_{\mathrm{LC}} + K^a$ & Standard definition \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The contortion sign pattern is $(+1, +1, -1)$, consistent with Hehl et al.\ (1976) 
-and the computational engine (DPPUv2 Engine Core v3) used in this work.
+\subsection{Independent ingredients in action comparisons}
+The simultaneous sign conversion is a change of description of the
+same connection. The two-form coefficients in NY, the integration volume,
+and the action variant are separate definitions; they are not absorbed
+by the sign dictionary. Both descriptions use the same
+$n_{\mathrm{REE}}=\varepsilon R/2$ and the adopted volumes.

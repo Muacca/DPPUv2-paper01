@@ -30,6 +30,7 @@ import ipywidgets as widgets
 from ipywidgets import Layout, HBox, VBox, Output
 from IPython.display import display, clear_output
 from scipy.optimize import minimize_scalar
+from DPPUv2_parameter_scan_v3 import analyze_stability, get_cubic_coefficients
 import sys
 import os
 import warnings
@@ -109,6 +110,8 @@ def get_potential_function(topology, mode, ny_variant, alpha_T3=1.0, beta_T3=1.0
     
     # Cache key includes anisotropy parameters for T3
     if topology == 'T3':
+        if alpha_T3 <= 0 or beta_T3 <= 0:
+            raise ValueError('T3 shape ratios must be positive')
         key = (topology, mode, ny_variant, alpha_T3, beta_T3)
     else:
         key = (topology, mode, ny_variant)
@@ -202,6 +205,13 @@ def get_potential_function(topology, mode, ny_variant, alpha_T3=1.0, beta_T3=1.0
             # eta_param is ignored (always 0 in this mode)
             return raw_func(r, V_param, theta_NY, L_SCALE, KAPPA)
     
+    def coefficients(V_param, eta_param, theta_NY):
+        return get_cubic_coefficients(
+            topology, ny_variant, 0 if mode == 'AX' else V_param,
+            0 if mode == 'VT' else eta_param, theta_NY, kappa=KAPPA,
+            length=L_SCALE*(alpha_T3*beta_T3 if topology == 'T3' else 1))
+    wrapped_func.cubic_coefficients = coefficients
+
     # Cache it
     _potential_cache[key] = wrapped_func
     
@@ -239,57 +249,13 @@ def clear_cache():
 # =============================================================================
 
 def classify_phase(potential_func, V_param, eta, theta):
+    """Return 1 (barrier minimum), 2 (minimum without barrier), or 3 (no minimum).
+
+    Engine potentials use analytic cubic roots on r>0 at fixed torsion inputs.
     """
-    Classify the stability type of the potential.
-    
-    Returns:
-        1: Type I  - Local minimum with barrier (V increases toward r=0)
-        2: Type II - Rolling (V decreases from r=0 toward minimum)
-        3: Type III - No local minimum in physical region
-    """
-    def v(r):
-        return potential_func(r, V_param, eta, theta)
-    
-    # Find minimum
-    try:
-        res_min = minimize_scalar(v, bounds=(R_MIN, R_MAX), method='bounded')
-    except Exception:
-        return 3
-    
-    if not res_min.success:
-        return 3
-    
-    r0 = res_min.x
-    
-    # Check if hitting bounds
-    if r0 < R_BOUNDARY_THRESHOLD or r0 > R_MAX - R_BOUNDARY_THRESHOLD:
-        return 3
-    
-    # Check curvature (second derivative) - must be positive for minimum
-    h = 1e-5
-    try:
-        d2v = (v(r0 + h) - 2 * v(r0) + v(r0 - h)) / h**2
-    except Exception:
-        return 3
-    
-    if d2v <= 0:
-        return 3
-    
-    # Check slope near r=0
-    r_test = R_MIN * 2
-    dr = R_MIN * 0.1
-    
-    try:
-        v1 = v(r_test)
-        v2 = v(r_test + dr)
-        slope_near_zero = (v2 - v1) / dr
-    except Exception:
-        slope_near_zero = 0
-    
-    if slope_near_zero > 0:
-        return 1  # Type I: barrier at origin
-    else:
-        return 2  # Type II: rolling
+    phase = analyze_stability(potential_func, V_param, eta, theta)[2]
+    return {'type-I': 1, 'type-II': 2, 'type-III': 3}[phase]
+
 
 # =============================================================================
 # Interactive Viewer Class

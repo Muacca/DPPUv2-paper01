@@ -1,240 +1,78 @@
-%==============================================================================
-% Appendix E: Volume Rescaling Invariance in $T^3 \times S^1$
-%==============================================================================
-\clearpage
-\section{Volume Rescaling Invariance in $\Tthree \times \Sone$}
-\label{app:rescaling}
-
-This appendix discusses the volume rescaling properties of the effective 
-potential for $\Tthree \times \Sone$ and justifies the isotropic setting 
-$R_1 = R_2 = R_3 = r$ adopted in the main text.
-
-%------------------------------------------------------------------------------
-\subsection{General Anisotropic Setting}
-\label{app:anisotropic}
-
-\subsubsection{Parameterization}
-
-For $\Tthree$, the three circumferences $R_1$, $R_2$, $R_3$ are independent 
-parameters. The coframe is:
+\section{Anisotropic torus and variation paths}\label{appE}
+\subsection{General reduced function}
+All spatial angles have period $2\pi$, and the circle coordinate has
+period one. For $R_i>0$, define the axial torsion as $2\eta/R_1$.
+This singles out $R_1$, so simply permuting the $R_i$ need not give
+the same variation problem:
 \begin{equation}
-  e^0 = R_1 \, \dd x^1, \quad e^1 = R_2 \, \dd x^2, \quad 
-  e^2 = R_3 \, \dd x^3, \quad e^3 = L \, \dd\tau,
+\begin{aligned}
+U_{\mathrm{FULL}}(R_1,R_2,R_3)
+ &=Q R_2R_3\left(V^2R_1+\frac{9\eta^2}{R_1}\right),\\
+U_{\mathrm{TT}}=U_{\mathrm{REE}}
+ &=Q R_2R_3\left(V^2R_1+\frac{9\eta^2}{R_1}
+                 +12V\eta\kappa^2\theta\right),\\
+Q&=\frac{8\pi^3L}{3\kappa^2}>0
+\end{aligned}
+\tag{E-01}\label{eq:E-01}
 \end{equation}
-where $x^i \in [0, 2\pi)$ are periodic coordinates.
+The quantities $\eta,V,L,\kappa,\theta$ are held fixed.
 
-\subsubsection{Volume element}
+\subsection{Fixed shape and isotropic expansion}
+For fixed $\alpha,\beta>0$, with $R_2=\alpha R_1$, $R_3=\beta R_1$,
+the isotropic potential in Section~\ref{sec3} is multiplied by
+$\alpha\beta$. Radius-extremum positions and types are unchanged,
+while action values and heights acquire that factor.
+There is no strict minimum in FULL along this path.
 
-The total volume is:
+This equivalence concerns expansion with shape held fixed; it does not
+imply stability in the $\alpha,\beta$ directions.
+Other constraints, such as volume-preserving shape variations, require
+their own reduced functions.
+
+\subsection{Varying one radius with two radii fixed}
+If $R_2,R_3$ are fixed and only $R_1$ varies, $V\eta\ne0$ gives
+a strict minimum:
 \begin{equation}
-  \mathrm{Vol}(\Tthree \times \Sone) = (2\pi)^4 L R_1 R_2 R_3.
+R_{1,0}=3\left\lvert\frac{\eta}{V}\right\rvert,\qquad
+\frac{\partial^2U}{\partial R_1^2}
+=Q R_2R_3\frac{18\eta^2}{R_1^3}>0.
+\tag{E-02}\label{eq:E-02}
 \end{equation}
+The mixed term of the diagnostic actions is constant on this path,
+so the minimum position and second derivative agree with FULL.
+However, for $\eta\ne0$, $U\to+\infty$ as $R_1\to0$.
+The Type~II cubic depth formula, which uses a zero origin limit,
+does not apply to this minimum.
 
-\subsubsection{Effective potential (general form)}
+For $\eta=0,V\ne0$ the potential increases; for $V=0,\eta\ne0$
+it decreases from positive values toward zero; when both vanish
+it is flat. These cases are distinguished from isotropic expansion.
 
-With all three radii independent, the effective potential for the FULL 
-variant is:
+\subsection{Independent variations of all three radii}
+Write $U=R_2R_3f(R_1)$. Then
 \begin{equation}
-  \Veff^{(\Tthree)}(R_1, R_2, R_3) = \frac{(2\pi)^4 L}{3\kappa^2} 
-  \left[ V^2 R_1 R_2 R_3 + 6V\eta\kappa^2\theta_{\NY} R_2 R_3 
-         + \frac{9\eta^2 R_2 R_3}{R_1} \right].
-  \label{eq:Veff_T3_general}
+\begin{aligned}
+\partial_{R_1}U&=R_2R_3 f',&
+\partial_{R_2}U&=R_3 f,&
+\partial_{R_3}U&=R_2 f,\\
+H_{22}&=H_{33}=0,&H_{23}&=f.
+\end{aligned}
+\tag{E-03}\label{eq:E-03}
 \end{equation}
+A minimum in $r$ or $R_1$ alone does not imply that the full gradient
+vanishes. Since $H_{22}=H_{33}=0$, the Hessian in the three independent
+variables cannot be positive definite.
+In FULL, $f>0$ at the $R_1$ minimum with $V\eta\ne0$, so the other
+two directions are not stationary.
 
-Note the asymmetric dependence on $R_1$ versus $R_2$, $R_3$: this arises 
-because the torsion ansatz singles out the $e^0$ direction for the axial 
-component normalization.
+Even if a diagnostic action satisfies the special conditions $f=f'=0$,
+flat directions in $R_2,R_3$ remain. Such a point is not a strict
+minimum in all variables.
+With additional physical constraints on shape variations, stability
+must be defined separately on the allowed subspace.
 
-%------------------------------------------------------------------------------
-\subsection{Rescaling Properties}
-\label{app:rescaling_properties}
+\subsection{Figures and summary tables}
+See Table~\ref{tab:v3:7} for the conditions and values.
 
-\subsubsection{Uniform rescaling}
-
-Under uniform rescaling $R_i \to \lambda R_i$ (for all $i = 1, 2, 3$):
-\begin{equation}
-  \Veff \to \lambda^3 \cdot \frac{(2\pi)^4 L}{3\kappa^2} 
-  \left[ V^2 R_1 R_2 R_3 + \frac{6V\eta\kappa^2\theta_{\NY}}{\lambda} R_2 R_3 
-         + \frac{9\eta^2}{\lambda^2} \frac{R_2 R_3}{R_1} \right].
-\end{equation}
-
-The three terms scale as $\lambda^3$, $\lambda^2$, and $\lambda^1$ respectively. 
-This non-uniform scaling means that the \textit{shape} of the potential 
-changes under rescaling, but the \textit{Type classification} (existence 
-of minima, barriers) is preserved.
-
-\subsubsection{Anisotropic rescaling relative to $R_1$}
-
-Consider the parameterization $R_2 = \alpha R_1$ and $R_3 = \beta R_1$, 
-where $\alpha$ and $\beta$ are dimensionless anisotropy ratios. 
-Substituting into Eq.~\eqref{eq:Veff_T3_general}:
-\begin{equation}
-  \frac{R_2 R_3}{R_1} = \alpha \beta R_1,
-\end{equation}
-which yields the key relation:
-\begin{equation}
-  \Veff(\alpha, \beta) = \alpha \beta \, \Veff(1, 1).
-  \label{eq:Veff_rescaling}
-\end{equation}
-
-This demonstrates that anisotropic rescaling merely multiplies $\Veff$ by 
-an overall factor $\alpha\beta$, leaving the extremum position with respect 
-to $R_1$ and the sign of $\partial_{R_1}\Veff$ unchanged. Consequently, 
-the \textbf{phase boundary positions are invariant} under this rescaling, 
-while the potential depth scales as $\alpha\beta$.
-
-\subsubsection{Shape-preserving property}
-
-Define dimensionless ratios:
-\begin{equation}
-  \rho_1 = \frac{R_1}{R_{\text{ref}}}, \quad 
-  \rho_2 = \frac{R_2}{R_{\text{ref}}}, \quad 
-  \rho_3 = \frac{R_3}{R_{\text{ref}}},
-\end{equation}
-where $R_{\text{ref}}$ is a reference scale.
-
-The Type classification depends only on the ratios $\rho_i$ and the 
-dimensionless combinations:
-\begin{equation}
-  \tilde{V} = V R_{\text{ref}}, \quad 
-  \tilde{\eta} = \eta, \quad 
-  \tilde{\theta} = \theta_{\NY}.
-\end{equation}
-
-This means that phase diagrams are independent of the overall scale 
-$R_{\text{ref}}$, justifying the use of $\kappa = L = 1$ units.
-
-%------------------------------------------------------------------------------
-\subsection{Isotropic Reduction}
-\label{app:isotropic}
-
-\subsubsection{Motivation}
-
-For comparison with $\Sthree$ and $\Nilthree$ (which have single scale 
-parameter $r$), we adopt the isotropic setting:
-\begin{equation}
-  R_1 = R_2 = R_3 = r.
-\end{equation}
-
-This reduces the 3-parameter family to a 1-parameter family, enabling 
-direct comparison of phase structures across topologies.
-
-\subsubsection{Resulting potential}
-
-Substituting $R_1 = R_2 = R_3 = r$ into Eq.~\eqref{eq:Veff_T3_general}:
-\begin{equation}
-  \Veff^{(\Tthree,\text{iso})}(r) = \frac{(2\pi)^4 L}{3\kappa^2} 
-  \left[ V^2 r^3 + 6V\eta\kappa^2\theta_{\NY} r^2 + 9\eta^2 r \right].
-\end{equation}
-
-This has the same $r \cdot (Ar^2 + Br + C)$ structure as $\Sthree$ and 
-$\Nilthree$, with:
-\begin{equation}
-  A = V^2, \quad B = 6V\eta\kappa^2\theta_{\NY}, \quad C = 9\eta^2.
-\end{equation}
-
-\subsubsection{Comparison with anisotropic case}
-
-The key difference from the anisotropic case:
-
-\begin{itemize}
-  \item \textbf{Anisotropic}: Three independent variables $(R_1, R_2, R_3)$; 
-        minima form a 2-dimensional surface in parameter space
-  \item \textbf{Isotropic}: Single variable $r$; minima are isolated points 
-        on the $r$-axis
-\end{itemize}
-
-The isotropic setting captures the ``diagonal slice'' of the full 
-3-dimensional configuration space.
-
-%------------------------------------------------------------------------------
-\subsection{Validity of Isotropic Approximation}
-\label{app:validity}
-
-\subsubsection{Stability analysis}
-
-For the isotropic minimum $r = r_0$ to be stable against anisotropic 
-perturbations, we require:
-\begin{equation}
-  \left.\frac{\partial^2 \Veff}{\partial R_i \partial R_j}\right|_{R_1=R_2=R_3=r_0} 
-  \quad \text{positive definite}.
-\end{equation}
-
-\subsubsection{Hessian computation}
-
-The Hessian matrix at the isotropic point has the structure:
-\begin{equation}
-  H_{ij} = \begin{pmatrix}
-    H_{11} & H_{12} & H_{13} \\
-    H_{12} & H_{22} & H_{23} \\
-    H_{13} & H_{23} & H_{33}
-  \end{pmatrix},
-\end{equation}
-where the specific values depend on $(V, \eta, \theta_{\NY}, r_0)$.
-
-For the parameter ranges studied in this paper, numerical evaluation shows 
-that the Hessian is positive definite at Type I minima, confirming stability 
-of the isotropic configuration.
-
-\subsubsection{Physical interpretation}
-
-The isotropic setting corresponds to a ``cubic torus'' where all three 
-directions are equivalent. Perturbations toward anisotropy (e.g., elongation 
-in one direction) increase the potential, so the system returns to the 
-isotropic state.
-
-This justifies using the isotropic reduction for phase classification, 
-as it captures the stable configurations.
-
-%------------------------------------------------------------------------------
-\subsection{Alternative Reduction Scheme (Not Adopted)}
-\label{app:alternatives}
-
-\subsubsection{Alternative: Fix $R_2 = R_3 = 1$}
-
-During the development of this work, an alternative approach was considered 
-that fixes two dimensions and varies only $R_1 = r$:
-
-\begin{equation}
-  \Veff^{(\text{alt})}(r) = \frac{(2\pi)^4 L}{3\kappa^2} 
-  \left[ V^2 r + 6V\eta\kappa^2\theta_{\NY} + \frac{9\eta^2}{r} \right].
-\end{equation}
-
-This gives a different functional form ($r + \text{const} + 1/r$) that 
-does not match $\Sthree$ or $\Nilthree$.
-
-\subsubsection{Comparison of phase structures}
-
-\begin{table}[H]
-\centering
-\caption{Comparison of $\Tthree$ reduction schemes.}
-\begin{tabular}{@{}lll@{}}
-\toprule
-Scheme & Potential structure & Compatible with $\Sthree$/$\Nilthree$? \\
-\midrule
-Isotropic ($R_1=R_2=R_3=r$) & $r^3 + r^2 + r$ & Yes \\
-Fixed dimensions ($R_2=R_3=1$) & $r + \text{const} + 1/r$ & No \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The isotropic scheme is preferred for cross-topology comparison because 
-it produces the same polynomial structure across all three test beds.
-
-%------------------------------------------------------------------------------
-\subsection{Summary}
-\label{app:rescaling_summary}
-
-\begin{enumerate}
-  \item The isotropic setting $R_1 = R_2 = R_3 = r$ is adopted for $\Tthree$ 
-        to enable fair comparison with $\Sthree$ and $\Nilthree$
-  
-  \item This setting produces the same $r \cdot (Ar^2 + Br + C)$ structure 
-        as the other topologies
-  
-  \item Stability analysis confirms that isotropic minima are stable against 
-        anisotropic perturbations in the parameter ranges studied
-  
-  \item The Type classification is independent of overall scale, depending 
-        only on dimensionless parameter combinations
-\end{enumerate}
+\input{tables/v3/tab07}
+\FloatBarrier

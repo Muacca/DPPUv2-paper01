@@ -7,7 +7,8 @@ Purpose: Implements topology-specific setup for T3xS1 (flat) manifold with v3 en
 
 Topology: T3 (3-torus) x S1 (circle)
 Structure Constants: All zero (Abelian)
-Volume: V = (2π)⁴ L R₁R₂R₃
+Space coordinates have period 2pi, circumferences 2pi*R_i; S1 circumference L
+Volume: V = (2π)³ L R₁R₂R₃
 Curvature: R_LC = 0 (flat)
 
 Changes from v2.0:
@@ -100,8 +101,8 @@ class T3S1Engine(BaseFrameEngine):
         metric = Matrix.eye(dim)
         self.data['metric_frame'] = metric
         
-        # Total volume: V = (2π)⁴ L R₁R₂R₃
-        total_volume = (2*pi)**4 * L * R1 * R2 * R3
+        # Three angular periods 2pi and circle coordinate u in [0,1).
+        total_volume = (2*pi)**3 * L * R1 * R2 * R3
         self.data['total_volume'] = total_volume
         
         # Structure constants: All zero (Abelian/flat)

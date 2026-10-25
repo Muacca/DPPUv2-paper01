@@ -114,6 +114,21 @@ R^{a}{}\_b = d\omega^a{}_b + \omega^a{}_c\wedge \omega^c{}_b,
 R^{a}{}\_b = \frac12 R^{a}{}\_{bcd} e^c\wedge e^d.
 $$
 
+### 6.1 Input array and geometric torsion
+
+`torsion_tensor` stores the input parameter array tau. The geometric components are
+`T_geom[a,b,c] = C[a,b,c] + Gamma[a,c,b] - Gamma[a,b,c] = -tau[a,b,c]`.
+`geometric_torsion_tensor` exposes these components. The contortion formula is
+`K[a,b,c]=(tau[a,b,c]+tau[b,c,a]-tau[c,a,b])/2`.
+
+### 6.2 Nieh–Yan density
+
+For Euclidean frame metric and epsilon(0,1,2,3)=+1, the component contractions are
+`N_TT=epsilon*T*T/4`, `N_REE=epsilon*R/2`, and `N_FULL=N_TT-N_REE`.
+REE denotes the diagnostic action term `+theta*N_REE`.
+For the static homogeneous ansatz of the three runners,
+`TT=REE=-4*V*eta/r` (using each runner's scale alias), hence `FULL=0`.
+
 ## 7. Curvature Component Formula (Form used by Engine)
 
 The DPPUv2 engine currently uses the following form for $R^a_{bcd}$:
@@ -226,4 +241,79 @@ Structure constants are identically zero ($C^a{}_{bc} = 0$). The $\varepsilon$-d
 | $\varepsilon \to -1^+$ | Singularity of $S^3$ structure (physically inaccessible) |
 | $\varepsilon = -2$ | Mathematical root of $C^2 = 0$, excluded since $\varepsilon < -1$ |
 
+## 11. Global Geometry and Integration Domains
 
+This section specifies the global backgrounds used by the three topology runners. The metric is the sum of the squares of the orthonormal coframe. All scales are positive. On the common circle, $u\in[0,1)$ and $e^3=L\,du$, so **L is the circumference**. The engine integrates a homogeneous scalar density by multiplying it by the Riemannian volume of the specified domain.
+
+### 11.1 Round S³
+
+The scale parameter r in $C^i{}_{jk}=4\varepsilon_{ijk}/r$ is twice the round-sphere radius $a=r/2$. An explicit SU(2) coframe is $e^i=-r\lambda^i/4$, where
+
+$$
+\begin{aligned}
+\lambda^0&=\cos\psi\,d\vartheta+\sin\psi\sin\vartheta\,d\varphi,\\
+\lambda^1&=-\sin\psi\,d\vartheta+\cos\psi\sin\vartheta\,d\varphi,\\
+\lambda^2&=d\psi+\cos\vartheta\,d\varphi.
+\end{aligned}
+$$
+
+Use $0\le\vartheta\le\pi$, $0\le\varphi<2\pi$, $0\le\psi<4\pi$, with the usual polar degeneracies and coupled boundary identification $(\varphi+2\pi,\psi)\sim(\varphi,\psi+2\pi)$. These are not three independently periodic torus coordinates. The positive metric density is $r^3\sin\vartheta/64$; the displayed coframe has orientation opposite to $d\vartheta\wedge d\varphi\wedge d\psi$.
+
+$$
+\operatorname{Vol}(S^3)=\frac{\pi^2r^3}{4}=2\pi^2a^3,\qquad
+\operatorname{Vol}(S^3\times S^1)=\frac{\pi^2Lr^3}{4},\qquad
+R_{\mathrm{LC}}=\frac{24}{r^2}=\frac{6}{a^2}.
+$$
+
+### 11.2 T³
+
+For $i=1,2,3$, take $x^i\in[0,2\pi)$ and $e^{i-1}=R_i\,dx^i$. The $R_i$ are coframe scale coefficients; the spatial circumferences are $\ell_i=2\pi R_i$.
+
+$$
+\operatorname{Vol}(T^3\times S^1)=(2\pi)^3LR_1R_2R_3
+=L\ell_1\ell_2\ell_3.
+$$
+
+The scan uses $R_1=R_2=R_3=r$. A fixed-shape path $R_2=\alpha r$, $R_3=\beta r$ holds positive $\alpha,\beta$ fixed. Holding R2 and R3 themselves fixed defines a different variation path.
+
+### 11.3 Compact Nil³
+
+Use the Heisenberg group law and left-invariant coframe
+
+$$
+\begin{aligned}
+(x,y,z)(x',y',z')&=(x+x',y+y',z+z'+xy'),\\
+e^0&=R\,dx,\qquad e^1=R\,dy,\qquad e^2=R(dz-x\,dy).
+\end{aligned}
+$$
+
+The compact space is the left quotient $\Gamma\backslash H$ with
+
+$$
+\Gamma=\{(2\pi j,2\pi k,4\pi^2l):j,k,l\in\mathbb Z\}.
+$$
+
+Its generators identify coordinates by
+
+$$
+\begin{aligned}
+(x,y,z)&\sim(x+2\pi,y,z+2\pi y),\\
+(x,y,z)&\sim(x,y+2\pi,z),\\
+(x,y,z)&\sim(x,y,z+4\pi^2).
+\end{aligned}
+$$
+
+Each identification preserves the coframe. For periods $(a,b,c)=(2\pi,2\pi,4\pi^2)$, the horizontal-generator commutator is the central translation by $ab=c$, so $ab/c=1$. The coordinate box $[0,2\pi)\times[0,2\pi)\times[0,4\pi^2)$ is a fundamental domain with the twisted x-face gluing above. Integration uses the positive density $R^3\,dx\,dy\,dz$.
+
+$$
+de^2=-\frac1R e^0\wedge e^1,\qquad C^2{}_{01}=-\frac1R,\qquad
+\operatorname{Vol}(\Gamma\backslash H\times S^1)=(2\pi)^4LR^3.
+$$
+
+The base-torus circumferences are $2\pi R$ and the central-fiber circumference is $4\pi^2R$. The lattice and its shape are held fixed as R varies. This explicit quotient realizes the local structure constants and the stated global volume together; its central coordinate does not have period $2\pi$.
+
+### 11.4 Input Parameters and Physical Lengths
+
+The runner and consumer APIs use the local scales r/R1/R2/R3/R and the input-array parameters $\eta_\tau,V_\tau$. The geometric torsion dictionary remains $\eta_g=-\eta_\tau$, $V_g=-V_\tau$.
+
+If the same S³ axial torsion is written as $2\chi/a$ instead of $2\eta_g/r$, use $a=r/2$ and $\chi=\eta_g/2$. For T³ circumference variables, $2\zeta/\ell_1=2\eta_g/R_1$ requires $\zeta=2\pi\eta_g$. Parameter intervals, sampling grids and extrema transform with these dictionaries. V remains a signed coefficient and acquires no additional factor.

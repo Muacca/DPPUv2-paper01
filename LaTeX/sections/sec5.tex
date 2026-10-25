@@ -1,308 +1,73 @@
-%==============================================================================
-% Section 5: Mechanisms and Interpretation of Phase Structure
-%==============================================================================
-\section{Mechanisms and Interpretation of Phase Structure}
-\label{sec:mechanisms}
-
-This section interprets the features of the phase diagrams presented in 
-Sec.~\ref{sec:numerical} based on the analytical structure of the effective 
-potential $\Veff(r)$.
-
-%------------------------------------------------------------------------------
-\subsection{Shape Changes of $\Veff(r)$ at Type Transitions}
-\label{sec:type_transitions}
-
-\subsubsection{Type III $\to$ Type II transition (appearance of well)}
-
-The transition from Type III to Type II corresponds to the appearance of a 
-local minimum in $\Veff(r)$.
-
-Consider the case of $\Sthree$-FULL with $\theta_{\NY} = 0$, $V = 4$ fixed, 
-and $\eta$ varying from $3$ to $0$:
-
-\begin{itemize}
-  \item \textbf{$\eta = 3$ (Type III)}: $\Veff(r)$ is monotonically increasing 
-        with no minimum within the allowed region
-  \item \textbf{$\eta = 0$ (Type II)}: A local minimum appears in $\Veff(r)$. 
-        However, there is no barrier in the $r \to 0$ direction, with 
-        $\dd\Veff/\dd r < 0$ near the origin
-\end{itemize}
-
-This transition can be understood from the effective potential structure 
-derived in Sec.~\ref{sec:reductions}. For $\Sthree$:
+\section{Extremum values and their interpretation}\label{sec5}
+\subsection{Local curvature and potential height}
+At a strict cubic minimum $r_0=r_+$,
 \begin{equation}
-  \Veff(r) \propto r \left[ V^2 r^2 + B r + C \right],
+U(r_0)=-P r_0^2(2Ar_0+B),\qquad
+U''(r_0)=2P\sqrt{B^2-3AC}.
+\tag{M5-01}\label{eq:M5-01}
 \end{equation}
-where $B = 6V\eta\kappa^2\theta_{\NY}$ and $C = 9\eta^2 - 36$.
+The second derivative is the curvature of the one-variable reduced
+potential. It is neither a mass squared nor a statement that the full
+Hessian is positive.
 
-For $\theta_{\NY} = 0$, $B = 0$, and minimum existence is determined solely
-by the sign of $C$. Minima can appear in the range $\eta \in (-2, 2)$ where
-$C < 0$, but due to the behavior as $r \to 0$, this results in Type II.
-
-\subsubsection{Type II $\to$ Type I transition (barrier formation)}
-
-The transition from Type II to Type I corresponds to barrier formation in 
-the $r \to 0$ direction.
-
-This transition is characterized by a sign change of the gradient of $\Veff(r)$ 
-near the origin:
+For Type~I, the height difference between the local maximum and minimum is
 \begin{equation}
-  \left.\frac{\dd\Veff}{\dd r}\right|_{r \to 0^+} \quad 
-  \begin{cases}
-    < 0 & \text{(Type II: rolling)} \\
-    > 0 & \text{(Type I: barrier)}
-  \end{cases}
+\Delta U_{\mathrm I}
+=U(r_-)-U(r_+)
+=\frac{4P(B^2-3AC)^{3/2}}{27A^2}>0.
+\tag{M5-02}\label{eq:M5-02}
 \end{equation}
-
-Differentiating the effective potential for $\Sthree$:
+For Type~II, we instead use the depth relative to the algebraic value
+$U(0)=0$:
 \begin{equation}
-  \frac{\dd\Veff}{\dd r} \propto 3V^2 r^2 + 2B r + C.
+\Delta U_{\mathrm{II}}
+=-U(r_+)
+=P r_+^2(2Ar_++B)>0.
+\tag{M5-03}\label{eq:M5-03}
 \end{equation}
+The point $r=0$ is a degenerate geometry outside the domain.
+This depth is not a barrier between two positive-radius extrema.
 
-As $r \to 0$, $\dd\Veff/\dd r \propto C$, so \textbf{the sign of $C$ determines 
-Type I/II}:
-\begin{itemize}
-  \item $C > 0$: $\dd\Veff/\dd r|_{r=0} > 0$ $\to$ Type I
-  \item $C < 0$: $\dd\Veff/\dd r|_{r=0} < 0$ $\to$ Type II
-\end{itemize}
-
-For $\Sthree$, $C = 9\eta^2 - 36$, and $C = 0$ at $\eta = \pm 2$.
-These correspond to the II boundary positions.
-
-\subsubsection{Type I $\to$ Type II $\to$ Type III transition}
-
-The ``Type I $\to$ Type II $\to$ Type III'' transition observed for
-$\Sthree$-FULL can be understood from the fact that $C(\eta) = 9\eta^2 - 36$
-is a quadratic function opening upward.
-
-$C(\eta)$ takes minimum value $-36$ at $\eta = 0$, and $C = 0$ at
-$\eta = \pm 2$. Therefore:
-\begin{itemize}
-  \item $|\eta| > 2$: $C > 0$ $\to$ Type I (if $B$ allows) or Type III
-  \item $|\eta| < 2$: $C < 0$ $\to$ Type II (geometric well)
-\end{itemize}
-
-This structure produces the Type I $\to$ Type II $\to$ Type III transition
-as $\eta$ varies from negative to positive. The central band is the region
-where "positive curvature" creates a potential well by itself.
-
-%------------------------------------------------------------------------------
-\subsection{Origin of Phase Structure in $\Sthree$}
-\label{sec:S3_complex}
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=1.0\textwidth]{figures/fig14_Phase_Potential_S3.png}
-  \caption{Phase-potential correspondence for $\Sthree \times \Sone$ 
-           ($\theta_{\NY} = 1$).}
-  \label{fig:phase_potential_S3}
-\end{figure}
-
-The phase structure of $\Sthree$ is determined by the competition between
-the geometric coefficient $C$ and the torsion coefficient $B$.
-
-\subsubsection{Role of Geometric Coefficient $C$}
-
-The coefficient $C = 9\eta^2 - 36$ contains a negative constant term $-36$
-due to the positive background curvature ($R=+24/r^2$).
-This allows $C < 0$ in the range $\eta \in (-2, 2)$,
-creating a "geometric potential well" even when $\theta_{\NY} = 0$.
-This is the origin of the central Type II band.
-
-\subsubsection{Role of Torsion Coefficient $B$}
-
-For $\theta_{\NY} > 0$, the $r^2$ term coefficient $B = 6V\eta\kappa^2\theta_{\NY}$
-becomes significant.
-\begin{itemize}
-  \item In the range $\eta < -2$ or $\eta > 2$, where $C > 0$ would normally prevent stability,
-        a sufficiently large negative $B$ can create a minimum.
-  \item This explains the appearance and expansion of Type I regions for $\theta_{\NY} > 0$.
-  \item Since $B \propto \eta$, its sign changes across the origin, leading to
-        asymmetric stability behavior (favored when $B < 0$).
-\end{itemize}
-
-%------------------------------------------------------------------------------
-\subsection{Phase Structure of $\Tthree$: $\theta_{\NY}$ Threshold}
-\label{sec:T3_structure}
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=1.0\textwidth]{figures/fig15_Phase_Potential_T3.png}
-  \caption{Phase-potential correspondence for $\Tthree \times \Sone$ 
-           ($\theta_{\NY} = 1$).}
-  \label{fig:phase_potential_T3}
-\end{figure}
-
-\paragraph{Observed features:}
-\begin{itemize}
-  \item $\theta_{\NY} \lesssim 0.9$: Entire region is Type III
-  \item $\theta_{\NY} \gtrsim 0.9$: As shown in Figure~\ref{fig:phase_potential_T3}, 
-        Type I appears in $\eta < 0$
-  \item $\eta \to -\eta$ symmetry is broken (prominent for $\theta_{\NY} > 0$)
-\end{itemize}
-
-We analyze the phase structure of $\Tthree$ with the isotropic setting 
-$R_1 = R_2 = R_3 = r$.
-
-\subsubsection{Effective potential structure}
-
-The effective potential for $\Tthree$ is:
+\subsection{The FULL minimum on the sphere}
+For $V\ne0$ and $|\eta|<2$,
 \begin{equation}
-  \Veff(r) \propto r \cdot \left[ V^2 r^2 + B r + C \right],
+\begin{aligned}
+r_0&=\frac{\sqrt{12-3\eta^2}}{\lvert V\rvert},\\
+U(r_0)&=-\frac{\pi^2L}{6\kappa^2}
+        \frac{(12-3\eta^2)^{3/2}}{\lvert V\rvert},\\
+U''(r_0)&=\frac{\pi^2L}{2\kappa^2}
+          \lvert V\rvert\sqrt{12-3\eta^2}.
+\end{aligned}
+\tag{M5-04}\label{eq:M5-04}
 \end{equation}
-where $B = 6V\eta\kappa^2\theta_{\NY}$ and $C = 9\eta^2$. This has the same 
-$r^3 + r^2 + r$ structure as $\Sthree$.
+The negative linear term reflects the competition between positive
+spatial curvature and axial torsion, while the positive cubic term
+comes from vector torsion. The NY coupling does not enter this mechanism.
+As $V\to0$, the radius tends to infinity and the finite minimum is lost
+to the runaway limit. As $|\eta|\to2$, the radius approaches the excluded
+origin. With zero torsion,
+$U=-3\pi^2Lr/\kappa^2$, so there is no finite well.
+Curvature alone does not create this minimum.
 
-\subsubsection{Entire Type III for $\theta_{\NY} = 0$}
-
-For $\theta_{\NY} = 0$, $B = 0$, giving:
+\subsection{Distinct boundaries}
+In the region $C>0$, $B<0$, the condition that the diagnostic minimum
+have the same height as the algebraic origin is
 \begin{equation}
-  \Veff(r) \propto r (V^2 r^2 + 9\eta^2).
+B^2=4AC,\qquad r_+=-\frac{B}{2A}.
+\tag{M5-05}\label{eq:M5-05}
 \end{equation}
+This is distinct from the saddle-node condition $B^2=3AC$.
+At the saddle-node the strict minimum is lost, whereas at $B^2=4AC$
+it remains and crosses the reference height.
+The Type~I/II distinction is determined by the presence of a
+positive-radius maximum, not by the minimum's height relative to the origin.
 
-Since $C = 9\eta^2 \geq 0$ and $V^2 > 0$, the bracketed term is always positive, 
-and $\Veff(r)$ is monotonically increasing for $r > 0$. Therefore, the entire 
-parameter region is Type III (unstable).
+\subsection{Signs, normalization, and comparisons}
+FULL depends on $V^2$ and $\eta^2$.
+The diagnostic mixed term depends on $V\eta\theta$ and is invariant under
+simultaneous reversal of $V$ and $\eta$, as in the $T/\tau$ dictionary.
+Reversing only $\eta$ generally changes the diagnostic potential.
 
-This originates from the flatness of $\Tthree$ ($R_{\LC} = 0$): since there 
-is no contribution from background curvature, the coefficient $C$ of $r$ 
-contains no first-order term in $\eta$, and $C = 9\eta^2$ is always non-negative.
-
-\subsubsection{Type I appearance for $\theta_{\NY} > 0$}
-
-For $\theta_{\NY} > 0$, $B = 6V\eta\kappa^2\theta_{\NY}$ becomes effective.
-
-The condition for minimum existence is that $\dd\Veff/\dd r = 0$ has positive 
-solutions:
-\begin{equation}
-  3V^2 r^2 + 2Br + C = 0.
-\end{equation}
-
-The discriminant $D = 4B^2 - 12V^2 C = 4(B^2 - 3V^2 C)$ must be positive, 
-and the solutions must be positive:
-\begin{equation}
-  B < 0 \quad \text{and} \quad B^2 > 3V^2 C.
-\end{equation}
-
-$B < 0$ occurs for $\eta < 0$ (when $\theta_{\NY} > 0$), and the second 
-condition is:
-\begin{equation}
-  36V^2\eta^2\kappa^4\theta_{\NY}^2 > 27V^2\eta^2,
-\end{equation}
-which is satisfied when $\theta_{\NY} > \sqrt{3}/(2\kappa^2) \approx 0.87$ 
-(for $\kappa = 1$).
-
-This provides the analytical explanation for the observation ``Type I appears 
-at $\theta_{\NY} \approx 0.9$''.
-
-\subsubsection{Breaking of $\eta \to -\eta$ symmetry}
-
-For $\Tthree$, since $B = 6V\eta\kappa^2\theta_{\NY}$ is linear in $\eta$, 
-$B \to -B$ under $\eta \to -\eta$.
-
-\begin{itemize}
-  \item $\eta < 0$, $\theta_{\NY} > 0$: $B < 0$ (contributes to minimum formation)
-  \item $\eta > 0$, $\theta_{\NY} > 0$: $B > 0$ (inhibits minimum formation)
-\end{itemize}
-
-Therefore, for $\theta_{\NY} > 0$, stable regions appear only on the $\eta < 0$ 
-side, and $\eta \to -\eta$ symmetry is broken.
-
-This asymmetry is also seen in $\Sthree$ and $\Nilthree$, but for $\Tthree$
-where $C = 9\eta^2$ is symmetric in $\eta$, it is characteristic that
-the asymmetry derives purely from the $B$ term.
-
-%------------------------------------------------------------------------------
-\subsection{negative curvature-related suppression of stabilization in $\Nilthree$}
-\label{sec:Nil3_structure}
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=1.0\textwidth]{figures/fig16_Phase_Potential_Nil3.png}
-  \caption{Phase-potential correspondence for $\Nilthree \times \Sone$ 
-           ($\theta_{\NY} = 1$).}
-  \label{fig:phase_potential_Nil3}
-\end{figure}
-
-\paragraph{Observed features:}
-\begin{enumerate}
-  \item As shown in Figure~\ref{fig:phase_potential_Nil3}, $\Tthree$ like
-        Type I region is suppressed near $\eta \approx 0$
-  \item $\eta \to -\eta$ symmetry is broken
-\end{enumerate}
-
-\subsubsection{Effective potential structure}
-
-The effective potential for $\Nilthree$ is:
-\begin{equation}
-  \Veff(r) \propto r \left[ 4V^2 r^2 + B r + C \right],
-\end{equation}
-where $C = 36\eta^2 + 3 > 0$ for all $\eta$.
-
-Since $C$ is always positive, stable minima in $\Nilthree$ require 
-sufficiently large $\theta_{\NY}$ to make the $B$ term dominant,
-similar to $\Tthree$.
-
-\subsubsection{Conditions for stable region appearance}
-
-For $\theta_{\NY} > 0$, stable regions can appear due to the effect of
-coefficient $B = 24V\eta\kappa^2\theta_{\NY}$.
-
-For $\eta < 0$, $B < 0$. The condition for a minimum to form is the positivity of the discriminant:
-\begin{equation}
-  D = B^2 - 12V^2 C > 0.
-\end{equation}
-
-Since $C = 36\eta^2 + 3$ is always positive, this condition is non-trivial.
-It requires $|B|$ to be sufficiently large.
-
-\subsubsection{Mechanism of Type III leakage (negative curvature-related suppression)}
-
-A unique feature of $\Nilthree$ is the persistence of Type III regions near $\eta=0$
-even on the negative side. This is due to the constant term $+3$ in $C$,
-which comes from the negative background curvature.
-
-Near $\eta \approx 0$:
-\begin{align}
-  C &\approx 3 \quad (\text{finite positive}), \\
-  B^2 &\propto \eta^2 \approx 0.
-\end{align}
-Therefore, $B^2 < 12V^2 C$ is always true for sufficiently small $\eta$.
-The "geometric barrier" $C$ remains finite while the "torsion driver" $B$ vanishes,
-preventing stabilization. This confirms the physical interpretation that
-negative spatial curvature inhibits stabilization in the weak torsion limit.
-
-This contrasts with $\Tthree$, where $C \propto \eta^2$ also vanishes,
-allowing stability to extend closer to the origin.
-
-%------------------------------------------------------------------------------
-
-\subsection{Uniformity of Construction Variants}
-\label{sec:variant_uniformity}
-
-\begin{table}[H]
-\centering
-\caption{Comparison of NY densities ($N$) for the three variants.}
-\label{tab:variant_comparison_N}
-\begin{tabular}{@{}lll@{}}
-\toprule
-Variant & $N$ & Coefficient of $r^2$ term ($B$) \\
-\midrule
-FULL & $-2V\eta/r$ & $6V\eta\kappa^2\theta_{\NY}$ \\
-REE & $-2V\eta/r$ & $6V\eta\kappa^2\theta_{\NY}$ \\
-TT & $-4V\eta/r$ & $12V\eta\kappa^2\theta_{\NY}$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-As shown in Table~\ref{tab:variant_comparison_N}, all three variants share the
-same functional form $N \propto \eta/r$.
-The only difference is a numerical factor of 2 for the TT variant.
-This coincidence of FULL and REE is not accidental: it follows from the
-vanishing of $\varepsilon^{abcd} R^{\LC}_{abcd}$ in the
-$\mathcal{M}_3 \times \Sone$ product geometry, which eliminates the
-topology-dependent Levi--Civita contribution to $N_{\REE}$
-(see Sec.~\ref{sec:FULL_role} for the detailed argument).
-Consequently, the qualitative phase structure is consistent across all variants,
-demonstrating that the stabilization mechanism originates in the torsion sector
-of the NY Lagrangian rather than in the specific form of $N$.
+A positive prefactor preserves radii and phase types but scales all
+potential heights. Comparing different geometries requires specifying
+the global quotient, units, and physical quantities held fixed.

@@ -474,7 +474,7 @@ class BaseFrameEngine:
         self.ny_variant = ny_variant
         self.logger = logger
         self.ckpt = checkpoint_mgr
-        self.data = {}
+        self.data = {'torsion_dictionary': 'T_geom=-torsion_tensor'}
         
         self.steps = [
             ("E4.1", self.step_E4_1_setup),
@@ -682,15 +682,17 @@ class BaseFrameEngine:
                             if val != S.Zero:
                                 T_tensor[a, b, c] = T_tensor[a, b, c] + val
         
+        # Input parameter array tau; Cartan torsion is T_geom=-tau.
         self.data['torsion_tensor'] = T_tensor
-        self._log_success("Torsion constructed")
+        self.data['geometric_torsion_tensor'] = -T_tensor
+        self._log_success("Input tau constructed; geometric torsion T_geom=-tau")
     
     # ========================================
     # Step E4.5: Contortion (Frame Basis)
     # ========================================
     
     def step_E4_5_contortion_frame(self):
-        """Compute Contortion K_abc in Frame Basis"""
+        """Compute contortion from the input array tau=-T_geom"""
         self._log_info("Computing Contortion...")
         dim = self.data['dim']
         T = self.data['torsion_tensor']
@@ -848,7 +850,8 @@ class BaseFrameEngine:
         self.data['ny_density_TT'] = simplify(N_TT)
         self._log_info(f"  N_TT = {self.data['ny_density_TT']}")
         
-        # 2. Ree term
+        # 2. e^a wedge e^b wedge R_ab: one curvature 2-form gives 1/2.
+        # REE is a +theta diagnostic term; FULL subtracts it below.
         N_Ree = S.Zero
         for a in range(dim):
             for b in range(dim):
@@ -856,7 +859,7 @@ class BaseFrameEngine:
                     for d in range(dim):
                         eps = levi_civita_4d(a,b,c,d)
                         if eps != 0:
-                            N_Ree += Rational(1,4) * eps * R_abcd[a,b,c,d]
+                            N_Ree += Rational(1,2) * eps * R_abcd[a,b,c,d]
         
         self.data['ny_density_Ree'] = simplify(N_Ree)
         self._log_info(f"  N_Ree = {self.data['ny_density_Ree']}")

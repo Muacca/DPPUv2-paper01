@@ -1,204 +1,118 @@
-%==============================================================================
-% Topology-Dependent Phase Classification of Effective Potentials
-% in Einstein--Cartan + Nieh--Yan Minisuperspace
-%==============================================================================
-\documentclass[12pt,a4paper]{article}
-
-%------------------------------------------------------------------------------
-% Packages
-%------------------------------------------------------------------------------
-
-% Fonts / encoding (helps text extraction)
+\documentclass[11pt,a4paper]{article}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{textcomp}
+\usepackage{lmodern,textcomp}
 \usepackage[final]{microtype}
-
-% Math
-\usepackage{amsmath,amssymb,amsfonts}
-\usepackage{mathtools}
-\usepackage{bm}
-
-% Graphics and figures
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{subcaption}
-
-% Tables
-\usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage{array}
-\usepackage{multirow}
-
-% TikZ for diagrams
-\usepackage{tikz}
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, fit, backgrounds}
-
-% Layout and formatting
+\usepackage{amsmath,amssymb,mathtools}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{setspace}
-\onehalfspacing
-
-% Misc (xcolor should come before hyperref)
-\usepackage{xcolor}
-\usepackage{enumitem}
-
-% References and links
-\definecolor{linkblue}{RGB}{0,0,180}
-\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
-\usepackage{cleveref}
-
-% Code listings (for appendices)
+\setstretch{1.12}
+\usepackage{xcolor,enumitem,needspace}
+\usepackage[hypertexnames=false,colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{xurl}
 \usepackage{listings}
-\lstset{
-  basicstyle=\ttfamily\small,
-  breaklines=true,
-  frame=single,
-  language=Python
-}
-
-% section break
-\usepackage{titlesec}
-\newcommand{\sectionbreak}{\clearpage}
-
-%------------------------------------------------------------------------------
-% Custom commands
-%------------------------------------------------------------------------------
-% Math shortcuts
-\newcommand{\dd}{\mathrm{d}}
-\newcommand{\Veff}{V_{\mathrm{eff}}}
-\newcommand{\Ric}{R}
-\newcommand{\LC}{\mathrm{LC}}
-\newcommand{\EC}{\mathrm{EC}}
-\newcommand{\NY}{\mathrm{NY}}
-\newcommand{\TT}{\mathrm{TT}}
-\newcommand{\REE}{\mathrm{REE}}
-\newcommand{\FULL}{\mathrm{FULL}}
-
-% Topology notation
-\newcommand{\Sthree}{S^3}
-\newcommand{\Tthree}{T^3}
-\newcommand{\Nilthree}{\mathrm{Nil}^3}
-\newcommand{\Sone}{S^1}
-
-% Differential forms
-\newcommand{\wedgep}{\wedge}
-
-%------------------------------------------------------------------------------
-% Title and authors
-%------------------------------------------------------------------------------
-\title{Topology-Dependent Phase Classification of Effective Potentials\\
-in Einstein--Cartan + Nieh--Yan Minisuperspace}
-
+\usepackage{graphicx,booktabs,tabularx,array,placeins}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.75}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,breakatwhitespace=true,
+  columns=fullflexible,keepspaces=true,frame=single,showstringspaces=false,
+  aboveskip=0.8em,belowskip=0.8em}
+\setcounter{tocdepth}{1}
+\setlength{\emergencystretch}{2em}
+\hypersetup{pdftitle={Geometry-Dependent Classification of Reduced Potentials in Einstein--Cartan Gravity},
+  pdfauthor={Muacca},pdfsubject={Geometric torsion, complete Nieh--Yan term, and global normalization}}
+\title{Geometry-Dependent Classification of Reduced Potentials\\
+in Einstein--Cartan Gravity}
 \author{Muacca}
-
 \date{}
-
-%==============================================================================
 \begin{document}
-%==============================================================================
-
 \maketitle
-
 \begin{center}
-Version: v2\\
+Version: v3\\
 First release: 2026-01-11\\
-Revised: 2026-02-15
+Revised: 2026-10-25
 \end{center}
-
-%------------------------------------------------------------------------------
-% Abstract
-%------------------------------------------------------------------------------
 \begin{abstract}
-We study Einstein--Cartan (EC) gravity supplemented with the Nieh--Yan (NY) term 
-in a Euclidean--signature minisuperspace framework, and classify the resulting 
-effective potential into distinct ``phases.'' Based on the presence or absence 
-of local minima and barriers in the effective potential, we define three types: 
-(I) metastable well with barrier, (II) barrier-free rolling, and 
-(III) unstable/boundary-attached configurations.
+We compare the Einstein--Cartan (EC) action with a constant complete
+Nieh--Yan (NY) coupling restricted to static homogeneous geometries on
+$S^3\times S^1$, $T^3\times S^1$, and compact
+$\mathrm{Nil}^3\times S^1$.
+A metric-compatible connection carries axial and vector torsion.
+Specifying the connection and local invariants separately from lattices,
+periods, and integration volumes fixes the global normalization of each
+local calculation.
 
-While the Nieh--Yan density (a 4-form) can be written as an exact derivative, 
-it is geometrically defined through the coframe and torsion. To facilitate 
-meaningful comparison, we evaluate topology dependence under a unified ansatz. 
-We adopt spatial sections that admit left-invariant coframes, enabling 
-systematic description within a common minisuperspace framework.
+On the ansatz, the two contributions to the complete NY density coincide:
+$T^a\wedge T_a-e^a\wedge e^b\wedge R_{ab}=0$.
+The reduced potential of the complete action is therefore independent
+of the NY coupling $\theta$.
+In the one-variable classification with torsion coefficients and circle
+circumference fixed, $S^3$ has a strict radius minimum without a barrier
+for $V\ne0$, $|\eta|<2$.
+The complete action has no strict positive-radius minimum on isotropic
+or fixed-shape torus expansion, or on uniform Nil expansion.
+Varying one torus radius with the other two fixed is a distinct problem,
+whose minimum condition is also stated.
 
-As concrete test beds, we consider: (i) $\Sthree$, (ii) $\Tthree$, and 
-(iii) $\Nilthree$. For the NY term, we focus on the complete form (FULL) 
-as the primary object, while also examining TT (torsion-torsion component only) 
-and REE (the remaining component) as diagnostic comparisons to disentangle 
-the contributions within FULL.
+Diagnostic actions adding only the torsion-side or positive curvature-side
+NY density coincide on the ansatz. They can have barrier-separated minima
+from the mixed term, but these are not results for the complete NY action.
+The classification follows analytically from cubic polynomials, with
+boundaries, degeneracies, and numerical limitations distinguished.
 
-Our investigation addresses two main questions: (1) How does the phase 
-(Type I/II/III) of the effective potential depend on topology? 
-(2) Can we identify, through numerical scanning, critical conditions 
-corresponding to well formation/disappearance and barrier collapse, 
-and organize their geometric dependence?
-
-Our scanning results suggest the following:
-\begin{itemize}
-  \item The phase structure of the effective potential varies systematically 
-        with topology.
-  \item Within the NY term, some contributions exhibit relative insensitivity 
-        to topology, while others appear selectively depending on geometric conditions.
-\end{itemize}
+These are off-shell classifications along fixed variation paths.
+A radius minimum does not ensure stationarity under full variations
+including the independent connection, torsion, and circle circumference,
+Lorentzian dynamical stability, or physical masses and decay rates.
+For standard source-free EC gravity without a cosmological constant
+and with a constant NY coupling, a separate nonexistence obstruction
+applies to smooth nondegenerate full vacuum solutions on closed real
+Euclidean $S^3\times S^1$.
 \end{abstract}
-
-%------------------------------------------------------------------------------
-% Main text
-%------------------------------------------------------------------------------
-\input{sections/sec1}  % Introduction
-\input{sections/sec2}  % Setup and conventions
-\input{sections/sec3}  % Topology-specific reductions
-\input{sections/sec4}  % Numerical results
-\input{sections/sec5}  % Mechanisms and interpretation
-\input{sections/sec6}  % Representative points and stability quality
-\input{sections/sec7}  % Interpretation and utility
-\input{sections/sec8}  % Conclusions and outlook
-
-%------------------------------------------------------------------------------
-% Acknowledgments
-%------------------------------------------------------------------------------
+\clearpage
+\tableofcontents
+\clearpage
+\input{sections/sec1}
+\input{sections/sec2}
+\input{sections/sec3}
+\input{sections/sec4}
+\input{sections/sec5}
+\input{sections/sec6}
+\input{sections/sec7}
+\input{sections/sec8}
+\clearpage
+\appendix
+\input{appendices/appA}
+\input{appendices/appB}
+\input{appendices/appC}
+\input{appendices/appD}
+\input{appendices/appE}
+\input{appendices/appF}
+\input{appendices/appG}
+\clearpage
 \section*{Acknowledgments}
 
-The author acknowledges the use of the following AI tools during manuscript preparation: 
-Claude Opus 4.5 (Anthropic; accessed 2025-12), Gemini 3 Pro (Google; accessed 2025-12), 
-Grok 4.1 Thinking (xAI; accessed 2025-12), and GPT-5.2 Thinking via ChatGPT (OpenAI; accessed 2025-12). 
-These tools were used for language editing (including Japanese-English translation), outlining and 
-improving exposition, drafting and reviewing auxiliary code (scripts and pseudocode) that was 
-subsequently tested and validated by the author, and proposing candidate consistency checks and 
-alternative derivations to be independently verified by the author. 
-They were additionally used for literature discovery support (keyword generation and 
-preliminary summaries of candidate papers); 
+The author acknowledges the use of the following AI tools during manuscript preparation:
+Claude Opus 4.5 (Anthropic; accessed 2025-12), Gemini 3 Pro (Google; accessed 2025-12),
+Grok 4.1 Thinking (xAI; accessed 2025-12), and GPT-5.2 Thinking via ChatGPT (OpenAI; accessed 2025-12).
+These tools were used for language editing (including Japanese-English translation), outlining and
+improving exposition, drafting and reviewing auxiliary code (scripts and pseudocode) that was
+subsequently tested and validated by the author, and proposing candidate consistency checks and
+alternative derivations to be independently verified by the author.
+They were additionally used for literature discovery support (keyword generation and
+preliminary summaries of candidate papers);
 all references and factual claims were verified by the author using primary sources.
 
-The AI tools did not determine the scientific claims of this work and were not used to generate or 
-modify research data or evidentiary figures. 
+For this revision, Codex (OpenAI; accessed 2026-10) also assisted with
+computational and plotting code, bilingual presentation, and validation.
+The numerical values and plots were produced by deterministic evaluations
+of the stated formulas and checked against the accompanying implementation;
+they are not synthetic images produced by a generative image model.
 The author takes full responsibility for the content and for any remaining errors.
 
 This work was developed within the informal collaborative project \textbf{DPPU}
 (\textbf{D}onut-like topology, \textbf{P}lanck-scale compactness,
 \textbf{P}recession dynamics, \textbf{U}niverse).
-
-%------------------------------------------------------------------------------
-% Appendices
-%------------------------------------------------------------------------------
-\appendix
-\input{appendices/appA}  % Theoretical details
-\input{appendices/appB}  % Reproducibility and verification
-\input{appendices/appC}  % Numerical computation details
-\input{appendices/appD}  % Visualization tools
-\input{appendices/appE}  % Volume rescaling invariance in T3×S1
-\input{appendices/appF}  % Code and data access
-\input{appendices/appG}  % Errata and revision history (v1 → v2)
-
-%------------------------------------------------------------------------------
-% References
-%------------------------------------------------------------------------------
-\bibliographystyle{unsrt}
-% \bibliography{references}  % Uncomment when bibliography file is available
-
-% Placeholder references
 \begin{thebibliography}{99}
 \bibitem{Hehl1976}
 F.~W.~Hehl, P.~von der Heyde, G.~D.~Kerlick, and J.~M.~Nester,
@@ -214,8 +128,17 @@ Phys.\ Rev.\ D \textbf{55}, 7580 (1997).
 H.~T.~Nieh and M.~L.~Yan,
 ``An identity in Riemann-Cartan geometry,''
 J.\ Math.\ Phys.\ \textbf{23}, 373 (1982).
-\end{thebibliography}
 
-%==============================================================================
+\bibitem{Corichi2016}
+A.~Corichi, I.~Rubalcava-Garc\'ia, and T.~Vuka\v{s}inac,
+``Actions, topological terms and boundaries in first order gravity: A review,''
+Int.\ J.\ Mod.\ Phys.\ D \textbf{25}, 1630011 (2016),
+\href{https://arxiv.org/abs/1604.07764}{arXiv:1604.07764}.
+
+\bibitem{LeBrun2009}
+C.~LeBrun,
+``Einstein metrics, complex surfaces, and symplectic 4-manifolds,''
+Math.\ Proc.\ Cambridge Philos.\ Soc.\ \textbf{147}, 1--8 (2009),
+\href{https://doi.org/10.1017/S0305004109002345}{doi:10.1017/S0305004109002345}.
+\end{thebibliography}
 \end{document}
-%==============================================================================

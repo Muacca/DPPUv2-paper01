@@ -1,296 +1,121 @@
-%==============================================================================
-% Section 4: Numerical Results: Phase Diagrams and Boundaries
-%==============================================================================
-\section{Numerical Results: Phase Diagrams and Boundaries}
-\label{sec:numerical}
+\section{Analytic classification on the positive-radius domain}\label{sec4}
+\subsection{Definitions and cubic criterion}
+The domain is $r>0$.
+Type~I has a positive-radius local maximum followed by a strict local
+minimum. Type~II has a strict local minimum without a preceding
+positive-radius maximum. Type~III has no strict local minimum;
+it includes monotone, runaway, flat, and stationary-inflection cases.
+A numerical failure is not a physical Type~III result.
 
-This section presents the results of numerical scanning on the effective 
-potentials derived in Sec.~\ref{sec:reductions}. We first explain the Type 
-classification procedure and how to read phase diagrams, then show the phase 
-diagrams for each topology. The mechanisms of phase boundary formation and 
-geometric interpretation are discussed in Sec.~\ref{sec:mechanisms}.
-
-%------------------------------------------------------------------------------
-\subsection{Type Classification Procedure}
-\label{sec:classification_procedure}
-
-\subsubsection{Search region and numerical method}
-
-For each parameter point $(V, \eta, \theta_{\NY})$, we numerically search for 
-extrema of $\Veff(r)$ in the range $r \in [r_{\min}, r_{\max}] = [0.01, 10^6]$. 
-We use Brent's method (\texttt{scipy.optimize.minimize\_scalar}) for extremum 
-search and verify the curvature condition $\dd^2 V/\dd r^2 > 0$ by numerical 
-differentiation.
-
-\subsubsection{Type determination criteria}
-
-Based on the definitions in Sec.~\ref{sec:type_definition}, we determine Types 
-using the following criteria:
-
+For $U=P(Ar^3+Br^2+Cr)$ with $P,A>0$, define
+\begin{equation}
+U'=P(3Ar^2+2Br+C),\qquad
+D=B^2-3AC,\qquad
+r_\pm=\frac{-B\pm\sqrt D}{3A}.
+\tag{M4-01}\label{eq:M4-01}
+\end{equation}
+For $D>0$, the second derivatives at the two roots are
+$U''(r_\pm)=\pm2P\sqrt D$, so a positive $r_+$ is the strict-minimum
+candidate. The signs of the roots give necessary and sufficient conditions.
+The complete criterion is:
 \begin{itemize}
-  \item \textbf{Type I (stable with barrier)}: A local minimum $r_0$ exists 
-        within the allowed region, and a barrier ($\Delta V > 0$) exists in 
-        the $r \to 0$ direction
-  \item \textbf{Type II (rolling)}: A local minimum $r_0$ exists within the 
-        allowed region, but no barrier in the $r \to 0$ direction 
-        ($\dd\Veff/\dd r|_{r \to 0^+} < 0$)
-  \item \textbf{Type III (unstable)}: No stable local minimum exists within 
-        the allowed region, or search reaches boundary ($r_{\min}$ or $r_{\max}$)
+\item $C<0$: Type~II. The product of the roots, $C/(3A)$, is negative,
+so only $r_+$ is positive; no additional $B<0$ condition is needed.
+\item $C=0$ and $B<0$: Type~II, with $r_+=-2B/(3A)>0$;
+the root at $r=0$ is excluded.
+\item $C>0$, $B<0$, and $D>0$: Type~I, with $0<r_-<r_+$.
+\item Otherwise: Type~III. In particular, $D=0$ does not give a strict minimum.
 \end{itemize}
+This criterion does not depend on a finite search window.
+The condition $C>0$ alone is insufficient for a barrier and minimum:
+the sign of $B$ and the discriminant are essential.
 
-\subsubsection{Scan resolution}
+\subsection{Complete action}
+For $S^3$, $A=V^2$ and $C=9\eta^2-36$.
+When $V\ne0$,
+\begin{equation}
+\lvert\eta\rvert<2
+\quad\Longleftrightarrow\quad
+\text{type-II},\qquad
+r_0=\frac{\sqrt{12-3\eta^2}}{\lvert V\rvert}.
+\tag{M4-02}\label{eq:M4-02}
+\end{equation}
+Equivalently, $a_0=r_0/2$ and $|\chi|<1$.
+The condition is independent of $\theta$ and symmetric under $\eta\mapsto-\eta$.
 
-The scan resolution is 51 points in the $V$ direction, 151 points in the 
-$\eta$ direction, and 51 points in the $\theta_{\NY}$ direction (range $[0, 5]$), 
-giving approximately 390,000 evaluations per topology. Note that this paper 
-primarily presents results for $\theta_{\NY} \lesssim 2$. The uncertainty in 
-boundary positions is on the order of the grid spacing 
-($\Delta\eta \approx 0.1$, $\Delta V \approx 0.1$).
+For the isotropic or fixed-shape torus, $C=9\eta^2\ge0$;
+the FULL potential is increasing, except that it is flat when both
+torsion parameters vanish. For Nil, $C=36\eta^2+3>0$ and FULL is
+strictly increasing. There is no Type~I region in FULL on these paths
+and no stabilization driven by the complete NY term.
 
-%------------------------------------------------------------------------------
-\subsection{How to Read Phase Diagrams}
-\label{sec:reading_diagrams}
+\subsection{Diagnostic actions}
+For $S^3$ with $V\ne0$, $|\eta|<2$ gives Type~II for any mixed coefficient.
+At $|\eta|=2$, Type~II requires $V\eta\theta<0$.
+For $|\eta|>2$, Type~I occurs precisely when
+\begin{equation}
+V\eta\theta<0,\qquad
+16\eta^2\kappa^4\theta^2>3(\eta^2-4).
+\tag{M4-03}\label{eq:M4-03}
+\end{equation}
+For the isotropic or fixed-shape torus, Type~I requires
+\begin{equation}
+V\eta\theta<0,\qquad
+\kappa^2\lvert\theta\rvert>\frac{\sqrt3}{4}.
+\tag{M4-04}\label{eq:M4-04}
+\end{equation}
+For Nil, the condition is
+\begin{equation}
+V\eta\theta<0,\qquad
+(64\kappa^4\theta^2-12)\eta^2>1.
+\tag{M4-05}\label{eq:M4-05}
+\end{equation}
+Equality at the discriminant boundary gives a stationary inflection,
+not a strict minimum. These are conditions for TT and positive REE,
+not for FULL.
 
-In the phase diagrams of this paper, Type classification is displayed on the 
-$(V, \eta)$ plane using the following visual conventions:
+\subsection{Degenerate parameters and numerical boundaries}
+At $V=0$, this ansatz has $A=B=0$, so the potential is linear.
+On $S^3$, it runs away for $|\eta|<2$, is flat at $|\eta|=2$, and
+increases for $|\eta|>2$.
+On $T^3$, it is flat at $\eta=0$ and otherwise increases.
+On Nil, it always increases.
+The generic quadratic case $A=0$, $B>0$, $C<0$ would give Type~II,
+but it is not the $V=0$ specialization of this ansatz.
 
-\begin{itemize}
-  \item \textbf{Colored region (no hatching)}: Type I (metastable well with barrier)
-  \item \textbf{Colored region (with hatching)}: Type II (rolling, no barrier)
-  \item \textbf{White region}: Type III (unstable / boundary-attached)
-\end{itemize}
+In floating-point evaluation, if
+$D\le64\epsilon_{\mathrm{float}}\max(B^2,|3AC|)$,
+the implementation reports no resolved strict minimum.
+Exact $D=0$ and the numerically unresolved neighborhood of that boundary
+are distinct: in particular, a small positive discriminant is not proved
+to be zero by this test. Analytic conditions take precedence.
+Appendix~\ref{appC} distinguishes analytic classification from
+search-window and numerical-error behavior.
 
-The color gradient represents the logarithmic value of the stable radius 
-$\log_{10}(r_0)$, ranging from purple (small) to yellow (large). White contour 
-lines show the logarithmic barrier height/well depth $\log_{10}(\Delta V)$.
+\subsection{Figures and summary tables}
+See Table~\ref{tab:v3:3} for the conditions and values.
 
-%------------------------------------------------------------------------------
-\subsection{Phase Diagrams by Topology: FULL Variant}
-\label{sec:phase_diagrams}
+The construction, curves, or classification are illustrated in Figure~\ref{fig:fig04_extrema}, Figure~\ref{fig:fig05_full_phases}, Figure~\ref{fig:fig06_diagnostics_04_05}, Figure~\ref{fig:fig07_diagnostics_08_09}.
 
-\subsubsection{$\Sthree \times \Sone$}
-
-Figure~\ref{fig:phase_S3} shows the phase diagrams for $\Sthree$-FULL at 
-$\theta_{\NY} = 0, 1, 2$.
-
+\input{tables/v3/tab03}
 \begin{figure}[htbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/fig09_phase_diagram_S3-FULL.png}
-  \caption{Phase diagram: $\Sthree \times \Sone$ ($\theta_{\NY} = 0, 1, 2$).}
-  \label{fig:phase_S3}
-\end{figure}
-
-\paragraph{For $\theta_{\NY} = 0$:}
-\begin{itemize}
-  \item $|\eta| \gtrsim 2$: Type III (white)
-  \item $|\eta| \lesssim 2$: Band-like region of Type II (hatched). 
-        This corresponds exactly to the region where $C = 9\eta^2 - 36 < 0$.
-\end{itemize}
-
-\paragraph{For $\theta_{\NY} > 0$:}
-\begin{itemize}
-  \item Type I (stable well) appears in regions where $\eta$ is large.
-  \item Type II (rolling) persists in the central band $|\eta| \lesssim 2$.
-  \item A characteristic "transition" (Type I $\to$ Type II $\to$ Type III) occurs 
-        as $\eta$ scans across the origin (e.g., $-3 \to 0 \to +3$).
-        This reflects the sign change of $C(\eta)$.
-  \item $\eta \to -\eta$ asymmetry is introduced by the $B$ term.
-\end{itemize}
-
-\paragraph{Key observations:}
-\begin{enumerate}
-  \item $\theta_{\NY} = 0$: Stability (Type II) is purely geometric ($C<0$).
-  \item $\theta_{\NY} > 0$: $B$ term enables barrier formation (Type I) at $\eta < 0$ area outside the central band.
-  \item The phase boundary consistently aligns with $C=0$ ($\eta=\pm 2$).
-\end{enumerate}
-
-\subsubsection{$\Tthree \times \Sone$}
-
-Figure~\ref{fig:phase_T3} shows the phase diagrams for $\Tthree$-FULL at 
-$\theta_{\NY} = 0, 1, 2$.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/fig10_phase_diagram_T3-FULL.png}
-  \caption{Phase diagram: $\Tthree \times \Sone$ ($\theta_{\NY} = 0, 1, 2$).}
-  \label{fig:phase_T3}
-\end{figure}
-
-\paragraph{For $\theta_{\NY} = 0$:}
-\begin{itemize}
-  \item Entire region is Type III (monotonically increasing)
-  \item No stable minimum exists
-\end{itemize}
-
-\paragraph{For $\theta_{\NY} > 0$:}
-\begin{itemize}
-  \item Type I (stable well) appears in the $\eta < 0$ region where $B < 0$
-  \item $\eta \gtrsim 0$ is entirely Type III
-\end{itemize}
-
-\paragraph{Key observations:}
-\begin{enumerate}
-  \item $\theta_{\NY} = 0$: No stability (Geometric instability).
-  \item $\theta_{\NY} > 0$: Torsion-induced stability. Type I appears.
-  \item $\eta \to -\eta$ symmetry is broken
-\end{enumerate}
-
-\subsubsection{$\Nilthree \times \Sone$}
-
-Figure~\ref{fig:phase_Nil3} shows the phase diagrams for $\Nilthree$-FULL at 
-$\theta_{\NY} = 0, 1, 2$.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/fig11_phase_diagram_Nil3-FULL.png}
-  \caption{Phase diagram: $\Nilthree \times \Sone$ ($\theta_{\NY} = 0, 1, 2$).}
-  \label{fig:phase_Nil3}
-\end{figure}
-
-\paragraph{For $\theta_{\NY} = 0$:}
-\begin{itemize}
-  \item Entire region is Type III. Since $C = 36\eta^2 + 3 > 0$ always, and $B=0$,
-        no minimum can form geometrically.
-\end{itemize}
-
-\paragraph{For $\theta_{\NY} > 0$:}
-\begin{itemize}
-  \item Type I (stable well) appears in the $\eta < 0$ region where $B < 0$.
-  \item $\eta \gtrsim 0$ is entirely Type III
-  \item Type III leakage Near $\eta \approx 0$, even on the negative side,
-        a Type III region persists. This is because $B^2 \propto \eta^2$ vanishes
-        faster than $C \to 3$ as $\eta \to 0$, failing the stability condition.
-\end{itemize}
-
-\paragraph{Key observations:}
-\begin{enumerate}
-  \item $\theta_{\NY} = 0$: No stability (Geometric instability).
-  \item $\theta_{\NY} > 0$: Torsion-induced stability, but inhibited by negative curvature near $\eta = 0$.
-  \item $\eta \to -\eta$ symmetry is broken.
-\end{enumerate}
-
-%------------------------------------------------------------------------------
-\subsection{Summary of $\theta_{\NY}$ Dependence}
-\label{sec:theta_dependence}
-
-Tables~\ref{tab:boundary_S3}--\ref{tab:boundary_Nil3} summarize the 
-$\theta_{\NY}$ dependence of phase boundaries for each topology.
-
-\begin{table}[H]
 \centering
-\caption{$\Sthree$: $\theta_{\NY}$ dependence of phase boundary positions 
-(FULL variant).}
-\label{tab:boundary_S3}
-\begin{tabular}{@{}llll@{}}
-\toprule
-Type & $\theta_{\NY} = 0$ & $\theta_{\NY} = 1$ & $\theta_{\NY} = 2$ \\
-\midrule
-Type I region & None & $\eta < -2$ & $\eta < -2$ \\
-Type II (main band) & $-2 < \eta < 2$ & $-2 < \eta < 2$ & $-2 < \eta < 2$ \\
-Type III region & $\eta < -2, \eta > 2$ & $\eta > 2$ & $\eta > 2$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{$\Tthree$: $\theta_{\NY}$ dependence of phase boundary positions 
-(FULL variant).}
-\label{tab:boundary_T3}
-\begin{tabular}{@{}llll@{}}
-\toprule
-Type & $\theta_{\NY} = 0$ & $\theta_{\NY} = 1$ & $\theta_{\NY} = 2$ \\
-\midrule
-Type I region & None & $\eta \lesssim 0$ & $\eta \lesssim 0$ \\
-Type II region & None & None & None \\
-Type III region & Entire & $0 \lesssim \eta$ & $0 \lesssim \eta$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{$\Nilthree$: $\theta_{\NY}$ dependence of phase boundary positions 
-(FULL variant).}
-\label{tab:boundary_Nil3}
-\begin{tabular}{@{}llll@{}}
-\toprule
-Type & $\theta_{\NY} = 0$ & $\theta_{\NY} = 1$ & $\theta_{\NY} = 2$ \\
-\midrule
-Type I region & None & $\eta \lesssim -0.5$ & $\eta \lesssim -0.3$ \\
-Type II region & None & None & None \\
-Type III region & Entire & $\eta \gtrsim -0.5$ & $\eta \gtrsim -0.3$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Key observations:}
-\begin{enumerate}
-  \item \textbf{$\Sthree$}: Shows dependence on $\theta_{\NY}$, with 
-        stable region expanding toward $\eta < -2$
-  \item \textbf{$\Tthree$}: Entire region is Type III for 
-        $\theta_{\NY} \lesssim 0.9$, but Type I appears in $\eta < 0$ for 
-        $\theta_{\NY} \gtrsim 0.9$
-  \item \textbf{$\Nilthree$}: Similar stability to $\Tthree$, 
-        but inhibited by negative curvature near $\eta = 0$
-\end{enumerate}
-
-%------------------------------------------------------------------------------
-\subsection{Comparison with TT/REE Variants}
-\label{sec:variant_comparison}
-
-This subsection compares the phase structure across three topologies
-($\Sthree$, $\Tthree$, $\Nilthree$) and three Nieh--Yan variants (FULL, TT, REE)
-as the coupling constant $\theta_{\NY}$ increases.
-
-\paragraph{Earlier stabilization of the TT variant (Fig.~\ref{fig:phase_matrix_04to05}):}
-
-\begin{itemize}
-  \item At $\theta_{\NY} = 0.5$, the TT variant develops a stable region (Type~I)
-        that is absent in the FULL and REE variants at the same coupling.
-  \item For $\Sthree$, stable regions already exist in all variants at
-        $\theta_{\NY} < 0.5$; however, at $\theta_{\NY} = 0.5$ the Type~I region
-        in the TT variant expands significantly toward lower $\eta$.
-        This behavior is consistent with curvature-assisted stabilization in
-        $\Sthree$, where positive background curvature cooperates with torsional
-        contributions.
-  \item For $\Tthree$ and $\Nilthree$, which remain entirely Type~III (unstable)
-        at $\theta_{\NY} < 0.5$, the TT variant is the first to develop a Type~I
-        region in the $\eta < 0$ domain upon reaching $\theta_{\NY} = 0.5$.
-  \item The $r^2$ coefficient $B$ in the TT variant is larger in magnitude than
-        in the FULL and REE variants ($B_{\TT} = 2 B_{\FULL}$), providing a
-        stronger stabilizing (negative) contribution to the effective potential.
-        This likely explains why the TT sector satisfies the
-        stability condition at smaller $\theta_{\NY}$.
-\end{itemize}
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.9\textwidth]{figures/fig12_phase_matrix_04to05.png}
-  \caption{Phase diagram matrix: $\theta_{\NY} = 0.4$ to $0.5$.}
-  \label{fig:phase_matrix_04to05}
+\includegraphics[width=.96\linewidth]{figures/v3/fig04_extrema.png}
+\caption{Schematic classification on positive scales, with $P=1$ and each polynomial given in its panel. Open origin markers are excluded from the domain. Type~I height is the maximum-to-minimum difference; Type~II depth is measured from the origin limit. The Type~III panel shows one example without a minimum.}\label{fig:fig04_extrema}
 \end{figure}
-
-\paragraph{Stabilization of FULL and REE variants (Fig.~\ref{fig:phase_matrix_08to09}):}
-
-\begin{itemize}
-  \item For $\theta_{\NY} < 0.9$, the FULL and REE variants of $\Tthree$ and
-        $\Nilthree$ remain Type~III. At $\theta_{\NY} = 0.9$, Type~I regions
-        appear simultaneously in both variants, indicating that they have reached
-        the same stabilization threshold previously crossed by the TT variant.
-  \item In $\Nilthree$, the TT variant's stable region extends close to
-        $\eta = 0$, whereas the FULL and REE variants retain a residual Type~III
-        ``leakage'' near $\eta \approx 0$. This residual instability suggests a
-        negative curvature-related suppression of stabilization specific to
-        the Nil geometry.
-  \item Across all three topologies, the phase diagrams of the FULL and REE
-        variants are identical in shape. This indicates that the FULL and REE
-        reductions converge to a common effective structure regardless of topology.
-\end{itemize}
-
 \begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.9\textwidth]{figures/fig13_phase_matrix_08to09.png}
-  \caption{Phase diagram matrix: $\theta_{\NY} = 0.8$ to $0.9$.}
-  \label{fig:phase_matrix_08to09}
+\centering
+\includegraphics[width=.96\linewidth]{figures/v3/fig05_full_phases.png}
+\caption{FULL phase maps at $\kappa=L=1$, sampled at spacing $0.1$ in geometric $V\in[-5,0]$ and $\eta\in[-5,10]$. Classification agrees at $\theta=0,1,2$. Only $S^3$ with $V\ne0$, $|\eta|<2$ is Type~II. Dashed boundaries $\eta=\pm2$ and the top edge $V=0$ are Type~III; open circles mark flat cases. There is no Type~I region.}\label{fig:fig05_full_phases}
 \end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.96\linewidth]{figures/v3/fig06_diagnostics_04_05.png}
+\caption{TT and positive REE phase maps for $\theta=0.4,0.5$, on the same input grid as Figure~\ref{fig:fig05_full_phases}, with $\kappa=L=1$. Dashed lines are the analytic boundaries of (M4-03)--(M4-05); colored cells have spacing $0.1$. The top edge $V=0$ is entirely Type~III. For $S^3$ at $V<0$, $\eta=2$ belongs to Type~II, whereas $\eta=-2$ is Type~III. A positive repeated stationary root at $D=0$ is Type~III.}\label{fig:fig06_diagnostics_04_05}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.96\linewidth]{figures/v3/fig07_diagnostics_08_09.png}
+\caption{TT and positive REE phase maps for $\theta=0.8,0.9$. Domains, grid spacing, and boundary conventions are those of Figure~\ref{fig:fig06_diagnostics_04_05}. Type~I regions of the diagnostic actions are not regions of the complete NY action.}\label{fig:fig07_diagnostics_08_09}
+\end{figure}
+\FloatBarrier

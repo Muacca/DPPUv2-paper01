@@ -28,6 +28,7 @@ from multiprocessing import Pool, cpu_count
 from functools import partial
 import argparse
 import time
+from decimal import Decimal, localcontext
 
 # ==============================================================================
 # Constants
@@ -36,6 +37,10 @@ import time
 PI = np.pi
 KAPPA = 1.0
 L = 1.0
+
+# Global geometry: L is the S1 circumference and S3 round radius is r/2.
+# T3 angles have period 2pi. Nil3 uses lattice (2pi,2pi,4pi^2).
+# See docs/CONVENTIONS.md for coframes and integration domains.
 
 # For T³×S¹, we set R2 = R3 = R1 = r (isotropic scaling)
 # R2 and R3 constants are no longer needed
@@ -53,67 +58,42 @@ R_BOUNDARY_THRESHOLD = 0.02  # If r0 < this or > R_MAX - this, consider unstable
 # --- S³×S¹ ---
 
 def V_S3_FULL(r, V_param, eta, theta):
-    """
-    S³xS¹ with FULL Nieh-Yan (N = TT - Ree)
-    V(r) = 2*pi²*L*r*(V²r² + 6*V*η*κ²*θ*r + 9η² - 36) / (3κ²)
-    [Updated 2026-02-11: Riemann tensor bug fix applied]
-    """
+    """S3: FULL NY=0 for the static homogeneous ansatz."""
     if r <= 0:
         return 1e50
     term1 = V_param**2 * r**2
-    term2 = 6 * V_param * eta * KAPPA**2 * theta * r
+    term2 = 0  # Static homogeneous FULL NY is zero.
     term3 = 9 * eta**2 - 36
-    return (2 * PI**2 * L * r * (term1 + term2 + term3)) / (3 * KAPPA**2)
+    return (PI**2 * L * r * (term1 + term2 + term3)) / (12 * KAPPA**2)
 
 
 def V_S3_TT(r, V_param, eta, theta):
     """
     S³xS¹ with TT-only Nieh-Yan
-    V(r) = 2*pi²*L*r*(V²r² + 12*V*η*κ²*θ*r + 9η² - 36) / (3κ²)
-    [Updated 2026-02-11: Riemann tensor bug fix applied]
+    U(r) = pi²*L*r*(V²r² + 12*V*η*κ²*θ*r + 9η² - 36) / (12κ²)
+    The round-sphere radius is r/2.
     """
     if r <= 0:
         return 1e50
     term1 = V_param**2 * r**2
     term2 = 12 * V_param * eta * KAPPA**2 * theta * r
     term3 = 9 * eta**2 - 36
-    return (2 * PI**2 * L * r * (term1 + term2 + term3)) / (3 * KAPPA**2)
+    return (PI**2 * L * r * (term1 + term2 + term3)) / (12 * KAPPA**2)
 
 
 def V_S3_REE(r, V_param, eta, theta):
-    """
-    S³xS¹ with Ree-only Nieh-Yan
-    V(r) = 2*pi²*L*r*(V²r² + 6*V*η*κ²*θ*r + 9η² - 36) / (3κ²)
-    [Updated 2026-02-11: Riemann tensor bug fix applied]
-    """
-    if r <= 0:
-        return 1e50
-    term1 = V_param**2 * r**2
-    term2 = 6 * V_param * eta * KAPPA**2 * theta * r
-    term3 = 9 * eta**2 - 36
-    return (2 * PI**2 * L * r * (term1 + term2 + term3)) / (3 * KAPPA**2)
+    """Positive REE diagnostic equals TT for the static homogeneous ansatz."""
+    return V_S3_TT(r, V_param, eta, theta)
 
 
-# --- T³×S¹ ---
-# Note: Isotropic scaling R1 = R2 = R3 = r
 
 def V_T3_FULL(r, V_param, eta, theta):
-    """
-    T³xS¹ with FULL Nieh-Yan (Isotropic: R1 = R2 = R3 = r)
-    
-    Original from engine log:
-    V(r) = 16*pi⁴*L*R2*R3*(R1²V² + 6*R1*V*η*κ²*θ + 9η²) / (3*R1*κ²)
-    
-    With R2 = R3 = R1 = r (isotropic):
-    V(r) = 16*pi⁴*L*r² * (r²V² + 6*r*V*η*κ²*θ + 9η²) / (3*r*κ²)
-         = 16*pi⁴*L / (3κ²) * r * (r²V² + 6*r*V*η*κ²*θ + 9η²)
-         = 16*pi⁴*L / (3κ²) * (V²r³ + 6*V*η*κ²*θ*r² + 9η²*r)
-    """
+    """T3: FULL NY=0 for the static homogeneous ansatz."""
     if r <= 0:
         return 1e50
-    prefactor = 16 * PI**4 * L / (3 * KAPPA**2)
+    prefactor = 8 * PI**3 * L / (3 * KAPPA**2)
     term1 = V_param**2 * r**3
-    term2 = 6 * V_param * eta * KAPPA**2 * theta * r**2
+    term2 = 0  # Static homogeneous FULL NY is zero.
     term3 = 9 * eta**2 * r
     return prefactor * (term1 + term2 + term3)
 
@@ -122,14 +102,14 @@ def V_T3_TT(r, V_param, eta, theta):
     """
     T³xS¹ with TT-only Nieh-Yan (Isotropic: R1 = R2 = R3 = r)
     
-    Original: V(r) = 16*pi⁴*L*R2*R3*(R1²V² + 12*R1*V*η*κ²*θ + 9η²) / (3*R1*κ²)
+    U = 8*pi³*L*R2*R3*(R1²V² + 12*R1*V*η*κ²*θ + 9η²) / (3*R1*κ²)
     
     With R2 = R3 = R1 = r:
-    V(r) = 16*pi⁴*L / (3κ²) * (V²r³ + 12*V*η*κ²*θ*r² + 9η²*r)
+    U(r) = 8*pi³*L / (3κ²) * (V²r³ + 12*V*η*κ²*θ*r² + 9η²*r)
     """
     if r <= 0:
         return 1e50
-    prefactor = 16 * PI**4 * L / (3 * KAPPA**2)
+    prefactor = 8 * PI**3 * L / (3 * KAPPA**2)
     term1 = V_param**2 * r**3
     term2 = 12 * V_param * eta * KAPPA**2 * theta * r**2
     term3 = 9 * eta**2 * r
@@ -137,25 +117,17 @@ def V_T3_TT(r, V_param, eta, theta):
 
 
 def V_T3_REE(r, V_param, eta, theta):
-    """
-    T³xS¹ with Ree-only Nieh-Yan (same as FULL for T³)
-    """
-    return V_T3_FULL(r, V_param, eta, theta)
+    """Positive REE diagnostic equals TT for the static homogeneous ansatz."""
+    return V_T3_TT(r, V_param, eta, theta)
 
 
-# --- Nil³×S¹ ---
-# Note: Using R as the variable radius
 
 def V_Nil3_FULL(r, V_param, eta, theta):
-    """
-    Nil³xS¹ with FULL Nieh-Yan
-    V(r) = 4*pi⁴*L*R*(4R²V² + 24*R*V*η*κ²*θ + 36η² + 3) / (3κ²)
-    [Updated 2026-02-11: Riemann tensor bug fix applied]
-    """
+    """Nil3: FULL NY=0 for the static homogeneous ansatz."""
     if r <= 0:
         return 1e50
     term1 = 4 * V_param**2 * r**2
-    term2 = 24 * V_param * eta * KAPPA**2 * theta * r
+    term2 = 0  # Static homogeneous FULL NY is zero.
     term3 = 36 * eta**2 + 3
     return (4 * PI**4 * L * r * (term1 + term2 + term3)) / (3 * KAPPA**2)
 
@@ -175,17 +147,8 @@ def V_Nil3_TT(r, V_param, eta, theta):
 
 
 def V_Nil3_REE(r, V_param, eta, theta):
-    """
-    Nil³xS¹ with Ree-only Nieh-Yan
-    V(r) = 4*pi⁴*L*R*(4R²V² + 24*R*V*η*κ²*θ + 36η² + 3) / (3κ²)
-    [Updated 2026-02-11: Riemann tensor bug fix applied]
-    """
-    if r <= 0:
-        return 1e50
-    term1 = 4 * V_param**2 * r**2
-    term2 = 24 * V_param * eta * KAPPA**2 * theta * r
-    term3 = 36 * eta**2 + 3
-    return (4 * PI**4 * L * r * (term1 + term2 + term3)) / (3 * KAPPA**2)
+    """Positive REE diagnostic equals TT for the static homogeneous ansatz."""
+    return V_Nil3_TT(r, V_param, eta, theta)
 
 
 # ==============================================================================
@@ -209,7 +172,95 @@ POTENTIAL_FUNCTIONS = {
 # Stability Analysis
 # ==============================================================================
 
+def get_cubic_coefficients(topology, ny_variant, V_param, eta, theta,
+                           kappa=None, length=None):
+    """Coefficients (a,b,c) of U=a*r**3+b*r**2+c*r, at fixed torsion.
+
+    L/length is the S1 circumference. S3 round radius is r/2.
+    T3 uses isotropic scaling; positive fixed shape ratios multiply length.
+    Nil3 uses the (2pi,2pi,4pi^2) Heisenberg lattice.
+    FULL is the complete NY action; TT and positive REE are diagnostics.
+    """
+    kappa = KAPPA if kappa is None else kappa
+    length = L if length is None else length
+    if kappa <= 0 or length <= 0:
+        raise ValueError('kappa and length must be positive')
+    if ny_variant not in ('FULL', 'TT', 'REE'):
+        raise ValueError('Unknown NY variant')
+    b = 0 if ny_variant == 'FULL' else 12*V_param*eta*kappa**2*theta
+    if topology == 'S3':
+        prefactor, a, c = PI**2*length/(12*kappa**2), V_param**2, 9*eta**2-36
+    elif topology == 'T3':
+        prefactor, a, c = 8*PI**3*length/(3*kappa**2), V_param**2, 9*eta**2
+    elif topology == 'Nil3':
+        prefactor, a, c = 4*PI**4*length/(3*kappa**2), 4*V_param**2, 36*eta**2+3
+        b *= 4
+    else:
+        raise ValueError('Unknown topology')
+    return prefactor*a, prefactor*b, prefactor*c
+
+
+def analyze_cubic_stability(a, b, c):
+    """Classify U=a*r**3+b*r**2+c*r on r>0, with a>=0.
+
+    Return (radius, barrier height or origin-to-minimum depth, type).
+    Type I has a positive local maximum preceding a strict minimum;
+    type II has a strict minimum without that barrier. Type III includes
+    monotone, flat, runaway and stationary-inflection cases.
+    Discriminants within 64 float eps relative to their constituent terms
+    are unresolved double-root boundaries, without a resolved strict minimum.
+    Decimal arithmetic avoids overflow and cancellation in root evaluation.
+    """
+    no_minimum = (None, None, 'type-III')
+    with localcontext() as ctx:
+        ctx.prec = 50
+        a, b, c = (Decimal(str(x)) for x in (a, b, c))
+        if not all(x.is_finite() for x in (a, b, c)) or a < 0:
+            raise ValueError('Finite coefficients with a>=0 are required')
+        if a == 0:
+            if b > 0 and c < 0:
+                return float(-c/(2*b)), float(c*c/(4*b)), 'type-II'
+            return no_minimum
+        discriminant = b*b - 3*a*c
+        tolerance = Decimal(str(64*np.finfo(float).eps))*max(b*b, abs(3*a*c))
+        if discriminant <= tolerance:
+            return no_minimum
+        root = discriminant.sqrt()
+        if b >= 0:
+            if c >= 0:
+                return no_minimum
+            radius = -c/(b+root)
+        else:
+            radius = (-b+root)/(3*a)
+        if radius <= 0:
+            return no_minimum
+        if c > 0:
+            delta = 4*discriminant*root/(27*a*a)
+            phase = 'type-I'
+        else:
+            delta = radius*radius*(2*a*radius+b)
+            phase = 'type-II'
+        return float(radius), float(delta), phase
+
+
 def analyze_stability(potential_func, V_param, eta, theta):
+    """Classify the radius potential at fixed parameters.
+
+    Registered potentials and callables exposing cubic_coefficients(V,eta,theta)
+    use analytic stationary roots on r>0. Other callables use a bounded numerical
+    fallback, limited to its search window and resolution.
+    """
+    coefficients = getattr(potential_func, 'cubic_coefficients', None)
+    if coefficients is not None:
+        return analyze_cubic_stability(*coefficients(V_param, eta, theta))
+    for (topology, variant), func in POTENTIAL_FUNCTIONS.items():
+        if potential_func is func:
+            return analyze_cubic_stability(*get_cubic_coefficients(
+                topology, variant, V_param, eta, theta))
+    return _analyze_bounded_potential(potential_func, V_param, eta, theta)
+
+
+def _analyze_bounded_potential(potential_func, V_param, eta, theta):
     """
     Analyze the stability of a potential configuration.
     
@@ -307,9 +358,6 @@ def calculate_single_point(args):
     Used for multiprocessing.
     """
     topology, ny_variant, V_param, eta, theta = args
-    V_param = round(V_param, 2)
-    eta = round(eta, 2)
-    theta = round(theta, 2)
 
     potential_func = POTENTIAL_FUNCTIONS[(topology, ny_variant)]
     r0, delta_V, stability_type = analyze_stability(potential_func, V_param, eta, theta)

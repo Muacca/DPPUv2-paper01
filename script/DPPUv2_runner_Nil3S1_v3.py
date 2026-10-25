@@ -140,8 +140,11 @@ class Nil3S1Engine(BaseFrameEngine):
         self.data['metric_frame'] = metric
         self._log_info("Frame metric: eta_ab = diag(1,1,1,1)")
         
-        # Total volume for Nil3xS1
-        # Standard compact quotient: (2pi)^4 L R^3
+        # Left Heisenberg quotient with coframe R*(dx,dy,dz-x*dy).
+        # Lattice periods (a,b,c)=(2pi,2pi,4pi^2), a*b/c=1:
+        # (x,y,z)~(x+a,y,z+a*y)~(x,y+b,z)~(x,y,z+c).
+        # Fundamental box [0,a)x[0,b)x[0,c), and S1 circumference L.
+        # See docs/CONVENTIONS.md, global geometry and integration domains.
         total_volume = (2*pi)**4 * L * R**3
         self.data['total_volume'] = total_volume
         self._log_info(f"Total volume: (2pi)^4 L R^3")

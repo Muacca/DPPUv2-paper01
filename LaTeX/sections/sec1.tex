@@ -1,139 +1,86 @@
-%==============================================================================
-% Section 1: Introduction
-%==============================================================================
-\section{Introduction}
-\label{sec:introduction}
+\section{Introduction}\label{sec1}
+\subsection{Question and scope}
+We study reduced potentials in Einstein--Cartan (EC) gravity with a constant
+Nieh--Yan (NY) coupling on static, homogeneous Euclidean geometries
+$S^3\times S^1$, $T^3\times S^1$, and compact $\mathrm{Nil}^3\times S^1$.
+The connection is metric compatible and admits axial and vector torsion.
+The question is how the extrema of a specified one-parameter restriction of
+the action depend on the geometry, the torsion parameters, and the chosen
+action variant.
 
-%------------------------------------------------------------------------------
-\subsection{Background: Correspondence Between Geometric Input and Phase Structure of Effective Potentials}
-\label{sec:background}
+Throughout this paper, a \emph{phase} means an extremum class on the open
+positive-radius domain. It denotes neither a thermodynamic phase,
+a transition between topologies, nor a classification of solutions
+of the full field equations. We define $U=-S$
+after integration over all four dimensions. Without a kinetic term, a time
+prescription, constraints, and a physical unit dictionary, this quantity
+cannot be identified with an energy or a particle mass.
 
-In theories where the coframe and connection are treated as independent variables, 
-curvature and torsion are introduced on equal footing as geometric degrees of freedom. 
-In particular, Einstein--Cartan (EC) theory and its extensions allow torsion and 
-topological densities to appear in the action, potentially making the structure 
-of the reduced effective theory sensitive to geometric input.
+\subsection{Torsion and comparison of geometries}
+The same torsion ansatz is used on the three spatial geometries.
+Local structure coefficients and curvature are specified separately from
+the global quotient, coordinate periods, and integration volume.
+The EC framework and the NY identity provide the underlying geometric
+setting \cite{Hehl1976,NiehYan1982,Chandia1997}.
 
-Meanwhile, minisuperspace reduction based on symmetry assumptions provides a 
-powerful procedure for mapping infinite-dimensional field theories to 
-finite-dimensional systems. However, even within the same reduction framework, 
-how differences in spatial topology or structure constants of homogeneous spaces 
-affect the shape of the effective potential $\Veff(r)$---including the presence 
-or absence of minima and barriers, and transitions to rolling behavior---has not 
-been systematically organized.
+In the preceding version of this paper and its computational implementation,
+the input array was called $T$. With the Cartan equation and index order
+used here, the torsion reconstructed from that connection is the negative
+of this array. We denote the input array by $\tau$ and use $T$ for geometric
+torsion, so that $\tau=-T$. The parameters $V,\eta$ in the main text describe
+$T$. Appendix~\ref{appA} gives the connection dictionary, and
+Appendix~\ref{appC} gives the input-domain dictionary.
 
-For this reason, it is important to classify and visualize, in a reproducible manner, 
-the correspondence between geometric input and the phase structure of the reduced 
-effective potential. This work organizes this correspondence using representative 
-homogeneous spaces as test beds, presenting the results as phase diagrams and 
-representative points.
+This dictionary preserves the formulas used to construct the contortion
+and connection from the code input: simultaneous conversion of the array
+and its parameters describes the same connection. It is distinct from
+the correction of the NY contraction coefficient, which changes the
+reduced potentials.
 
-%------------------------------------------------------------------------------
-\subsection{Our Approach: Treating EC+NY as a ``Phase Classification Problem for Effective Potentials''}
-\label{sec:approach}
+\subsection{Principal conclusions}
+On the ansatz considered here, the TT and positive-REE densities coincide
+pointwise. Their difference, the complete NY density, vanishes.
+Consequently, the complete action, denoted FULL, has no $\theta$-dependent
+phase boundary. For fixed torsion parameters and circle length,
+$S^3$ can support a strict radius minimum through its negative linear
+term and the positive cubic vector-torsion term. The isotropic or
+fixed-shape $T^3$ path and the uniform Nil path do not support such a
+minimum in FULL.
 
-In this work, we take EC+NY (Einstein--Cartan gravity with the Nieh--Yan term) as 
-our object of study and classify the phases of the effective potential in a 
-Euclidean-signature minisuperspace from the perspective of topology dependence. 
-In EC theory, torsion is naturally introduced as geometry, and while the NY density 
-(a 4-form) can be written as an exact derivative, it is geometrically defined 
-through the coframe and torsion. Therefore, by comparing how the effective potential 
-changes when varying the spatial topology under the same minisuperspace ansatz, 
-we diagnose the phase structure provided by EC+NY from the viewpoint of geometric input.
+The separate TT and positive-REE actions are diagnostic comparisons.
+Their mixed term is proportional to $V\eta\theta$, and they can have
+barriers. Those barriers are not properties of FULL. The comparison is
+geometry dependent: the global quotient and the path of variation are
+part of the problem. It does not establish vacuum selection by topology.
 
-Although EC+NY originates as a gravitational theory, the focus of this paper is 
-on systematically organizing the influence of geometric input (topology, structure 
-constants, torsion, and NY contributions) on the phase structure after reduction.
-
-%------------------------------------------------------------------------------
-\subsection{Scope: Three Homogeneous Spaces as Test Beds}
-\label{sec:scope}
-
-To enable comparison from the perspective of topology dependence, we adopt spatial 
-sections that possess homogeneity and can be uniformly described using left-invariant 
-coframes. Specifically, as three representative examples with contrasting properties 
-in structure constants and curvature, we adopt:
-\begin{enumerate}[label=(\roman*)]
-  \item $\Sthree$ (SU(2); isotropic positive curvature),
-  \item $\Tthree$ (flat),
-  \item $\Nilthree$ (compact quotient of the Heisenberg group; anisotropic geometry).
+\subsection{Main points of this revision}
+\begin{enumerate}
+\item The coefficient in the REE contraction is $1/2$, replacing $1/4$;
+the TT coefficient remains $1/4$. For this ansatz the complete NY density
+therefore vanishes.
+\item Geometric torsion $T$ is the primary variable. The relation
+$\tau=-T$ preserves the connection associated with the computational
+input and is independent of the NY coefficient correction.
+\item Global normalization is fixed explicitly: the round-sphere radius
+is $a=r/2$, $L$ is the circle circumference,
+$\operatorname{Vol}(S^3\times S^1)=\pi^2Lr^3/4$, and the spatial torus
+angles have period $2\pi$, giving volume $(2\pi)^3LR_1R_2R_3$.
+For Nil, the lattice $(a,b,c)=(2\pi,2\pi,4\pi^2)$ realizes the volume
+$(2\pi)^4LR^3$.
+\item Claims of $\theta$-dependent stabilization and phase boundaries in
+FULL are withdrawn. Diagnostic actions are distinguished from FULL,
+and radius minima are distinguished from full vacuum solutions.
+Potential heights are not directly interpreted as masses or decay rates.
 \end{enumerate}
-These serve as a minimal set for comparing how ``geometric data (structure constants, 
-curvature characteristics)'' affect the phase structure of the effective potential 
-under the same reduction procedure.
 
-%------------------------------------------------------------------------------
-\subsection{Deliverables: Type Classification, Critical Conditions, Phase Diagrams, and Representative Points}
-\label{sec:deliverables}
-
-The central output of this work is an operational classification based on the 
-shape of $\Veff(r)$. Specifically, we introduce three types:
-\begin{itemize}
-  \item[(I)] Metastable well with barrier,
-  \item[(II)] Barrier-free rolling,
-  \item[(III)] Unstable/boundary-attached,
-\end{itemize}
-and visualize how these are arranged in parameter space for each topology as 
-phase diagrams. Furthermore, we identify critical conditions corresponding to 
-well formation/disappearance and barrier collapse through numerical scanning, 
-and organize their geometric dependence.
-
-For the NY term, we take the complete form (FULL) as the primary object, while 
-also using TT and REE as diagnostic comparisons to disentangle the contributions 
-(definitions in Sec.~\ref{sec:setup}). Note that TT/REE are not proposed as 
-independent fundamental theories but serve as auxiliary comparisons for 
-understanding the effects of FULL.
-
-Through this approach, we provide a reproducible diagnostic pipeline that returns 
-the phase (Type I/II/III) and critical boundaries of $\Veff(r)$ for given geometric 
-input (topology, parameters). The resulting phase diagrams, representative points, 
-and critical conditions can be used as foundational data for explicitly incorporating 
-topology dependence in EC+NY minisuperspace analysis.
-
-%------------------------------------------------------------------------------
-\subsection{Paper Organization}
-\label{sec:organization}
-
-The organization of this paper is as follows. Section~\ref{sec:setup} summarizes 
-the formulation of EC+NY and minisuperspace reduction, as well as the definitions 
-and numerical criteria for Type I/II/III. Section~\ref{sec:reductions} presents 
-the reduction results for $\Sthree$, $\Tthree$, and $\Nilthree$, showing the form 
-of the effective potential. Section~\ref{sec:numerical} presents numerical scanning 
-results as phase diagrams. Section~\ref{sec:mechanisms} interprets the phase 
-diagram features based on the analytical structure of the effective potential. 
-Section~\ref{sec:representative} summarizes representative points and stability 
-metrics (minimum position, barrier height, etc.). Section~\ref{sec:interpretation} 
-discusses geometric interpretation and the utility of this framework. 
-Section~\ref{sec:conclusions} presents conclusions and future prospects.
-
-%------------------------------------------------------------------------------
-\subsection{Scope and Limitations}
-\label{sec:limitations}
-
-This work focuses on phase classification of effective potentials based on 
-minisuperspace reduction. The following items are outside the scope of this paper 
-and are discussed as future research directions in Sec.~\ref{sec:conclusions}.
-
-\paragraph{Dynamical evolution:}
-We do not treat time evolution including Friedmann-type constraint equations, 
-nor quantitative calculations of tunneling rates via WKB approximation. 
-The distinction between Type I/II is an operational classification based on 
-the shape of $\Veff(r)$ and does not provide actual transition probabilities.
-
-\paragraph{Quantum corrections:}
-We do not consider quantum corrections at one-loop or higher, nor renormalization 
-group running of coupling constants. The results of this work are based on the 
-classical (tree-level) effective potential.
-
-\paragraph{Matter field coupling:}
-We do not include interactions with matter fields such as spinor or scalar fields. 
-We focus on the geometric structure of pure EC+NY theory.
-
-\paragraph{Inhomogeneous perturbations:}
-We do not analyze inhomogeneous fluctuations beyond the minisuperspace ansatz 
-(spatial homogeneity). Consequently, our results are limited to the homogeneous sector.
-
-\paragraph{Analytic continuation to Lorentzian signature:}
-This work performs calculations in Euclidean signature $(+,+,+,+)$. 
-Wick rotation to Lorentzian signature $(-,+,+,+)$ and interpretation in 
-real-time cosmology are not discussed in detail in this paper.
+\subsection{Organization}
+Section~\ref{sec2} defines the action, conventions, and variations.
+Section~\ref{sec3} fixes the global geometries and reduced potentials.
+Sections~\ref{sec4}--\ref{sec6} give the analytic classification,
+extremum measures, and representative parameter choices.
+Section~\ref{sec7} states the limits of physical interpretation, and
+Section~\ref{sec8} summarizes the conclusions.
+Appendices~\ref{appA}--\ref{appG} provide the torsion dictionary,
+verification criteria, numerical input and output conventions,
+visualization conventions, torus variation paths, code access,
+and the noncoordinate curvature formula.

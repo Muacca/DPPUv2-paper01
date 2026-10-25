@@ -116,6 +116,20 @@ R^a{}_b = d\omega^{a}{}\_b + \omega^{a}{}\_c\wedge \omega^{c}{}\_b,
 R^a{}_b = \frac12 R^{a}{}\_{bcd} e^c\wedge e^d.
 $$
 
+### 6.1 入力配列と幾何学的torsion
+
+`torsion_tensor` は入力パラメータ配列τを格納する。幾何学的成分は
+`T_geom[a,b,c] = C[a,b,c] + Gamma[a,c,b] - Gamma[a,b,c] = -tau[a,b,c]`。
+`geometric_torsion_tensor` はこの成分を公開する。contortionは
+`K[a,b,c]=(tau[a,b,c]+tau[b,c,a]-tau[c,a,b])/2`で与える。
+
+### 6.2 Nieh–Yan密度
+
+Euclideanフレーム計量とepsilon(0,1,2,3)=+1の下で、成分縮約は
+`N_TT=epsilon*T*T/4`、`N_REE=epsilon*R/2`、`N_FULL=N_TT-N_REE`である。
+REEは作用に`+theta*N_REE`を加える診断量を表す。
+3種のrunnerの静的一様ansatzでは`TT=REE=-4*V*eta/r`（各runnerのscale alias）、`FULL=0`。
+
 ## 7. 曲率成分の計算式（engine が実際に使う形）
 
 DPPUv2 engine の $R^{a}_{bcd}$ は（現状）次の形を用いる：
@@ -225,8 +239,84 @@ $C^2 = 0$ が全域で成立し、Weyl 項は常にゼロとなる（null test�
 
 | 極限 | 物理的意味 |
 |---|---|
-| $\varepsilon = 0$ | 等方的 $S^3$ ： $C^2 = 0$、Paper I の安定真空 |
+| $\varepsilon = 0$ | 等方的 $S^3$ の背景： $C^2 = 0$ |
 | $\varepsilon \to +\infty$ | $\mathrm{Nil}^3$ の平坦極限（ $C^2 \to 0$ 漸近） |
 | $\varepsilon \to -1^+$ | $S^3$ 構造の特異点（物理的到達不能） |
 | $\varepsilon = -2$ | $C^2 = 0$ の数学的根だが $\varepsilon < -1$ のため物理的除外 |
 
+## 11. 大域幾何と積分領域
+
+3種類のtopology runnerで使う大域背景を定める。計量は正規直交coframeの平方和で、スケールは全て正とする。共通の円について、$u\in[0,1)$、$e^3=L\,du$とし、**Lは円周長**を表す。engineは一様なスカラー密度に、指定した領域のRiemann体積を掛けて積分する。
+
+### 11.1 丸いS³
+
+$C^i{}_{jk}=4\varepsilon_{ijk}/r$に現れるスケールrは丸球半径の2倍であり、実半径は$a=r/2$。明示的なSU(2) coframeは$e^i=-r\lambda^i/4$で、
+
+$$
+\begin{aligned}
+\lambda^0&=\cos\psi\,d\vartheta+\sin\psi\sin\vartheta\,d\varphi,\\
+\lambda^1&=-\sin\psi\,d\vartheta+\cos\psi\sin\vartheta\,d\varphi,\\
+\lambda^2&=d\psi+\cos\vartheta\,d\varphi.
+\end{aligned}
+$$
+
+積分域は$0\le\vartheta\le\pi$、$0\le\varphi<2\pi$、$0\le\psi<4\pi$とし、極での退化と境界の同定$(\varphi+2\pi,\psi)\sim(\varphi,\psi+2\pi)$を伴う。3方向独立周期のトーラス座標ではない。正の計量密度は$r^3\sin\vartheta/64$。上のcoframeの向きは$d\vartheta\wedge d\varphi\wedge d\psi$と逆になる。
+
+$$
+\operatorname{Vol}(S^3)=\frac{\pi^2r^3}{4}=2\pi^2a^3,\qquad
+\operatorname{Vol}(S^3\times S^1)=\frac{\pi^2Lr^3}{4},\qquad
+R_{\mathrm{LC}}=\frac{24}{r^2}=\frac{6}{a^2}.
+$$
+
+### 11.2 T³
+
+$i=1,2,3$について、$x^i\in[0,2\pi)$、$e^{i-1}=R_i\,dx^i$とする。$R_i$はcoframeのスケール係数で、空間各方向の周長は$\ell_i=2\pi R_i$。
+
+$$
+\operatorname{Vol}(T^3\times S^1)=(2\pi)^3LR_1R_2R_3
+=L\ell_1\ell_2\ell_3.
+$$
+
+scanは$R_1=R_2=R_3=r$を使う。固定形状経路$R_2=\alpha r$、$R_3=\beta r$では正の$\alpha,\beta$を固定する。R2・R3自体を固定する場合は別の変分経路となる。
+
+### 11.3 コンパクトNil³
+
+Heisenberg群の積と左不変coframeを
+
+$$
+\begin{aligned}
+(x,y,z)(x',y',z')&=(x+x',y+y',z+z'+xy'),\\
+e^0&=R\,dx,\qquad e^1=R\,dy,\qquad e^2=R(dz-x\,dy)
+\end{aligned}
+$$
+
+とする。コンパクト空間には左商$\Gamma\backslash H$を使い、格子を
+
+$$
+\Gamma=\{(2\pi j,2\pi k,4\pi^2l):j,k,l\in\mathbb Z\}
+$$
+
+と定める。生成元による座標同定は
+
+$$
+\begin{aligned}
+(x,y,z)&\sim(x+2\pi,y,z+2\pi y),\\
+(x,y,z)&\sim(x,y+2\pi,z),\\
+(x,y,z)&\sim(x,y,z+4\pi^2).
+\end{aligned}
+$$
+
+各同定はcoframeを保つ。周期$(a,b,c)=(2\pi,2\pi,4\pi^2)$に対し、水平生成元の交換子は中央方向の$ab=c$だけの並進であり、$ab/c=1$となる。基本領域は$[0,2\pi)\times[0,2\pi)\times[0,4\pi^2)$で、x面は上記のねじれを伴って貼り合わせる。正の密度$R^3\,dx\,dy\,dz$で積分する。
+
+$$
+de^2=-\frac1R e^0\wedge e^1,\qquad C^2{}_{01}=-\frac1R,\qquad
+\operatorname{Vol}(\Gamma\backslash H\times S^1)=(2\pi)^4LR^3.
+$$
+
+底のトーラスの周長は各$2\pi R$、中央S¹繊維の周長は$4\pi^2R$。Rを変分するときも格子とその形状を固定する。この商は局所構造定数と指定体積を同時に実現し、中央座標の周期は$2\pi$ではない。
+
+### 11.4 入力パラメータと実長さ
+
+runner・消費側のAPIは局所スケールr/R1/R2/R3/Rと入力配列のパラメータ$\eta_\tau,V_\tau$を使用する。幾何学的torsionとの辞書は$\eta_g=-\eta_\tau$、$V_g=-V_\tau$。
+
+同じS³のaxial振幅を$2\eta_g/r$から$2\chi/a$で表す場合は、$a=r/2$、$\chi=\eta_g/2$を使う。T³を周長で表す場合は、$2\zeta/\ell_1=2\eta_g/R_1$より$\zeta=2\pi\eta_g$とする。入力区間、刻み、極値もこの辞書に従って変換する。Vは符号付き係数のままで、追加の倍率を付けない。

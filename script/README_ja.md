@@ -10,7 +10,7 @@ DPPUv2 Phase 1は以下の機能を提供します：
 - ねじれを含むEinstein-Cartan場の方程式の記号計算
 - 3種類の時空トポロジーの解析：S³×S¹、T³×S¹、Nil³×S¹
 - 3種類のねじれアンザッツモード：軸性（AX）、ベクトル・トレース（VT）、混合（MX）
-- 3種類のNieh-Yan結合バリアント：TT、REE、FULL
+- 完全Nieh-Yan項（FULL）と診断用作用（TT・正符号REE）の比較
 - 相図の生成と可視化
 - 全パラメータ組み合わせの一括実行
 
@@ -21,7 +21,7 @@ DPPUv2 Phase 1は以下の機能を提供します：
 - **DPPUv2_engine_core_v3.py** - Einstein-Cartan理論を実装するコア計算エンジン
   - ねじれアンザッツ計算の基礎フレームワークを提供
   - Riemannテンソルの反対称性の厳密な検証を実装
-  - 3つのモード（AX/VT/MX）と3つのNYバリアント（TT/REE/FULL）をサポート
+  - 3つのモード（AX/VT/MX）と3つの作用選択（FULLと診断用のTT/REE）をサポート
   - 型安全なenumベースのモード管理
 
 - **DPPUv2_runner_S3S1_v3.py** - S³×S¹トポロジーランナー
@@ -36,8 +36,8 @@ DPPUv2 Phase 1は以下の機能を提供します：
 
 - **DPPUv2_runner_Nil3S1_v3.py** - Nil³×S¹トポロジーランナー
   - Nil多様体×円トポロジー
-  - 構造定数：C¹_23 = -C¹_32 = 4/r（Heisenberg代数）
-  - 曲率：R_LC = 0
+  - 非零の構造係数：$C^2{}_{01}=-1/R$、$C^2{}_{10}=1/R$（空間添字$0,1,2$、スケール$R>0$）
+  - Levi–Civitaスカラー曲率：$\mathcal R_{\mathrm{LC}}=-\frac{1}{2R^2}$（torsionを含まない接続）
 
 ### 解析ツール
 
@@ -81,6 +81,8 @@ DPPUv2 Phase 1は以下の機能を提供します：
 
 ## クイックスタート
 
+以下のコマンドは、この`script/`ディレクトリをカレントディレクトリとして実行します。
+
 ### 単一トポロジーの実行
 
 選択したモードとNYバリアントで特定のトポロジーを実行：
@@ -115,10 +117,10 @@ bin/run_all.sh quick   # クイックモード：3ケース
 
 ```bash
 # 相図データを生成
-python DPPUv2_parameter_scan_v3.py --topology S3S1 --ny-variant FULL
+python -B DPPUv2_parameter_scan_v3.py --topologies S3 --ny-variants FULL --output-dir output
 
-# 結果を可視化
-python DPPUv2_visualize_phasemap_v3.py results_data.csv
+# YYYYMMDD_HHMMSSを生成されたCSVの日時に置き換えて可視化
+python -B DPPUv2_visualize_phasemap_v3.py output/dppu_scan_S3_FULL_YYYYMMDD_HHMMSS.csv
 ```
 
 ## コマンドラインオプション
@@ -131,23 +133,30 @@ python DPPUv2_visualize_phasemap_v3.py results_data.csv
                             VT: ベクトル・トレースのみ（T_μ ≠ 0, S^μ = 0）
                             MX: 混合（両方とも非ゼロ）
 
---ny-variant {TT,REE,FULL}  Nieh-Yan結合バリアント
-                            TT: ねじれ・トレースのみ
-                            REE: Riemannのみ
-                            FULL: 両項
+--ny-variant {TT,REE,FULL}  作用の選択（定義は下記）
 
 --log-file PATH             出力ログファイルのパス
 --checkpoint-dir PATH       計算チェックポイント用ディレクトリ
 ```
 
+EC項に加える項を次のように選びます。各項は四次元で積分します。
+
+- `TT`：torsion二形式の積$T^a\wedge T_a$に$+\theta$を掛けた診断用作用。
+- `REE`：曲率側$e^a\wedge e^b\wedge R_{ab}$に$+\theta$を掛けた診断用作用。
+- `FULL`：両者の差$T^a\wedge T_a-e^a\wedge e^b\wedge R_{ab}$に$\theta$を掛けた完全Nieh-Yan項。
+
+ここで$T$はCartan方程式で定義する幾何学的torsionです。TTはvector trace成分だけを指す名称ではありません。接続・入力配列との対応は[規約文書](docs/CONVENTIONS_ja.md)、作用の定義は[論文第2章](../section_02_ja.md)を参照してください。
+
 ### パラメータスキャン
 
 ```
---topology {S3S1,T3S1,Nil3S1}  時空トポロジー
---ny-variant {TT,REE,FULL}     Nieh-Yanバリアント
---output PATH                  出力CSVファイルパス
---workers N                    並列ワーカー数
+--topologies {S3,T3,Nil3} [...]    対象幾何（複数指定可）
+--ny-variants {FULL,TT,REE} [...]  作用の選択（複数指定可）
+--output-dir DIR                  出力CSVを保存するディレクトリ
+--workers N                       並列ワーカー数
 ```
+
+入力範囲・点数のオプションは`python -B DPPUv2_parameter_scan_v3.py --help`で確認できます。出力は指定ディレクトリの`dppu_scan_all_{timestamp}.csv`および`dppu_scan_{topology}_{ny_variant}_{timestamp}.csv`です。入力の意味・既定値と少数点の実行例は[付録C](../appendix_C_ja.md)・[付録F](../appendix_F_ja.md)に示します。
 
 ## 出力ファイル
 

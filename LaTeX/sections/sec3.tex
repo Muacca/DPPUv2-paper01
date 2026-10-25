@@ -1,434 +1,170 @@
-%==============================================================================
-% Section 3: Topology-Specific Reductions
-%==============================================================================
-\section{Topology-Specific Reductions}
-\label{sec:reductions}
-
-This section applies the minisuperspace reduction defined in Sec.~\ref{sec:setup} 
-to the three test beds ($\Sthree$, $\Tthree$, $\Nilthree$) and derives the 
-explicit form of the effective potential $\Veff(r)$ for each topology.
-
-%------------------------------------------------------------------------------
-\subsection{$\Sthree \times \Sone$: Reduced Action and Effective Potential}
-\label{sec:S3_reduction}
-
-\subsubsection{Geometric setup}
-
-$\Sthree$ is realized as the SU(2) group manifold, with left-invariant coframes 
-$\{\sigma^i\}$ given by the Maurer-Cartan forms of SU(2). The structure constants are
+\section{Global geometry and reduced potentials}\label{sec3}
+\subsection{The three-sphere: structure coefficients and physical radius}
+Identify $S^3$ with $SU(2)$ and take Euler angles
+$\vartheta\in[0,\pi]$, $\varphi\in[0,2\pi)$, $\psi\in[0,4\pi)$.
+Use the left-invariant forms
 \begin{equation}
-  C^{i}{}_{jk} = \frac{4}{r} \varepsilon_{ijk},
+\begin{aligned}
+\lambda^0&=\cos\psi\,d\vartheta+\sin\psi\sin\vartheta\,d\varphi,\\
+\lambda^1&=-\sin\psi\,d\vartheta+\cos\psi\sin\vartheta\,d\varphi,\\
+\lambda^2&=d\psi+\cos\vartheta\,d\varphi,\qquad
+e^i=-\frac r4\lambda^i.
+\end{aligned}
+\tag{M3-01}\label{eq:M3-01}
 \end{equation}
-and the background Ricci scalar (without torsion) is
+At the boundaries, $(\varphi+2\pi,\psi)\sim(\varphi,\psi+2\pi)$,
+together with the usual $SU(2)$ identifications at the polar coordinate
+degeneracies. These angles are not three independent circles.
+The coframe gives $C^i{}_{jk}=4\varepsilon_{ijk}/r$,
+and the actual radius of the round sphere is $a=r/2$.
+
+The positive volume measure compatible with the coframe orientation is
+$r^3\sin\vartheta\,d\vartheta\,d\varphi\,d\psi/64$.
+The sign of the angular coordinate ordering is distinguished from the
+coframe orientation. The volumes and local invariants are
 \begin{equation}
-  R_{\LC} = \frac{24}{r^2} > 0
+\begin{aligned}
+\operatorname{Vol}(S^3)&=\frac{\pi^2r^3}{4}=2\pi^2a^3,\\
+\operatorname{Vol}(S^3\times S^1)&=\frac{\pi^2Lr^3}{4},\\
+\mathcal R_{\mathrm{LC}}&=\frac{24}{r^2}=\frac6{a^2},\\
+\mathcal R_{\mathrm{EC}}&=\frac{24-6\eta^2}{r^2}-\frac23V^2.
+\end{aligned}
+\tag{M3-02}\label{eq:M3-02}
 \end{equation}
-(positive curvature). The volume element is
+It follows that
 \begin{equation}
-  \mathrm{Vol}(\Sthree \times \Sone) = 2\pi^2 L r^3.
+\begin{aligned}
+U^{S^3}_{\mathrm{FULL}}(r)
+ &=\frac{\pi^2L}{12\kappa^2}
+   \left[V^2r^3+(9\eta^2-36)r\right],\\
+U^{S^3}_{\mathrm{TT}}(r)=U^{S^3}_{\mathrm{REE}}(r)
+ &=\frac{\pi^2L}{12\kappa^2}
+   \left[V^2r^3+12V\eta\kappa^2\theta r^2+(9\eta^2-36)r\right].
+\end{aligned}
+\tag{M3-03}\label{eq:M3-03}
 \end{equation}
-
-\subsubsection{Scalar quantities}
-
-In MX mode ($\eta \neq 0$, $V \neq 0$), the scalar quantities computed by 
-DPPUv2 Engine Core v3 are as follows:
-
-\paragraph{Ricci scalar:}
+To express the axial component as $2\chi/a$ in terms of the actual radius,
+we also transform $\chi=\eta/2$. The same fixed-$\chi$ path gives
 \begin{equation}
-  R = \frac{2(-V^2 r^2 - 9\eta^2 + 36)}{3r^2}
+U^{S^3}_{\mathrm{FULL}}(a)
+=\frac{2\pi^2L}{3\kappa^2}
+\left[V^2a^3+9(\chi^2-1)a\right].
+\tag{M3-04}\label{eq:M3-04}
 \end{equation}
+For each diagnostic action, add $12V\chi\kappa^2\theta a^2$ inside the
+brackets. Replacing the radius symbol alone while keeping the definition
+of the axial coefficient unchanged is not this transformation.
 
-\paragraph{Torsion scalar:}
+\subsection{The three-torus: periods and expansion paths}
+Let $x^i\in[0,2\pi)$ and $e^{i-1}=R_i\,dx^i$.
+The positive coframe coefficients $R_i$ correspond to actual circumferences
+$\ell_i=2\pi R_i$. Structure coefficients and Levi--Civita curvature vanish,
+but the EC curvature with torsion need not vanish:
 \begin{equation}
-  T_{abc}T^{abc} = \frac{2V^2}{3} + \frac{24\eta^2}{r^2}
+\operatorname{Vol}(T^3\times S^1)=(2\pi)^3LR_1R_2R_3,\qquad
+\mathcal R_{\mathrm{EC}}=-\frac{6\eta^2}{R_1^2}-\frac23V^2
+\tag{M3-05}\label{eq:M3-05}
 \end{equation}
-
-\paragraph{NY densities (each variant):}
+Along the isotropic path $R_i=r$,
 \begin{equation}
-  N_{\TT} = -\frac{4V\eta}{r}, \quad
-  N_{\REE} = -\frac{2V\eta}{r}, \quad
-  N_{\FULL} = -\frac{2V\eta}{r}
+\begin{aligned}
+U^{T^3}_{\mathrm{FULL}}(r)
+ &=\frac{8\pi^3L}{3\kappa^2}\left[V^2r^3+9\eta^2r\right],\\
+U^{T^3}_{\mathrm{TT}}(r)=U^{T^3}_{\mathrm{REE}}(r)
+ &=\frac{8\pi^3L}{3\kappa^2}
+   \left[V^2r^3+12V\eta\kappa^2\theta r^2+9\eta^2r\right].
+\end{aligned}
+\tag{M3-06}\label{eq:M3-06}
 \end{equation}
+For fixed positive shape ratios $R_2=\alpha R_1$, $R_3=\beta R_1$,
+set $r=R_1$ and multiply the potential by $\alpha\beta$.
+The radius classification is unchanged, but stability under shape
+variations does not follow. Writing the axial component as
+$2\zeta/\ell_1$ requires $\zeta=2\pi\eta$.
 
-Notably, $N_{\FULL} = N_{\REE}$. 
-
-\subsubsection{Effective potential}
-
-Integrating the Lagrangian $\mathcal{L} = R/(2\kappa^2) + \theta_{\NY} N$ 
-over the volume and extracting $\Veff(r) = -S_{\mathrm{eff}}$, we obtain 
-for each NY variant:
-
-\paragraph{FULL ($N = N_{\FULL}$):}
+\subsection{Nil geometry: compact quotient and lattice}
+Define the Heisenberg group $H$ by
+$(x,y,z)(x',y',z')=(x+x',y+y',z+z'+xy')$, with coframe
 \begin{equation}
-  \Veff^{(\Sthree,\FULL)}(r) = \frac{2\pi^2 L}{3\kappa^2} r
-  \left[ V^2 r^2 + 6V\eta\kappa^2\theta_{\NY} r + 9\eta^2 - 36 \right]
-  \label{eq:Veff_S3_FULL}
+e^0=R\,dx,\qquad e^1=R\,dy,\qquad
+e^2=R(dz-x\,dy),\qquad R>0.
+\tag{M3-07}\label{eq:M3-07}
 \end{equation}
+The nonzero structure coefficients are $C^2{}_{01}=-1/R$ and
+$C^2{}_{10}=1/R$. We use the left quotient $\Gamma\backslash H$,
+where
+$\Gamma=\{(2\pi j,2\pi k,4\pi^2l):j,k,l\in\mathbb Z\}$.
+For general lattice periods $(a,b,c)$, closure under the group product
+requires $ab/c\in\mathbb Z$. Our choice
+$(a,b,c)=(2\pi,2\pi,4\pi^2)$ has $ab/c=1$.
+The coframe descends to the quotient and the spatial manifold is compact.
 
-\paragraph{TT ($N = N_{\TT}$):}
+A fundamental integration region is
+$x,y\in[0,2\pi)$, $z\in[0,4\pi^2)$, with the twisted face identifications
 \begin{equation}
-  \Veff^{(\Sthree,\TT)}(r) = \frac{2\pi^2 L}{3\kappa^2} r
-  \left[ V^2 r^2 + 12V\eta\kappa^2\theta_{\NY} r + 9\eta^2 - 36 \right]
+(x,y,z)\sim(x+2\pi,y,z+2\pi y),\quad
+(x,y,z)\sim(x,y+2\pi,z),\quad
+(x,y,z)\sim(x,y,z+4\pi^2).
+\tag{M3-08}\label{eq:M3-08}
 \end{equation}
-
-\paragraph{REE ($N = N_{\REE}$):}
+This is not a product torus with three independently periodic coordinates.
+The volume form is $R^3dx\wedge dy\wedge dz$.
+The two base circumferences are $2\pi R$, and the central fiber circumference
+is $4\pi^2R$. We hold this lattice fixed while varying $R$:
 \begin{equation}
-  \Veff^{(\Sthree,\REE)}(r) = \frac{2\pi^2 L}{3\kappa^2} r
-  \left[ V^2 r^2 + 6V\eta\kappa^2\theta_{\NY} r + 9\eta^2 - 36 \right]
+\begin{aligned}
+\operatorname{Vol}(\mathrm{Nil}^3\times S^1)&=(2\pi)^4LR^3,\\
+\mathcal R_{\mathrm{LC}}&=-\frac1{2R^2},\\
+\mathcal R_{\mathrm{EC}}&=-\frac{1/2+6\eta^2}{R^2}-\frac23V^2
+\end{aligned}
+\tag{M3-09}\label{eq:M3-09}
 \end{equation}
+The reduced potentials are
+\begin{equation}
+\begin{aligned}
+U^{\mathrm{Nil}}_{\mathrm{FULL}}(R)
+ &=\frac{4\pi^4L}{3\kappa^2}
+   \left[4V^2R^3+(36\eta^2+3)R\right],\\
+U^{\mathrm{Nil}}_{\mathrm{TT}}(R)=U^{\mathrm{Nil}}_{\mathrm{REE}}(R)
+ &=\frac{4\pi^4L}{3\kappa^2}
+   \left[4V^2R^3+48V\eta\kappa^2\theta R^2+(36\eta^2+3)R\right].
+\end{aligned}
+\tag{M3-10}\label{eq:M3-10}
+\end{equation}
+Local structure coefficients alone do not determine the lattice.
+The quotient above is part of our definition of the geometry, and provides
+a concrete global realization of the volume $(2\pi)^4LR^3$.
 
-These potential shapes are shown in Figure~\ref{fig:variant_S3}.
+\subsection{Common structure}
+On all three geometries,
+$T_{abc}T^{abc}=24\eta^2/s^2+2V^2/3$, and the NY densities obey
+\eqref{eq:M2-07}. Denoting the common scale by $r$, each potential has
+the form $U=P(Ar^3+Br^2+Cr)$ with $P>0$.
+FULL has $B=0$, whereas the diagnostic actions have
+$B\propto V\eta\theta$. The coefficient $C$ contains the contribution
+of the Levi--Civita curvature.
 
+A positive constant change of volume normalization multiplies $U$,
+its derivatives, and its heights by the same factor at fixed input,
+without changing positive-radius extremum locations or their classification.
+Conversion to an actual radius or circumference also requires transforming
+the horizontal coordinate and the axial parameter.
+
+\subsection{Figures and summary tables}
+See Table~\ref{tab:v3:1}, Table~\ref{tab:v3:2} for the conditions and values.
+
+The construction, curves, or classification are illustrated in Figure~\ref{fig:fig02_variants}, Figure~\ref{fig:fig03_decomposition}.
+
+\input{tables/v3/tab01}
+\input{tables/v3/tab02}
 \begin{figure}[htbp]
-  \centering
-  \includegraphics[width=1.0\textwidth]{figures/fig03_variant_comparison_S3.png}
-  \caption{Nieh--Yan variant comparison for $\Sthree \times \Sone$.}
-  \label{fig:variant_S3}
-\end{figure}
-
-\subsubsection{Structural analysis}
-
-The effective potential for $\Sthree$ has a cubic polynomial structure in $r$:
-\begin{equation}
-  \Veff(r) \propto r \cdot \left[ A r^2 + B r + C \right],
-\end{equation}
-where:
-\begin{itemize}
-  \item $A = V^2 > 0$: Governs divergence as $r \to \infty$
-  \item $B$: Proportional to NY coupling $\theta_{\NY}$, linear in $\eta$
-  \item $C = 9\eta^2 - 36$: Induces potential well when negative
-\end{itemize}
-
-A crucial feature of $\Sthree$ is that the coefficient $C$ contains a constant term $-36$,
-arising from the positive background Ricci scalar ($+24/r^2$).
-This allows $C < 0$ in the range $\eta \in (-2, 2)$,
-enabling a local minimum to form purely from geometric effects (even if $B=0$).
-This "geometric assistance" makes $\Sthree$ uniquely stable.
-
-From this structure, a local minimum can appear when $B < 0$ and $|B|$ is
-sufficiently large. For $\Sthree$, $B \propto \eta$, so $B < 0$
-for $\eta < 0$ (when $\theta_{\NY} > 0$), and $C = 0$ at $\eta = \pm 2$.
-
-The contributions of $r^3$, $r^2$, and $r$ terms to the potential are shown 
-in Figure~\ref{fig:decomposition_S3}.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.9\textwidth]{figures/fig04_decomposition_S3.png}
-  \caption{Potential decomposition for $\Sthree \times \Sone$.}
-  \label{fig:decomposition_S3}
-\end{figure}
-
-%------------------------------------------------------------------------------
-\subsection{$\Tthree \times \Sone$: Reduced Action and Effective Potential}
-\label{sec:T3_reduction}
-
-\subsubsection{Geometric setup}
-
-$\Tthree$ is an Abelian group (discrete quotient of $\mathbb{R}^3$), with all 
-structure constants vanishing:
-\begin{equation}
-  C^i{}_{jk} = 0.
-\end{equation}
-The background Ricci scalar is
-\begin{equation}
-  R_{\LC} = 0
-\end{equation}
-(flat). The volume element is
-\begin{equation}
-  \mathrm{Vol}(\Tthree \times \Sone) = (2\pi)^4 L R_1 R_2 R_3,
-\end{equation}
-where $R_1, R_2, R_3$ are the circumferences in each direction of $\Tthree$. 
-In this paper, for comparison with $\Sthree$ and $\Nilthree$, we assume 
-isotropic expansion $R_1 = R_2 = R_3 = r$. This allows description with a 
-single scale parameter $r$, as with the other topologies.
-
-\subsubsection{Scalar quantities}
-
-In MX mode, the scalar quantities are:
-
-\paragraph{Ricci scalar:}
-\begin{equation}
-  R = -\frac{2V^2}{3} - \frac{6\eta^2}{r^2}
-\end{equation}
-
-\paragraph{Torsion scalar:}
-\begin{equation}
-  T_{abc}T^{abc} = \frac{2V^2}{3} + \frac{24\eta^2}{r^2}
-\end{equation}
-
-\paragraph{NY densities (each variant):}
-\begin{equation}
-  N_{\TT} = -\frac{4V\eta}{r}, \quad 
-  N_{\REE} = -\frac{2V\eta}{r}, \quad 
-  N_{\FULL} = -\frac{2V\eta}{r}
-\end{equation}
-
-Notably for $\Tthree$, $N_{\FULL} = N_{\REE}$, too.
-
-\subsubsection{Effective potential}
-
-With the isotropic setting $R_1 = R_2 = R_3 = r$, for each NY variant:
-
-\paragraph{FULL ($N = N_{\FULL}$):}
-\begin{equation}
-  \Veff^{(\Tthree,\FULL)}(r) = \frac{16\pi^4 L}{3\kappa^2} 
-  \left[ V^2 r^3 + 6V\eta\kappa^2\theta_{\NY} r^2 + 9\eta^2 r \right]
-  \label{eq:Veff_T3_FULL}
-\end{equation}
-
-\paragraph{TT ($N = N_{\TT}$):}
-\begin{equation}
-  \Veff^{(\Tthree,\TT)}(r) = \frac{16\pi^4 L}{3\kappa^2} 
-  \left[ V^2 r^3 + 12V\eta\kappa^2\theta_{\NY} r^2 + 9\eta^2 r \right]
-\end{equation}
-
-\paragraph{REE ($N = N_{\REE}$):}
-\begin{equation}
-  \Veff^{(\Tthree,\REE)}(r) = \frac{16\pi^4 L}{3\kappa^2} 
-  \left[ V^2 r^3 + 6V\eta\kappa^2\theta_{\NY} r^2 + 9\eta^2 r \right]
-  \label{eq:Veff_T3_REE}
-\end{equation}
-
-
-These have the same $r^3 + r^2 + r$ structure as $\Sthree$.
-
-The potential shapes are shown in Figure~\ref{fig:variant_T3}.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=1.0\textwidth]{figures/fig05_variant_comparison_T3.png}
-  \caption{Nieh--Yan variant comparison for $\Tthree \times \Sone$.}
-  \label{fig:variant_T3}
-\end{figure}
-
-\subsubsection{Structural analysis}
-
-With the isotropic setting, the effective potential for $\Tthree$ has the 
-same structure as $\Sthree$:
-\begin{equation}
-  \Veff(r) \propto r \cdot \left[ V^2 r^2 + B r + C \right],
-\end{equation}
-where $B = 6V\eta\kappa^2\theta_{\NY}$ and $C = 9\eta^2$.
-
-From this form:
-\begin{itemize}
-  \item $r \to 0$: $\Veff \to 0^+$ (always positive for $C > 0$ when $\eta \neq 0$)
-  \item $r \to \infty$: $\Veff \to +\infty$ due to the $r^3$ term
-  \item Minimum existence condition: $3V^2 r^2 + 2Br + C = 0$ has positive 
-        real solutions
-\end{itemize}
-
-A characteristic of $\Tthree$ is that the coefficient $C = 9\eta^2$ of $r$ 
-is always non-negative (zero only when $\eta = 0$). Therefore:
-\begin{itemize}
-  \item For $\theta_{\NY} = 0$, $B = 0$, and 
-        $\dd\Veff/\dd r \propto 3V^2 r^2 + 9\eta^2 > 0$ (for $r > 0$), 
-        so it is always monotonically increasing (Type III)
-  \item For $\theta_{\NY} > 0$ and $\eta < 0$, $B < 0$, and minima can form
-\end{itemize}
-
-Under $\eta \to -\eta$ transformation, $B \to -B$, so for $\theta_{\NY} \neq 0$, 
-symmetry is broken. For $\theta_{\NY} > 0$, stable regions appear only on 
-the $\eta < 0$ side.
-
-The contributions of $r^3$, $r^2$, and $r$ terms are shown in 
-Figure~\ref{fig:decomposition_T3}.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.9\textwidth]{figures/fig06_decomposition_T3.png}
-  \caption{Potential decomposition for $\Tthree \times \Sone$.}
-  \label{fig:decomposition_T3}
-\end{figure}
-
-%------------------------------------------------------------------------------
-\subsection{$\Nilthree \times \Sone$: Reduced Action and Effective Potential}
-\label{sec:Nil3_reduction}
-
-\subsubsection{Geometric setup}
-
-$\Nilthree$ is a compact quotient of the Heisenberg group (Bianchi Type II), 
-with structure constants
-\begin{equation}
-  C^{2}{}_{01} = -\frac{1}{r}, \quad C^{2}{}_{10} = +\frac{1}{r}, \quad 
-  \text{others } 0.
-\end{equation}
-An important point is that $\Nilthree$ is \textbf{not bi-invariant} (the 
-Heisenberg group is nilpotent, not semisimple). Therefore, the generalized 
-Koszul formula (see Appendix~\ref{app:theory}) must be used for connection 
-calculations.
-
-The background Ricci scalar is
-\begin{equation}
-  R_{\LC} = -\frac{1}{2r^2} < 0
-\end{equation}
-(negative curvature). The volume element is
-\begin{equation}
-  \mathrm{Vol}(\Nilthree \times \Sone) = (2\pi)^4 L r^3.
-\end{equation}
-
-\subsubsection{Scalar quantities}
-
-In MX mode, the scalar quantities are:
-
-\paragraph{Ricci scalar:}
-\begin{equation}
-  R = \frac{-4V^2 r^2 - 36\eta^2 - 3}{6r^2}
-\end{equation}
-
-\paragraph{Torsion scalar:}
-\begin{equation}
-  T_{abc}T^{abc} = \frac{2V^2}{3} + \frac{24\eta^2}{r^2}
-\end{equation}
-
-\paragraph{NY densities (each variant):}
-\begin{equation}
-  N_{\TT} = -\frac{4V\eta}{r}, \quad
-  N_{\REE} = -\frac{2V\eta}{r}, \quad
-  N_{\FULL} = -\frac{2V\eta}{r}
-\end{equation}
-
-Notably for $\Nilthree$, $N_{\FULL} = N_{\REE}$, too.
-
-\subsubsection{Effective potential}
-
-For each NY variant:
-
-\paragraph{FULL:}
-\begin{equation}
-  \Veff^{(\Nilthree,\FULL)}(r) = \frac{4\pi^4 L}{3\kappa^2} r
-  \left[ 4V^2 r^2 + 24V\eta\kappa^2\theta_{\NY} r + 36\eta^2 + 3 \right]
-  \label{eq:Veff_Nil3_FULL}
-\end{equation}
-
-\paragraph{TT:}
-\begin{equation}
-  \Veff^{(\Nilthree,\TT)}(r) = \frac{4\pi^4 L}{3\kappa^2} r
-  \left[ 4V^2 r^2 + 48V\eta\kappa^2\theta_{\NY} r + 36\eta^2 + 3 \right]
-\end{equation}
-
-\paragraph{REE:}
-\begin{equation}
-  \Veff^{(\Nilthree,\REE)}(r) = \frac{4\pi^4 L}{3\kappa^2} r
-  \left[ 4V^2 r^2 + 24V\eta\kappa^2\theta_{\NY} r + 36\eta^2 + 3 \right]
-\end{equation}
-
-The potential shapes are shown in Figure~\ref{fig:variant_Nil3}.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=1.0\textwidth]{figures/fig07_variant_comparison_Nil3.png}
-  \caption{Nieh--Yan variant comparison for $\Nilthree \times \Sone$.}
-  \label{fig:variant_Nil3}
-\end{figure}
-
-\subsubsection{Structural analysis}
-
-The effective potential for $\Nilthree$ has the coefficient $C$:
-\begin{equation}
-  C_{\Nilthree} = 36\eta^2 + 3 > 0 \quad \text{for all } \eta.
-\end{equation}
-
-The constant term $+3$ arises from the negative background curvature ($R=-1/2r^2$).
-Since $C$ is always positive, unlike $\Sthree$, geometric effects alone cannot form a potential well.
-Stability relies entirely on the NY term coefficient $B$ overcoming this positive $C$.
-This requires sufficiently large $\theta_{\NY}$ and $\eta < 0$ (for $B<0$).
-Furthermore, near $\eta \approx 0$, $B \propto \eta$ vanishes while $C \to 3$,
-making stabilization impossible. This "negative curvature penalty" creates
-an unstable region near the origin.
-
-The contributions of $r^3$, $r^2$, and $r$ terms are shown in 
-Figure~\ref{fig:decomposition_Nil3}.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.9\textwidth]{figures/fig08_decomposition_Nil3.png}
-  \caption{Potential decomposition for $\Nilthree \times \Sone$.}
-  \label{fig:decomposition_Nil3}
-\end{figure}
-
-%------------------------------------------------------------------------------
-\subsection{Structural Comparison: Sources of Topology Dependence}
-\label{sec:structure_comparison}
-
-We compare the structure of effective potentials across the three topologies 
-and organize the sources of topology dependence.
-
-\subsubsection{General form of effective potential}
-
-For all topologies, the effective potential in MX mode is expressed in the 
-general form:
-\begin{equation}
-  \Veff(r) = \mathcal{N} \cdot r^{\alpha} \cdot P(r),
-\end{equation}
-where $\mathcal{N}$ is a normalization factor, $\alpha$ is a topology-dependent 
-exponent, and $P(r)$ is a polynomial in $r$.
-
-\begin{table}[H]
 \centering
-\caption{Effective potential structure comparison.}
-\label{tab:structure_comparison}
-\begin{tabular}{@{}llll@{}}
-\toprule
-Topology & Structure & $r \to 0$ & $r \to \infty$ \\
-\midrule
-$\Sthree$ & $r \cdot [Ar^2 + Br + C]$ & $\to 0$ & $\to +\infty$ \\
-$\Tthree$ & $r \cdot [Ar^2 + Br + C]$ & $\to 0$ & $\to +\infty$ \\
-$\Nilthree$ & $r \cdot [Ar^2 + Br + C]$ & $\to 0$ & $\to +\infty$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-All of $\Sthree$, $\Tthree$, and $\Nilthree$ share the $r \cdot [Ar^2 + Br + C]$ 
-structure.
-
-\subsubsection{Comparison of NY densities}
-
-\begin{table}[H]
+\includegraphics[width=.96\linewidth]{figures/v3/fig02_variants.png}
+\caption{Action variants at $V=-4,\eta=3,\theta=\kappa=L=1$. The bottom row magnifies the near-origin region. FULL is Type~III in every geometry; TT and positive REE coincide and are Type~I. Horizontal axes are coframe scales $r$ ($S^3,T^3$) or $R$ (Nil); the round-sphere radius is $a=r/2$. Vertical scales use the volumes in Table~\ref{tab:v3:1}.}\label{fig:fig02_variants}
+\end{figure}
+\begin{figure}[htbp]
 \centering
-\caption{Comparison of NY densities ($N_{\FULL}$) and background curvature 
-dependence.}
-\label{tab:NY_comparison}
-\begin{tabular}{@{}lll@{}}
-\toprule
-Topology & $N_{\FULL}$ & Background curvature dependence \\
-\midrule
-$\Sthree$ & $\displaystyle-\frac{2V\eta}{r}$ &
-            $\eta$ only: standard form \\
-$\Tthree$ & $\displaystyle-\frac{2V\eta}{r}$ &
-            $\eta$ only: standard form \\
-$\Nilthree$ & $\displaystyle-\frac{2V\eta}{r}$ &
-              $\eta$ only: standard form \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-A remarkable finding is that for all three topologies, $N_{\FULL} = -2V\eta/r$.
-The NY density serves as a universal, topology-independent driver of stability
-(coefficient $B$). Topological differences in stability arise almost exclusively
-from the geometric coefficient $C$.
-
-\subsubsection{Geometric factors affecting stability}
-
-The existence and position of the effective potential minimum are primarily 
-determined by the following factors:
-
-\begin{enumerate}
-  \item \textbf{Coefficient of $r^3$ term} ($\propto V^2$): Always positive. 
-        Governs growth as $r \to \infty$.
-  
-  \item \textbf{Coefficient of $r^2$ term} ($\propto V\theta_{\NY} \times f(\eta)$): 
-        Function of NY coupling and $\eta$. When negative, promotes minimum formation.
-  
-  \item \textbf{Coefficient of $r$ term}: Topology-specific geometric contribution.
-        \begin{itemize}
-          \item $\Sthree$: $9\eta^2 - 36$
-          \item $\Tthree$: $9\eta^2$
-          \item $\Nilthree$: $36\eta^2 + 3$
-        \end{itemize}
-\end{enumerate}
-
-The competition among these factors produces different phase structures for 
-each topology. Detailed analysis of phase boundaries is presented in 
-Sec.~\ref{sec:numerical}.
+\includegraphics[width=.96\linewidth]{figures/v3/fig03_decomposition.png}
+\caption{Term decomposition for the inputs of Figure~\ref{fig:fig02_variants}. FULL is the sum of cubic and linear terms; its complete NY term is zero. The orange curve is the quadratic contribution to TT or positive REE and is absent from FULL.}\label{fig:fig03_decomposition}
+\end{figure}
+\FloatBarrier

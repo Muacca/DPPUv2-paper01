@@ -1,264 +1,64 @@
-%==============================================================================
-% Section 6: Representative Points and Stability Quality
-%==============================================================================
-\section{Representative Points and Stability Quality}
-\label{sec:representative}
-
-This section presents the specific shapes of the effective potential $\Veff(r)$ 
-and stability metrics at representative parameter points on the phase diagrams. 
-This clarifies how the operational definitions of Type I/II/III 
-(Sec.~\ref{sec:type_definition}) correspond to actual potential shapes in the 
-light of the corrected stability mechanism dominated by torsion.
-
-%------------------------------------------------------------------------------
-\subsection{Selection Criteria for Representative Points}
-\label{sec:selection_criteria}
-
-For each topology, we select representative points to illustrate the typical 
-behaviors of stable and unstable vacua. We set the coupling constant $V = 4.0$ 
-and fix the compactification scale $L=1$ (and $\kappa=1$).
-The selection criteria are as follows:
-
-\begin{enumerate}
-  \item \textbf{Type I representative}: Points exhibiting a metastable well with 
-        a distinct potential barrier ($\Delta V > 0$). We focus on the region 
-        $\eta < 0$ where the torsion-induced stability mechanism is most effective.
-  \item \textbf{Type II representative}: Points where the potential minimum exists 
-        but the barrier disappears or becomes negligible, typically found near 
-        stability boundaries.
-  \item \textbf{Type III representative}: Points showing instability where no 
-        minimum forms within the allowed dynamical range.
-\end{enumerate}
-
-%------------------------------------------------------------------------------
-\subsection{Representative Points for $\Sthree \times \Sone$}
-\label{sec:S3_representatives}
-
-\subsubsection{List of representative points}
-
-Table~\ref{tab:S3_representatives} lists the representative points for the 
-$\Sthree$ topology. We chose $\theta_{\NY} = 1.0$ as a standard value.
-
-\begin{table}[H]
-\centering
-\caption{$\Sthree$-FULL representative points ($V=4.0, \theta_{\NY}=1.0$).}
-\label{tab:S3_representatives}
-\begin{tabular}{@{}ccccccc@{}}
-\toprule
-Point & $\eta$ & Type & $r_0$ & $\log_{10}(r_0)$ & $\Delta V$ & $\log_{10}(\Delta V)$ \\
-\midrule
-S1 & $-3.0$ & I & $2.65$ & $0.42$ & $633$ & $2.80$ \\
-S2 & $-2.0$ & I/II bdy & $2.00$ & $0.30$ & --- & --- \\
-S3 & $0.0$ & II & $0.87$ & $-0.06$ & --- & --- \\
-S4 & $3.0$ & III & --- & --- & --- & --- \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\textbf{Note on S2:} This point lies exactly on the Type I/II boundary where the
-coefficient $C = 9\eta^2 - 36$ vanishes. At $C = 0$, the effective potential
-satisfies $\dd\Veff/\dd r|_{r \to 0^+} = 0$ but $\dd^2\Veff/\dd r^2|_{r=0} < 0$,
-so the potential is flat at the origin and immediately decreasing---a degenerate
-case between barrier (Type I) and rolling (Type II).
-
-\subsubsection{Characteristics of each representative point}
-
-\paragraph{Point S1 (Type I, $\eta = -3$):}
-This point represents a robust stable vacuum. The negative flux parameter
-$\eta = -3$ generates a large negative term in the potential via the torsion
-contribution ($B \propto \eta$), creating a deep potential well protected by a
-high barrier. This confirms that $\Sthree$ can host stable vacua in the negative
-$\eta$ region, driven by the flux-induced torsion.
-
-\paragraph{Point S2 (I/II boundary, $\eta = -2$):}
-At $\eta = -2$, the coefficient $C = 9\eta^2 - 36 = 0$ exactly, placing this
-point on the Type I/II phase boundary. The minimum at $r_0 = 2.00$ persists,
-but the barrier vanishes. This is the critical $\eta$ value at which the
-positive background curvature of $\Sthree$ ceases to provide geometric
-stabilization (for $|\eta| > 2$, $C > 0$ and a barrier forms; for $|\eta| < 2$,
-$C < 0$ and the potential rolls from the origin).
-
-\paragraph{Point S3 (Type II, $\eta = 0$):}
-As $\eta$ increases toward zero, the stabilizing torsion
-contribution weakens. At $\eta = 0$, only the structure constant
-term contributes to the quadratic coefficient ($C = -36 < 0$), forming a minimum but
-lacking the barrier characteristic of the torsion-dominated region.
-
-\paragraph{Point S4 (Type III, $\eta = 3$):}
-For positive $\eta$, both the curvature term $C$ and the torsion term $B$ 
-contribute positively, leading to a monotonic potential without a minimum. 
-This illustrates the general instability of the $\eta > 0$ region for $\Sthree$.
-
-%------------------------------------------------------------------------------
-\subsection{Representative Points for $\Tthree \times \Sone$}
-\label{sec:T3_representatives}
-
-\subsubsection{List of representative points}
-
-Table~\ref{tab:T3_representatives} shows the points for the $\Tthree$ topology.
-
-\begin{table}[H]
-\centering
-\caption{$\Tthree$-FULL representative points ($V=4.0, \theta_{\NY}=1.0$).}
-\label{tab:T3_representatives}
-\begin{tabular}{@{}ccccccc@{}}
-\toprule
-Point & $\eta$ & Type & $r_0$ & $\log_{10}(r_0)$ & $\Delta V$ & $\log_{10}(\Delta V)$ \\
-\midrule
-T1 & $-3.0$ & I & $2.25$ & $0.35$ & $1.4 \times 10^4$ & $4.15$ \\
-T2 & $0.0$  & III & --- & --- & --- & --- \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsubsection{Characteristics of each representative point}
-
-\paragraph{Point T1 (Type I, $\eta = -3$):}
-Similar to S1, T1 exhibits a strong stable vacuum driven by the negative $\eta$. 
-Despite the flat spatial geometry of $\Tthree$, the flux-induced torsion creates 
-a potential shape qualitatively similar to the stable $\Sthree$ case. This 
-emphasizes the universal role of the flux parameter in generating stability 
-regardless of the underlying spatial curvature.
-
-\paragraph{Point T2 (Type III, $\eta = 0$):}
-With $\eta = 0$, the flux contributions vanish. For $\Tthree$, the scalar 
-curvature is zero, so without the stabilizing flux, the potential is flat (or 
-dominated by other destabilizing factors) and does not support a stable minimum.
-
-%------------------------------------------------------------------------------
-\subsection{Representative Points for $\Nilthree \times \Sone$}
-\label{sec:Nil3_representatives}
-
-\subsubsection{List of representative points}
-
-Table~\ref{tab:Nil3_representatives} lists the points for $\Nilthree$.
-
-\begin{table}[H]
-\centering
-\caption{$\Nilthree$-FULL representative points ($V=4.0, \theta_{\NY}=1.0$).}
-\label{tab:Nil3_representatives}
-\begin{tabular}{@{}ccccccc@{}}
-\toprule
-Point & $\eta$ & Type & $r_0$ & $\log_{10}(r_0)$ & $\Delta V$ & $\log_{10}(\Delta V)$ \\
-\midrule
-N1 & $-3.0$ & I & $2.24$ & $0.35$ & $1.3 \times 10^4$ & $4.13$ \\
-N2 & $-0.6$ & I & $0.38$ & $-0.42$ & $18.9$ & $1.28$ \\
-N3 & $0.0$ & III & --- & --- & --- & --- \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsubsection{Characteristics of each representative point}
-
-\paragraph{Point N1 (Type I, $\eta = -3$):}
-This point corresponds to the deep stable region. The parameters ($r_0$, $\Delta V$) 
-are remarkably close to those of T1 ($r_0 \approx 2.25$), suggesting that for 
-large negative $\eta$, the potential shape is dominated by the flux terms ($B$ 
-and $A$) rather than the specific spatial curvature of $\Nilthree$.
-
-\paragraph{Point N2 (Type I, $\eta = -0.6$):}
-This point is located near the stability boundary. While it remains Type I, 
-the barrier height ($\Delta V \approx 19$) is orders of magnitude smaller than 
-at N1. This illustrates the transition towards instability as $\eta$ approaches 
-the critical value where the negative torsion term can no longer overcome the 
-positive geometric terms.
-
-\paragraph{Point N3 (Type III, $\eta = 0$):}
-At $\eta = 0$, the negative torsion term vanishes. The inherent negative scalar 
-curvature of $\Nilthree$ is insufficient to stabilize the modulus in this 
-configuration without the aid of flux, resulting in Type III instability.
-
-%------------------------------------------------------------------------------
-\subsection{Visualization of Stability Metrics}
-\label{sec:metrics_visualization}
-
-\subsubsection{Scaling of Barrier Height}
-
-The analysis of Type I stable vacua across different topologies reveals a universal 
-scaling relationship between the stable radius $r_0$ and the barrier height $\Delta V$. 
-Figure~\ref{fig:scaling_laws_S3}, ~\ref{fig:scaling_laws_T3}~ and \ref{fig:scaling_laws_Nil3} show 
-the distribution of $\Delta V$ versus $r_0$ for identified as Type I.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/fig17_Scaling_laws_S3.png}
-  \caption{Scaling laws $\Sthree$ $(\eta=-3.0, \theta=1.0)$.}
-  \label{fig:scaling_laws_S3}
-\end{figure}
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/fig18_Scaling_laws_T3.png}
-  \caption{Scaling laws $\Tthree$ $(\eta=-3.0, \theta=1.0)$.}
-  \label{fig:scaling_laws_T3}
-\end{figure}
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/fig19_Scaling_laws_Nil3.png}
-  \caption{Scaling laws $\Nilthree$ $(\eta=-3.0, \theta=1.0)$.}
-  \label{fig:scaling_laws_Nil3}
-\end{figure}
-
-
-In all three topologies, we observe a strong positive correlation:
+\section{Representative parameters and scaling}\label{sec6}
+\subsection{A FULL sphere minimum}
+Set $\kappa=L=1$ and use geometric-torsion parameters throughout.
+For $V=-4$, $\eta=0$, and arbitrary $\theta$,
 \begin{equation}
- \log \Delta V \sim \alpha \log r_0 + \text{const.}
+r_0=\frac{\sqrt3}{2},\qquad
+a_0=\frac{\sqrt3}{4},\qquad
+U(r_0)=-\sqrt3\,\pi^2,\qquad
+\Delta U_{\mathrm{II}}=\sqrt3\,\pi^2.
+\tag{M6-01}\label{eq:M6-01}
 \end{equation}
-This indicates that deeper potentials (larger $\Delta V$) are associated with 
-larger moduli radii ($r_0$). Physically, this corresponds to the regime where 
-large negative $\eta$ drives the minimum to larger values while simultaneously 
-deepening the potential well. The linearity in the log-log plot suggests a 
-power-law behavior $\Delta V \propto r_0^\alpha$, which is consistent with the
-polynomial structure of the effective potential
-$\Veff(r) \propto r(Ar^2 + Br + C)$.
+This is a Type~II minimum. Its positive depth is measured relative to
+the algebraic origin as in Section~\ref{sec5}.
+At $\eta=\pm2$, the FULL potential has only its positive cubic term.
+At $\eta=\pm3$, its linear term is also positive, and there is no
+strict positive-radius minimum. FULL does not select one sign of $\eta$.
 
-%------------------------------------------------------------------------------
-\subsection{Consistency Check Between Analytical Boundaries and Numerical Scan}
-\label{sec:consistency_check}
+\subsection{Torus and Nil examples}
+For the isotropic torus with $V=-4$, $\eta=0$,
+$\mathcal R_{\mathrm{EC}}=-32/3$ and
+$U=128\pi^3r^3/3$. The vanishing Levi--Civita curvature does not imply
+vanishing torsionful curvature or a flat potential.
+The FULL potential on Nil is increasing for every real $\eta,V$.
 
-We verified the consistency between the analytical conditions derived in 
-Sec.~\ref{sec:mechanisms} and the numerical classification results.
+For $V=-4$, $\eta=3$, and $\kappa^2\theta=1$, the diagnostic action
+has Type~I behavior on all three geometries, while FULL has no strict
+minimum on any of the three paths.
+At $\eta=0$ or $V=0$, the mixed density vanishes and all variants coincide.
+This does not imply equality of FULL and REE for general MX inputs.
 
-\subsubsection{S3 Stability Boundary}
-The analytical condition $C(\eta) = 0$ for $\Sthree$ (with $V=4$) yields 
-$\eta = -2$ and $\eta = +2$ as critical points.
-Numerical scans confirm that around $\eta = -2$, the potential behavior changes
-significantly: S2 ($\eta=-2$) sits exactly on the I/II boundary where $C = 0$,
-with $r_0 = 2.00$ matching the analytical prediction
-$r_0 = -2B/(3A) = 96/48 = 2$.
+\subsection{Scaling with vector torsion}
+For $V\ne0$, define $x=|V|r$ and $\sigma=\operatorname{sign}V$.
+The diagnostic sphere potential becomes
+\begin{equation}
+U^{S^3}_{\mathrm{TT}}
+=\frac{\pi^2L}{12\kappa^2\lvert V\rvert}
+\left[x^3+12\sigma\eta\kappa^2\theta x^2+(9\eta^2-36)x\right].
+\tag{M6-02}\label{eq:M6-02}
+\end{equation}
+At fixed $\eta,\kappa^2\theta,\sigma$ (and fixed $\kappa,L$), extremum
+radii and potential-height differences scale as $1/|V|$, provided the
+corresponding minimum exists.
+The same substitution applies to the isotropic torus and Nil potentials.
+For example, there is no FULL minimum at $\eta=3$ to which a minimum
+scaling law could be applied.
+The case $V=0$ is a separate linear problem.
 
-\subsubsection{T3 Instability Threshold}
-For $\Tthree$, the stability condition requires a sufficiently large flux parameter 
-$\theta_{\NY}$ to overcome the flat geometry. Our numerical check at $\eta = -3$ 
-confirms that stable Type I vacua appear only when $\theta_{\NY} \gtrsim 0.8$, 
-which is fully consistent with the analytical threshold $\theta_{\NY} \approx 0.87$.
+\subsection{Figures and summary tables}
+See Table~\ref{tab:v3:4} for the conditions and values.
 
-\subsubsection{Nil3 Stability Limit}
-For $\Nilthree$, the competition between the positive curvature term ($C > 0$) 
-and the negative torsion term ($B < 0$ for $\eta < 0$) determines stability.
-The numerical scan shows that stability (Type I) is maintained down to 
-$\eta \approx -0.6$ (Point N2), but is lost by $\eta = -0.5$. This aligns with 
-the requirement that the torsion effect must be strong enough (sufficiently negative $\eta$) 
-to create a local minimum.
+The construction, curves, or classification are illustrated in Figure~\ref{fig:fig08_representatives}, Figure~\ref{fig:fig09_scaling}.
 
-%------------------------------------------------------------------------------
-\subsection{Summary of Stability Quality}
-\label{sec:representative_summary}
-
-The analysis of representative points and stability metrics reveals a consistent 
-physical picture across $\Sthree$, $\Tthree$, and $\Nilthree$:
-
-\begin{enumerate}
-    \item \textbf{Universal Stability in $\eta < 0$}: All three topologies exhibit 
-    robust Type I stable vacua in the region of large negative $\eta$. 
-    This stability is driven by the flux-induced torsion term.
-    \item \textbf{Topology Independence at Large $|\eta|$}: The similarity between 
-    S1, T1, and N1 parameters suggests that strong flux effects can override 
-    differences in spatial curvature.
-    \item \textbf{Consistent Scaling}: The positive correlation between barrier 
-    height and stable radius is a universal feature of these flux-stabilized vacua.
-\end{enumerate}
-
-These results provide solid numerical evidence for the torsion-dominated stability 
-mechanism proposed in this paper.
+\input{tables/v3/tab04}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.96\linewidth]{figures/v3/fig08_representatives.png}
+\caption{Representative FULL curves at $V=-4,\theta=\kappa=L=1$. Curves for $\eta=3$ and $-3$ coincide. Only the sphere at $\eta=0$ has a strict positive-radius minimum, at $r_0=\sqrt3/2$ (round radius $a_0=\sqrt3/4$). Numerical values are given in Table~\ref{tab:v3:4}.}\label{fig:fig08_representatives}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.96\linewidth]{figures/v3/fig09_scaling.png}
+\caption{Scaling where minima exist, at $\theta=\kappa=L=1$ and 121 values of $|V|\in[0.5,6]$ with $V<0$. Top: the sphere FULL minimum and Type~II depth at $\eta=0$. Bottom: diagnostic Type~I minima and barriers at $\eta=3$ for all geometries. Each scales as $1/|V|$. Here $s_0=r_0$ or $R_0$; bottom-left curves nearly coincide. FULL has no minimum at $\eta=3$.}\label{fig:fig09_scaling}
+\end{figure}
+\FloatBarrier

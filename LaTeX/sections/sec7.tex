@@ -1,239 +1,78 @@
-%==============================================================================
-% Section 7: Geometric Interpretation and Utility as a Tool
-%==============================================================================
-\section{Geometric Interpretation and Utility as a Tool}
-\label{sec:interpretation}
-
-This section interprets the numerical results obtained in Secs.~\ref{sec:numerical}--\ref{sec:representative} 
-from a geometric perspective and discusses the applicability and limitations 
-of the diagnostic framework provided by this work.
-
-%------------------------------------------------------------------------------
-\subsection{Geometric Factors of Topology Dependence}
-\label{sec:geometric_factors}
-
-\subsubsection{Correspondence between structure constants and phase structure}
-
-We organize the correspondence between the characteristics of structure 
-constants $C^{i}{}_{jk}$ for the three test beds and the observed phase structure.
-
-\begin{table}[H]
-\centering
-\caption{Correspondence between structure constants and phase structure.}
-\label{tab:structure_phase}
-\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X l>{\raggedright\arraybackslash}X@{}}
-\toprule
-Topology & Structure constant characteristics & Lie algebra & Phase structure characteristics \\
-\midrule
-$\Sthree$ & $C^{i}{}_{jk} = (4/r)\varepsilon_{ijk}$ (totally antisym.) & 
-            $\mathfrak{su}(2)$ (simple) & Complex, high $\theta_{\NY}$ sensitivity \\
-$\Tthree$ & $C^{i}{}_{jk} = 0$ (all zero) & Abelian & 
-            Threshold-dependent, activates at $\theta_{\NY} > 0.87$ \\
-$\Nilthree$ & $C^{2}{}_{01} = -1/r$, $C^{2}{}_{10} = +1/r$, others 0 & 
-              Heisenberg (nilpotent) & Intermediate, Negative curvature-related suppression \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-From this correspondence, it is suggested that the ``complexity'' of structure 
-constants (number of nonzero components and symmetry) correlates with the 
-complexity of phase structure.
-
-\subsubsection{Role of background curvature}
-
-The background Ricci scalar $R_{\LC}$ from the Levi--Civita connection affects
-the effective potential through the Einstein--Hilbert term $R/(2\kappa^2)$,
-which determines the geometric coefficient $C$ in each topology.
-(Note that $N_{\REE} = -2V\eta/r$ is topology-independent after the
-torsion reduction, so background curvature enters $\Veff$ solely via
-the Ricci scalar.)
-
-\paragraph{Positive curvature ($\Sthree$): Lowers the barrier}
-
-For $\Sthree$ ($R_{\LC} = +24/r^2$), the positive curvature contributes a negative constant $-36$
-to the geometric coefficient $C = 9\eta^2 - 36$.
-This "lowering" of the barrier allows $C$ to become negative for small $\eta$,
-creating a potential well even without torsion. This is the origin of the
-robust stability of spherical space.
-
-\paragraph{Zero curvature ($\Tthree$): Neutral baseline}
-
-For $\Tthree$ ($R_{\LC} = 0$), $C = 9\eta^2 \ge 0$.
-The baseline is neutral. Stability is possible but requires the torsion term $B$
-to actively dig the well, necessitating $\theta_{\NY} > \theta_{crit}$.
-
-\paragraph{Negative curvature ($\Nilthree$): Raises the barrier}
-
-For $\Nilthree$ ($R_{\LC} = -1/2r^2$), the negative curvature contributes a positive constant $+3$
-to $C = 36\eta^2 + 3$.
-This "raising" of the barrier makes stabilization harder, specifically forbidding it
-near $\eta=0$ where the torsion term is weak. This "negative curvature-related suppression"
-is a distinct geometric fingerprint.
-
-\subsubsection{Isotropy and anisotropy}
-
-$\Sthree$ (SU(2)) is an isotropic homogeneous space where any two directions
-can be mapped to each other by group action. On the other hand, $\Nilthree$
-(Heisenberg) is anisotropic, with the structure $[E_0, E_1] = (1/R)E_2$
-giving special treatment to the ``$E_2$ direction.''
-
-The anisotropy manifests in the effective potential as follows:
-\begin{itemize}
-  \item $\Sthree$: $C(\eta) = 9\eta^2 - 36$ (allows $C < 0$ for $|\eta| < 2$)
-  \item $\Nilthree$: $C(\eta) = 36\eta^2 + 3$ (always positive, larger coefficient)
-\end{itemize}
-
-For anisotropic topologies like $\Nilthree$, stable minima require larger
-$\theta_{\NY}$ values to overcome the always-positive $C$ term.
-
-%------------------------------------------------------------------------------
-\subsection{Role of FULL Revealed by Diagnostic Comparison (TT/REE)}
-\label{sec:FULL_role}
-
-\subsubsection{Physical meaning of TT and REE}
-
-In the decomposition $N = N_{\TT} - N_{\REE}$ of the NY density, each component 
-carries different geometric information:
-
-\paragraph{$N_{\TT}$ (torsion-torsion term):}
+\section{Variation scope and physical interpretation}\label{sec7}
+\subsection{A radius minimum is not full stationarity}
+On $S^3$ in FULL, take $V=1$, $\eta=\theta=0$, and $\kappa=L=1$.
+At $r=2\sqrt3$,
 \begin{equation}
-  N_{\TT} = \frac{1}{4}\varepsilon^{abcd} T^{e}{}_{ab} T_{ecd}
+\begin{aligned}
+\partial_r U&=0,&\partial_r^2U&=\sqrt3\,\pi^2>0,\\
+\partial_V U&=4\sqrt3\,\pi^2\ne0,
+&\partial_L U&=-4\sqrt3\,\pi^2\ne0.
+\end{aligned}
+\tag{M7-01}\label{eq:M7-01}
 \end{equation}
+Thus radius stationarity and positive radial curvature coexist with
+nonzero derivatives in other directions.
+On $T^3$, fixed-shape scaling and variation of the three radii independently
+are different questions. In particular, Appendix~\ref{appE} shows that
+the full radius Hessian has $H_{22}=H_{33}=0$ on the specified family.
 
-This represents ``self-interaction'' of torsion and does not depend on 
-background curvature. It takes the form $N_{\TT} \propto V\eta/r$ and is 
-an odd function of $\eta$.
+\subsection{Scoped nonexistence of a full vacuum on the sphere product}
+The following statement concerns standard EC gravity with a constant
+complete NY coupling, no sources, and no cosmological constant,
+on a closed real Euclidean $S^3\times S^1$.
+The coframe is smooth and nondegenerate and the metric-compatible
+connection is varied independently.
 
-\paragraph{$N_{\REE}$ (Riemann-torsion term):}
-\begin{equation}
-  N_{\REE} = \frac{1}{4}\varepsilon^{abcd} R_{abcd}
-\end{equation}
+The complete NY term is a total derivative, so a constant coefficient
+does not change the bulk equations on a closed manifold.
+For a nondegenerate coframe, the standard EC connection equation gives
+zero torsion, and the coframe equation gives Ricci flatness.
+For these bulk variations and the NY identity, see
+\cite[Sec.~IV.A--B, Eqs.~(4.10)--(4.12), (4.20)]{Corichi2016}.
+We now apply their geometric consequences under the real Euclidean,
+closed-manifold assumptions stated above.
 
-This is the contribution of curvature from the EC connection (including torsion).
-All three topologies have the same simplified form:
-\begin{itemize}
-  \item $\Sthree$: $N_{\REE} \propto V\eta/r$
-  \item $\Tthree$: $N_{\REE} \propto V\eta/r$
-  \item $\Nilthree$: $N_{\REE} \propto V\eta/r$
-\end{itemize}
+Since $\chi(S^3\times S^1)=0$, the four-dimensional Gauss--Bonnet
+formula for a Ricci-flat Riemannian metric gives zero for a positive
+constant times the integral of the squared Riemann-curvature norm.
+The nonnegative integrand must therefore vanish everywhere, so the
+metric would be flat.
 
-\subsubsection{Unified form for $B$ }
+By Bieberbach's theorem, a compact flat four-manifold has a finite
+cover by a flat $T^4$; see also the proof of Lemma~1 in \cite{LeBrun2009}.
+Its fundamental group must contain a finite-index subgroup
+isomorphic to $\mathbb Z^4$.
+But $\pi_1(S^3\times S^1)=\mathbb Z$, whose subgroups are cyclic and
+cannot be isomorphic to $\mathbb Z^4$.
+This contradiction excludes a full vacuum satisfying all the stated
+assumptions. It is a global obstruction, not an inference from a finite
+set of parameter examples.
+It does not exclude the off-shell geometries used in this paper,
+and does not address theories with a cosmological constant, sources,
+boundaries, complex metrics, nonconstant $\theta$, or higher-curvature terms.
 
-The three variants (FULL, TT, REE) have similar $B$ forms. For all topologies:
-\begin{itemize}
-  \item FULL: $B \propto \eta$
-  \item TT: $B \propto 2\eta$
-  \item REE: $B \propto \eta$
-\end{itemize}
+\subsection{NY, curvature contractions, and topology}
+The contraction $\varepsilon^{abcd}R_{abcd}$ is linear in curvature.
+It is not the Pontryagin density, which is quadratic in curvature
+through $R\wedge R$.
+Its vanishing on a torsion-free slice does not imply vanishing for
+general torsion.
+Likewise, a zero integral of the complete NY form does not require
+the separate TT and REE integrals to vanish.
 
-All variants share the same sign condition: $B < 0$ for $\eta < 0$,
-when $\theta_{\NY} > 0$.
+\subsection{What is required for physical observables}
+The sign of $U_{\min}$ alone does not identify a dominant saddle in a
+path integral. Such an interpretation requires an integration contour,
+a weighting prescription, and the relevant variations.
+Nor does a height difference $\Delta U$ give a physical energy or
+a tunneling rate without a kinetic term, constraints, boundary conditions,
+and a bounce or an equivalent dynamical analysis.
+The Type~I action difference alone does not determine a WKB exponent.
+Fixing the global volume does not supply that physical unit dictionary.
 
-The exact derivative structure $N = \dd(e^a \wedgep T_a)$ of the NY term
-still carries geometric information, but the topology-dependent differences
-now appear primarily in the coefficient $C$ rather than in the form of $B$.
-
-\subsubsection{Structural origin of $N_{\FULL} = N_{\REE}$}
-
-All three topologies have $N_{\FULL} = N_{\REE} = -2V\eta/r$.
-This identity is not a numerical coincidence but a structural consequence
-of the $\mathcal{M}_3 \times \Sone$ product geometry and the NY Lagrangian.
-
-Since $N_{\FULL} = N_{\TT} - N_{\REE}$ by definition, the identity
-$N_{\FULL} = N_{\REE}$ is equivalent to $N_{\TT} = 2 N_{\REE}$.
-To see why this holds for all topologies, consider the decomposition of
-$N_{\REE}$:
-\begin{equation}
-  N_{\REE} = \frac{1}{4}\varepsilon^{abcd} R^{\mathrm{EC}}_{abcd}
-  = \frac{1}{4}\varepsilon^{abcd} R^{\LC}_{abcd}
-  + (\text{contortion-dependent terms}).
-\end{equation}
-In the $\mathcal{M}_3 \times \Sone$ product geometry, the Levi--Civita
-Riemann tensor $R^{\LC}_{abcd}$ is supported entirely on the spatial
-$\mathcal{M}_3$ directions (indices $0,1,2$), with all components
-involving the $\Sone$ direction (index $3$) vanishing. The totally
-antisymmetric tensor $\varepsilon^{abcd}$ in four dimensions, however,
-requires all four distinct indices, forcing one to be the $\Sone$ direction.
-Consequently,
-\begin{equation}
-  \varepsilon^{abcd} R^{\LC}_{abcd} = 0
-  \label{eq:LC_pontryagin_vanish}
-\end{equation}
-identically for all topologies. This eliminates the topology-dependent
-contribution to $N_{\REE}$, leaving only contortion (torsion) terms that
-depend on $(V, \eta)$ but not on the spatial geometry. Since $N_{\TT}$
-is also purely torsional by construction, both components---and hence
-$N_{\FULL}$---are topology-independent.
-
-This result has an important physical implication: the stabilization
-driven by the NY term is a property of the torsion sector alone, with
-topology entering the effective potential exclusively through the
-Einstein--Hilbert (geometric) coefficient $C$. The phase diagrams
-(Figs.~\ref{fig:phase_matrix_04to05}--\ref{fig:phase_matrix_08to09})
-confirm this separation: all three NY variants produce qualitatively
-similar phase boundaries, differing only in the numerical prefactor
-of $B$ ($B_{\TT} = 2 B_{\FULL}$).
-
-%------------------------------------------------------------------------------
-\subsection{Usage as a Reusable Diagnostic Tool}
-\label{sec:diagnostic_tool}
-
-\subsubsection{Input and output specifications}
-
-The diagnostic framework provided by this work has the following input/output 
-specifications:
-
-\paragraph{Input:}
-\begin{itemize}
-  \item Topology: $\mathcal{M}_3 \in \{\Sthree, \Tthree, \Nilthree\}$ 
-        (or specified by structure constants $C^{i}{}_{jk}$)
-  \item Parameters: $(V, \eta, \theta_{\NY})$
-  \item NY variant: FULL / TT / REE
-\end{itemize}
-
-\paragraph{Output:}
-\begin{itemize}
-  \item Type classification: I (stable with barrier) / II (rolling) / 
-        III (unstable)
-  \item Stable radius: $r_0$ (for Type I/II)
-  \item Barrier height: $\Delta V$ (for Type I)
-  \item Effective potential: Analytical expression for $\Veff(r)$
-\end{itemize}
-
-\subsubsection{Application example: Use for parameter design}
-
-When constructing cosmological models based on EC+NY theory, this diagnostic 
-framework can be used for the following purposes:
-
-\paragraph{Identification of stable regions:}
-For a given topology and NY variant, read the parameter range realizing 
-Type I or Type II from phase diagrams.
-
-\paragraph{Prediction of critical conditions:}
-Use the analytical boundary conditions derived in Sec.~\ref{sec:mechanisms} 
-(e.g., $\eta = 2, -2$ for $\Sthree$) to predict parameters where Type 
-transitions occur.
-
-\paragraph{Evaluation of stability quality:}
-Quantitatively evaluate the ``robustness'' of metastable states from 
-$\log_{10}(\Delta V)$ values. Larger $\Delta V$ means stronger suppression 
-of decay by quantum tunneling.
-
-\subsubsection{Extension to other topologies}
-
-This diagnostic framework can be extended to any 3-dimensional Lie group 
-admitting left-invariant coframes. Specifically:
-
-\begin{enumerate}
-  \item Specify structure constants $C^{i}{}_{jk}$
-  \item Execute the computational pipeline from Sec.~\ref{sec:pipeline}
-  \item Derive effective potential $\Veff(r)$
-  \item Compute Type classification and stability metrics
-\end{enumerate}
-
-Among Thurston's eight geometries, those with compact quotients 
-($\Sthree$, $\mathbb{E}^3$, $\mathrm{Nil}$, $\mathrm{Sol}$, 
-$\widetilde{SL_2(\mathbb{R})}$, $\mathbb{H}^2 \times \mathbb{R}$, 
-$S^2 \times \mathbb{R}$) can in principle be treated with this framework. 
-However, $S^2 \times \mathbb{R}$ is not parallelizable, requiring caution 
-in constructing a global coframe.
+Comparing topology sectors requires a common physical framework,
+including the quantities and constraints held fixed.
+An extension to $S^2\times\mathbb R$ would also require a noncompact-volume
+prescription and a defined reduction.
+Nontriviality of $TS^2$ alone does not prove the absence of a global frame
+on a product containing it. No such extension is computed here.

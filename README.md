@@ -1,79 +1,71 @@
-# DPPUv2 Paper 01: Topology-Dependent Phase Classification of Effective Potentials in Einstein-Cartan Gravity
-
-[10.5281/zenodo.18213677](https://doi.org/10.5281/zenodo.18213677)
+# DPPUv2 Paper 01: Geometry-Dependent Classification of Reduced Potentials in Einstein–Cartan Gravity
 
 [日本語版 README](README_ja.md)
 
-![Phase diagram example](data/image/ALL/phase_matrix_0010.png "Phase diagram example")
+This repository provides supplementary materials for the paper, including the manuscript, sources, calculation code and figure data. The paper compares reduced potentials for static homogeneous geometries on $S^3\times S^1$, $T^3\times S^1$ and a compact $\mathrm{Nil}^3\times S^1$ quotient in Einstein–Cartan gravity.
 
-## Paper Content
+On the stated ansatz, the complete Nieh–Yan (NY) density vanishes, so the FULL reduced potential is independent of the NY coupling. TT and positive-REE are separate diagnostic actions. The phase classification describes off-shell extrema along specified variation paths; a radius minimum does not establish a full vacuum solution, physical mass or decay rate.
 
-- [Official PDF (English, built from LaTeX)](DPPUv2-paper01.pdf)
-- [Draft Japanese version (Markdown)](20260101-01_paper_01_v2_2.md)
+## Paper version
 
-## Directory Structure
+**v3 — revised 2026-10-25.** The manuscript, figures and accompanying data correspond to v3. The changes from v2 to the action, torsion notation, global normalization and conclusions are summarized in the [revision history](CHANGELOG.md).
 
-- `LaTeX/` - LaTeX manuscript and compiled PDF
-  - `main.tex` - Main file
-  - `sections/` - Section TeX files
-  - `appendices/` - Appendix TeX files
-  - `figures/` - Figures
-- `data/` - Data for the paper
-- `script/` - Data processing and visualization scripts
-  - For script details, see [script/README](script/README.md)
+Repository DOI: [10.5281/zenodo.18213677](https://doi.org/10.5281/zenodo.18213677). When citing or comparing results, identify the manuscript version and files used.
 
-## Building the LaTeX Document
+[Correction tracking (Issue #4)](https://github.com/Muacca/DPPUv2-paper01/issues/4)
 
-### Basic Build Commands
+## Read the paper and data
 
-Navigate to the LaTeX directory and run pdflatex.
-To properly resolve cross-references (`\ref`, `\label`, etc.) in LaTeX, **you need to compile at least twice**:
+| Resource | Contents |
+|---|---|
+| [English PDF](DPPUv2-paper01.pdf) | v3 paper with figures, tables and appendices |
+| [Japanese Markdown](section_01_ja.md) | v3 paper; the introduction links to all chapters and appendices |
+| [Figure and table data](data/paper_v3/README.md) | Numerical datasets, parameters, input domains and asset index |
+| [LaTeX sources](LaTeX/main.tex) | Main file, sections and appendices |
+| [Calculation code](script/) | Symbolic engines, topology runners, parameter scanner and visualization tools |
+| [Conventions](script/docs/CONVENTIONS.md) | Connection, torsion, index and global-geometry conventions |
+| [Independent NY calculation notebook](supplement/nieh_yan/README.md) | Optional exterior-algebra derivation of the NY identity, component coefficients and T/τ correspondence |
 
-- **1st pass**: Writes label information to `.aux` file
-- **2nd pass**: Reads references from `.aux` file and resolves them
+![Complete-NY action phase classification](LaTeX/figures/v3/fig05_full_phases.png)
 
-If references appear as `??`, compile once more.
+The displayed phase map uses geometric-torsion parameters. Definitions and variation paths are given in the paper.
+
+## Use the calculation code
+
+Run the following commands from the repository root, using a Python environment with the dependencies listed in [script/requirements.txt](script/requirements.txt).
 
 ```powershell
-cd LaTeX
-pdflatex -interaction=nonstopmode main.tex
-pdflatex -interaction=nonstopmode main.tex
+python -m pip install -r script/requirements.txt
+python -B script/DPPUv2_parameter_scan_v3.py --help
 ```
 
-### Output Files
+A small scan example from Appendix F:
 
-Upon successful build, the following files are generated:
-
-- `main.pdf` - Final PDF file (approximately 3.5 MB, 79 pages)
-- `main.aux` - Auxiliary file (cross-reference information)
-- `main.log` - Compilation log
-- `main.out` - Hyperref outline information
-
-### Troubleshooting
-
-#### If Errors Occur
-
-Check errors:
 ```powershell
-# Review log file
-cat main.log | Select-String -Pattern "Error|Warning" | Select-Object -Last 20
+python -B script/DPPUv2_parameter_scan_v3.py --topologies S3 --ny-variants FULL --V-min 1 --V-max 4 --V-points 2 --eta-min -3 --eta-max 3 --eta-points 7 --theta-min 0 --theta-max 1 --theta-points 2 --workers 1 --output-dir new_scan
 ```
 
-#### Clean Build
+The paper and figure datasets use geometric torsion $T$. The code input is $\tau=-T$, with $V_\tau=-V$ and $\eta_\tau=-\eta$. Thus the positive V inputs in this example correspond to negative V in the paper. Use the same torsion convention, global volumes and variation path when comparing calculations. Appendices A and C specify the parameter and domain maps; Appendix F describes reproduction.
 
-Remove all auxiliary files before rebuilding:
+CSV files are written to the selected directory as `dppu_scan_all_{timestamp}.csv` and `dppu_scan_{topology}_{ny_variant}_{timestamp}.csv`. The scanner output format differs from the figure datasets; see Appendix C and the [data guide](data/paper_v3/README.md).
+
+Use a fresh output/checkpoint directory for each calculation and restart notebook or viewer kernels after changing code versions. Pre-revision images, historical data and saved notebook outputs remain in the repository for reference; they are not automatically converted and are not evidence for the v3 conclusions. The v3 figure assets are in [LaTeX/figures/v3](LaTeX/figures/v3/) and the supporting datasets are in [data/paper_v3](data/paper_v3/).
+
+## Build the PDF
+
+Use a LaTeX installation providing `pdflatex` and the packages declared in [main.tex](LaTeX/main.tex). From the repository root, run:
+
 ```powershell
-cd LaTeX
-Remove-Item *.aux, *.log, *.out, *.synctex.gz, *.fdb_latexmk, *.fls -ErrorAction SilentlyContinue
-pdflatex -interaction=nonstopmode main.tex
-pdflatex -interaction=nonstopmode main.tex
+Push-Location LaTeX
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+Pop-Location
 ```
 
-## Author
+The repeated passes resolve cross-references and the table of contents. The output is `LaTeX/main.pdf`; inspect `LaTeX/main.log` for errors or unresolved references. These commands do not replace the supplied `DPPUv2-paper01.pdf` at the repository root.
 
-Muacca
+## Author and license
 
-## License
-
-See LICENSE file in the repository root.
+Muacca. See [LICENSE](LICENSE) for the terms of use.
 

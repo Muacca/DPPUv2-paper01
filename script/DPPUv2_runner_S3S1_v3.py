@@ -7,7 +7,8 @@ Purpose: Implements topology-specific setup for S3xS1 manifold with v3 engine.
 
 Topology: S3 (3-sphere) x S1 (circle)
 Structure Constants: C^i_jk = (4/r)eps_ijk  (SU(2) Lie algebra)
-Volume: V = 2pi^2 L r^3
+Round-sphere radius: a = r/2; L is the S1 circumference
+Volume: V = pi^2 L r^3/4 = 2pi^2 L a^3
 Curvature: R_LC = 24/r^2 (for eta=0)
 
 Changes from v2.0:
@@ -97,8 +98,8 @@ class S3S1Engine(BaseFrameEngine):
         metric = Matrix.eye(dim)
         self.data['metric_frame'] = metric
         
-        # Total volume: V = 2π²Lr³
-        total_volume = 2 * pi**2 * L * r**3
+        # SU(2) has round radius r/2; the circle has circumference L.
+        total_volume = pi**2 * L * r**3 / 4
         self.data['total_volume'] = total_volume
         
         # Structure constants: C^i_jk = (4/r)ε_ijk for i,j,k ∈ {0,1,2}

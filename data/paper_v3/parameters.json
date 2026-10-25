@@ -1,0 +1,108 @@
+{
+  "schema": "paper-figure-data-v1",
+  "parameters": {
+    "kappa": 1,
+    "L": 1,
+    "torsion": "geometric T",
+    "code_map": "V_tau=-V; eta_tau=-eta",
+    "scale": "s=r (S3,T3), s=R (Nil3)",
+    "T3_path": "R1=R2=R3=r",
+    "S3_physical_radius": "a=r/2",
+    "volumes": {
+      "S3": "pi^2 L r^3/4",
+      "T3": "(2 pi)^3 L r^3",
+      "Nil3": "(2 pi)^4 L R^3"
+    },
+    "Nil_lattice": [
+      "2pi",
+      "2pi",
+      "4pi^2"
+    ]
+  },
+  "equations": [
+    "M3-03",
+    "M3-06",
+    "M3-10",
+    "M4-01",
+    "M4-02",
+    "M4-03",
+    "M4-04",
+    "M4-05",
+    "M5-01",
+    "M5-02",
+    "M5-03",
+    "M6-02",
+    "A-05"
+  ],
+  "grids": {
+    "phase_V": [
+      -5,
+      0,
+      51
+    ],
+    "phase_eta": [
+      -5,
+      10,
+      151
+    ],
+    "theta_FULL_verified": [
+      0,
+      1,
+      2
+    ],
+    "theta_diagnostic": [
+      0.4,
+      0.5,
+      0.8,
+      0.9
+    ],
+    "curve_s": [
+      0.002,
+      6,
+      1201
+    ],
+    "representative_s": [
+      0.002,
+      2,
+      601
+    ],
+    "scaling_absV": [
+      0.5,
+      6,
+      121
+    ]
+  },
+  "counts": {
+    "variant_curves": 3603,
+    "representative_curves": 5409,
+    "phase_grid": 115515,
+    "scaling": 484,
+    "representative_values": 15,
+    "local_invariants": 3
+  },
+  "code_sha256": {
+    "DPPUv2_engine_core_v3.py": "6bc5b8c01558a1381916e8a7e2f69fe14f1a1bcd542a1cde45c27fbd9773db5a",
+    "DPPUv2_interactive_viewer_v3.py": "92800c86e2d146ba6d6d65ace482aa187c0654c9eac10a650eb902be48b5ffbc",
+    "DPPUv2_parameter_scan_v3.py": "7427972257fa238c0f927d93c75a5276e1dd9eb2dfe58e9b4559b8ca4322426b",
+    "DPPUv2_runner_Nil3S1_v3.py": "2deb333487274352c634ea48fe96c3d8e38069ed39f3b110368e2cda26a5600a",
+    "DPPUv2_runner_S3S1_v3.py": "1d68bef87ba8bb5f15bfaf707315825b0635dc430adff5a1006cd72403999c5c",
+    "DPPUv2_runner_T3S1_v3.py": "03a52724b505e13e3485af420d0bc658339a5dfd2241af7db95eaaeadc65ff78",
+    "DPPUv2_visualize_phasemap_v3.py": "a1e4e9a288cf258f9f2af6b02bad5cd50754d7ad6956cacdc59564a865517905",
+    "DPPUv2_visualize_phasematrix_v3.py": "b67cc125eca71f663a8f060ad33be62555ff4f71e57af1d45cff9cdbd9e16ad1"
+  },
+  "data_sha256": {
+    "local_invariants.csv.gz": "4090a2c94a9d649d2c841d09ad3a9f647eb9b9d4ff6ec571517af9dee436c80d",
+    "phase_grid.csv.gz": "c2d93aa494ad6c359fe7f09990b12d5ff2988621d16c0b35549cf5d73852c43a",
+    "representative_curves.csv.gz": "840fb071d88c38cea8de0fcb840a0af651973ebcaf913f37c0f75c8873e02573",
+    "representative_values.csv.gz": "bca2b18d29c8014dba44cda6b80a915c092ed41bcd0e4d664e4b633ac4d26eeb",
+    "scaling.csv.gz": "520fd8e3e086774beaa76fcb94ab88e79907bd01b9f8b48e7fd336d66e49117b",
+    "variant_curves.csv.gz": "f7694a758afa3970877adf858bc3cb0ca5e1e61c87f9721c488e474b30383522"
+  },
+  "notes": [
+    "FULL phase panels are identical at theta=0,1,2.",
+    "TT and positive REE share diagnostic data; both consumers are independently compared.",
+    "The radius domain is strictly positive. No-minimum fields are blank, not zero.",
+    "Type I height is maximum-to-minimum difference; Type II height is origin-limit depth.",
+    "No full default three-dimensional parameter sweep is claimed."
+  ]
+}
