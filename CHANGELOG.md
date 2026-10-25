@@ -40,6 +40,8 @@ At the same inputs, the volume correction multiplies the $S^3$ action, potential
 
 ### Earlier results
 
-Pre-revision images in [LaTeX/figures](LaTeX/figures/), historical datasets and saved notebook outputs are preserved but are not evidence for the v3 conclusions. Some generating inputs and versions remain unidentified; earlier scan statistics and version-comparison claims are not revalidated by this revision. Existing checkpoints and saved outputs are not automatically converted to the corrected coefficients or volume conventions.
+Pre-revision images, movies, sample scan/run results and embedded notebook outputs are excluded from the v3 supplement. They remain accessible in the [pre-v3 repository revision](https://github.com/Muacca/DPPUv2-paper01/tree/19455291caecba1c10ec97e6a08467200dabf936). The exploratory notebooks retain their executable source and are distributed without evaluated outputs; the figure notebook is not the generator of the v3 paper figures.
+
+Some generating inputs and versions of the earlier outputs remain unidentified. Those outputs are not evidence for the v3 conclusions, and earlier scan statistics and version-comparison claims are not revalidated by this revision. Existing checkpoints and saved outputs are not automatically converted to the corrected coefficients or volume conventions.
 
 The correction is tracked in [Issue #4](https://github.com/Muacca/DPPUv2-paper01/issues/4).

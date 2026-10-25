@@ -37,8 +37,8 @@ DPPUv2 Phase 1 provides tools for:
 
 - **DPPUv2_runner_Nil3S1_v3.py** - Nil³×S¹ topology runner
   - Nilmanifold × circle topology
-  - Structure constants: C¹_23 = -C¹_32 = 4/r (Heisenberg algebra)
-  - Curvature: R_LC = 0
+  - Nonzero structure coefficients: $C^2{}_{01}=-1/R$, $C^2{}_{10}=1/R$ (spatial indices $0,1,2$; scale $R>0$)
+  - Levi–Civita scalar curvature: $\mathcal R_{\mathrm{LC}}=-\frac{1}{2R^2}$ (torsion-free connection)
 
 ### Analysis Tools
 
@@ -46,7 +46,7 @@ DPPUv2 Phase 1 provides tools for:
   - Systematically scans (V, η, θ_NY) parameter space
   - Outputs CSV files with stability classifications (type-I/II/III)
   - Supports multiprocessing for parallel computation
-  
+
 - **DPPUv2_visualize_phasemap_v3.py** - Phase diagram visualization
   - Generates phase diagram images from CSV data
   - Creates color-coded stability maps
@@ -74,11 +74,14 @@ Technical documentation and conventions:
 - [DPPUv2 Engine CONVENTIONS](docs/CONVENTIONS.md) - DPPUv2 Engine conventions and specifications
 - [DPPUv2 SymPy guideline](docs/SymPy_guideline.md) - SymPy usage guidelines and best practices
 
-### `sample_result/` - Sample run_all/scan execution results
+### Paper Data and Notebooks
 
-- `sample_result-run_all_20251221.zip`: Sample results of running all cases at once
-    - `DPPUv2_parameter_scan_v3` was created based on these results
-- `sample_result-scan_20251221.zip`:  Sample results of `DPPUv2_parameter_scan_v3`
+The [v3 data guide](../data/paper_v3/README.md) lists the published figures, tables, parameters and numerical datasets. These datasets use descriptive columns and geometric-torsion parameters; they are not the eight-column scanner CSV format expected by the CSV visualization scripts.
+
+- [Interactive visualizer](DPPUv2_visualize_notebook_v3.ipynb): launches the accompanying viewer. Requires Jupyter, ipywidgets and ipympl in addition to the calculation dependencies.
+- [Potential exploration](DPPUv2_Paper_Figures_v3.ipynb): uses the accompanying engines for decomposition and comparison of the complete NY action with the diagnostic actions. Its FULL type-I filters return empty datasets on the stated expansion paths. It is not the generator of the paper's nine figures.
+
+Both notebooks are supplied without evaluated outputs. Start Jupyter with this `script/` directory as the working directory and use a fresh kernel. The figure notebook writes PNG/PDF files to the working directory when plotting cells are run. Notebook variables `V` and `eta` are code inputs $V_\tau,\eta_\tau$; the paper uses $V=-V_\tau$, $\eta=-\eta_\tau$. See [CONVENTIONS](docs/CONVENTIONS.md) for the radius and volume conventions, and the [revision history](../CHANGELOG.md#earlier-results) for earlier outputs.
 
 ## Quick Start
 

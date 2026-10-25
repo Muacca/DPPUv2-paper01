@@ -45,7 +45,7 @@ DPPUv2 Phase 1は以下の機能を提供します：
   - (V, η, θ_NY)パラメータ空間を系統的にスキャン
   - 安定性分類（type-I/II/III）を含むCSVファイルを出力
   - 並列計算のためのマルチプロセッシングをサポート
-  
+
 - **DPPUv2_visualize_phasemap_v3.py** - 相図可視化
   - CSVデータから相図画像を生成
   - カラーコード化された安定性マップを作成
@@ -73,11 +73,14 @@ DPPUv2 Phase 1は以下の機能を提供します：
 - [DPPUv2 Engine CONVENTIONS](docs/CONVENTIONS_ja.md) - DPPUv2 エンジンの規約と仕様
 - [DPPUv2 SymPy guideline](docs/SymPy_guideline_ja.md) - SymPy使用ガイドラインとベストプラクティス
 
-### `sample_result/` - run_all/scan 実行結果サンプル
+### 掲載データとnotebook
 
-- `sample_result-run_all_20251221.zip`: 全ケースを一括実行した結果のサンプル
-    - `DPPUv2_parameter_scan_v3` はこの結果をもとに作成
-- `sample_result-scan_20251221.zip`: `DPPUv2_parameter_scan_v3` の実行結果サンプル
+[v3データ案内](../data/paper_v3/README.md)に、掲載図表・パラメータ・数値データをまとめています。このデータは内容別の列と幾何学的torsionのパラメータを使っており、CSV可視化スクリプトが読み込むscannerの8列CSVとは形式が異なります。
+
+- [対話型可視化](DPPUv2_visualize_notebook_v3.ipynb)：付属viewerを起動します。計算用の依存ライブラリに加え、Jupyter・ipywidgets・ipymplが必要です。
+- [ポテンシャルの探索](DPPUv2_Paper_Figures_v3.ipynb)：付属エンジンを使って項別分解と完全NY作用・診断用作用の比較を行います。記載した膨張経路ではFULLのtype-Iフィルタは空集合を返します。論文掲載の9図を生成するnotebookではありません。
+
+いずれも実行済み出力を含めていません。この`script/`ディレクトリをカレントディレクトリとしてJupyterを起動し、新しいkernelで実行してください。図のnotebookは描画セルの実行時にカレントディレクトリへPNG/PDFを出力します。notebookの変数`V`・`eta`はコード入力$V_\tau,\eta_\tau$で、本文では$V=-V_\tau$、$\eta=-\eta_\tau$です。半径・体積の規約は[CONVENTIONS](docs/CONVENTIONS_ja.md)、改訂前の出力は[改訂履歴](../CHANGELOG.md#earlier-results)を参照してください。
 
 ## クイックスタート
 

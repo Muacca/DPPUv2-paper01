@@ -49,7 +49,7 @@ python -B script/DPPUv2_parameter_scan_v3.py --topologies S3 --ny-variants FULL 
 
 CSVは指定ディレクトリに`dppu_scan_all_{timestamp}.csv`および`dppu_scan_{topology}_{ny_variant}_{timestamp}.csv`として保存されます。走査出力と掲載図表のデータでは形式が異なるため、付録Cと[データ案内](data/paper_v3/README.md)を参照してください。
 
-計算ごとに新しい出力・checkpointディレクトリを使い、コードの版を変えた場合はnotebookやviewerのkernelを再起動してください。改訂前の画像・旧データ・notebook保存出力は参照用に保持していますが、自動変換されず、v3の結論の証拠には用いません。v3の図は[LaTeX/figures/v3](LaTeX/figures/v3/)、対応するデータは[data/paper_v3](data/paper_v3/)にあります。
+計算ごとに新しい出力・checkpointディレクトリを使い、コードの版を変えた場合はnotebookやviewerのkernelを再起動してください。notebookには実行済み出力を含めていません。用途と実行条件は[スクリプト案内](script/README_ja.md)を参照してください。v3の図は[LaTeX/figures/v3](LaTeX/figures/v3/)、表は[LaTeX/tables/v3](LaTeX/tables/v3/)、対応するデータは[data/paper_v3](data/paper_v3/)にあります。改訂前の結果とその解釈上の制限は[改訂履歴](CHANGELOG.md#earlier-results)を参照してください。
 
 ## PDFをビルドする
 
