@@ -22,11 +22,11 @@ python -B script/DPPUv2_runner_S3S1_v3.py --mode MX --ny-variant FULL --log-file
 python -B script/DPPUv2_parameter_scan_v3.py --topologies S3 --ny-variants FULL --V-min 1 --V-max 4 --V-points 2 --eta-min -3 --eta-max 3 --eta-points 7 --theta-min 0 --theta-max 1 --theta-points 2 --workers 1 --output-dir new_scan
 ```
 
-これは$V_\tau>0$の入力例であり、本文では$V<0$に対応する。ログと出力の保存先は実行ごとに分け、入力と結果を対応付ける。
+これは $`V_\tau>0`$ の入力例であり、本文では $V<0$ に対応する。ログと出力の保存先は実行ごとに分け、入力と結果を対応付ける。
 
 ## F.3 計算条件の記録
 
-コードの版、作用variant、$T/\tau$の入力規約、体積規約、変分経路、入力の点数と端点、分類器の境界処理を記録する。$S^3$の$r$と実半径$a$、$T^3$の$R_i$と周長$\ell_i$を分ける。Nilでは格子の面同定も含めて空間を特定する。
+コードの版、作用variant、 $T/\tau$ の入力規約、体積規約、変分経路、入力の点数と端点、分類器の境界処理を記録する。 $S^3$ の $r$ と実半径 $a$ 、 $T^3$ の $`R_i`$ と周長 $`\ell_i`$ を分ける。Nilでは格子の面同定も含めて空間を特定する。
 
 CSVの8列と入力域は[付録C](appendix_C_ja.md)、表示量の定義は[付録D](appendix_D_ja.md)に示した。notebookを用いる場合、出力には各セルを実行した時点の値が格納される。計算の再現には、使用する環境を指定し、kernelを再起動したうえで必要な計算セルを順に実行する。
 

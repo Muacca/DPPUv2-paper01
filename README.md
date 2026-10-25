@@ -45,7 +45,7 @@ A small scan example from Appendix F:
 python -B script/DPPUv2_parameter_scan_v3.py --topologies S3 --ny-variants FULL --V-min 1 --V-max 4 --V-points 2 --eta-min -3 --eta-max 3 --eta-points 7 --theta-min 0 --theta-max 1 --theta-points 2 --workers 1 --output-dir new_scan
 ```
 
-The paper and figure datasets use geometric torsion $T$. The code input is $\tau=-T$, with $V_\tau=-V$ and $\eta_\tau=-\eta$. Thus the positive V inputs in this example correspond to negative V in the paper. Use the same torsion convention, global volumes and variation path when comparing calculations. Appendices A and C specify the parameter and domain maps; Appendix F describes reproduction.
+The paper and figure datasets use geometric torsion $T$. The code input is $\tau=-T$, with $`V_\tau=-V`$ and $`\eta_\tau=-\eta`$. Thus the positive V inputs in this example correspond to negative V in the paper. Use the same torsion convention, global volumes and variation path when comparing calculations. Appendices A and C specify the parameter and domain maps; Appendix F describes reproduction.
 
 CSV files are written to the selected directory as `dppu_scan_all_{timestamp}.csv` and `dppu_scan_{topology}_{ny_variant}_{timestamp}.csv`. The scanner output format differs from the figure datasets; see Appendix C and the [data guide](data/paper_v3/README.md).
 

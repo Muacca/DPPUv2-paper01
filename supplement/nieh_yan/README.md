@@ -19,7 +19,7 @@ n_{\mathrm{TT}}=n_{\mathrm{REE}}=-\frac{4V\eta}{s},
 \qquad n_{\mathrm{FULL}}=0.
 $$
 
-Here $s=r$ for the sphere, $s=R_1$ for the torus ansatz and $s=R$ for Nil; the sphere's physical radius is $r/2$. REE denotes the positive curvature term; FULL is TT minus REE. The notebook also compares the directly solved connection with both contortion formulas and establishes
+Here $s=r$ for the sphere, $`s=R_1`$ for the torus ansatz and $s=R$ for Nil; the sphere's physical radius is $r/2$. REE denotes the positive curvature term; FULL is TT minus REE. The notebook also compares the directly solved connection with both contortion formulas and establishes
 
 $$
 \tau=-T,\qquad V_\tau=-V,\qquad \eta_\tau=-\eta.
@@ -36,7 +36,7 @@ python -m pip install sympy notebook
 jupyter notebook supplement/nieh_yan/nieh_yan_identity.ipynb
 ```
 
-Choose **Restart Kernel and Run All Cells**. The distributed notebook has no saved cell outputs. The density matrix has rows S3, T3 and Nil3 and columns TT, REE, FULL and $d(e^a\wedge T_a)/\mathrm{vol}_4$. Empty dictionaries in the residual displays denote zero exterior forms; the component-comparison matrix is zero.
+Choose **Restart Kernel and Run All Cells**. The distributed notebook has no saved cell outputs. The density matrix has rows S3, T3 and Nil3 and columns TT, REE, FULL and $`d(e^a\wedge T_a)/\mathrm{vol}_4`$. Empty dictionaries in the residual displays denote zero exterior forms; the component-comparison matrix is zero.
 
 The calculation imports only SymPy and Python's standard library. It reads no data files and does not call the paper's calculation engines. It can also be run after copying the notebook to a separate directory.
 

@@ -36,8 +36,8 @@ DPPUv2 Phase 1は以下の機能を提供します：
 
 - **DPPUv2_runner_Nil3S1_v3.py** - Nil³×S¹トポロジーランナー
   - Nil多様体×円トポロジー
-  - 非零の構造係数：$C^2{}_{01}=-1/R$、$C^2{}_{10}=1/R$（空間添字$0,1,2$、スケール$R>0$）
-  - Levi–Civitaスカラー曲率：$\mathcal R_{\mathrm{LC}}=-\frac{1}{2R^2}$（torsionを含まない接続）
+  - 非零の構造係数： $`C^2{}_{01}=-1/R`$ 、 $`C^2{}_{10}=1/R`$ （空間添字 $0,1,2$ 、スケール $R>0$ ）
+  - Levi–Civitaスカラー曲率： $`\mathcal R_{\mathrm{LC}}=-\frac{1}{2R^2}`$ （torsionを含まない接続）
 
 ### 解析ツール
 
@@ -80,7 +80,7 @@ DPPUv2 Phase 1は以下の機能を提供します：
 - [対話型可視化](DPPUv2_visualize_notebook_v3.ipynb)：付属viewerを起動します。計算用の依存ライブラリに加え、Jupyter・ipywidgets・ipymplが必要です。
 - [ポテンシャルの探索](DPPUv2_Paper_Figures_v3.ipynb)：付属エンジンを使って項別分解と完全NY作用・診断用作用の比較を行います。記載した膨張経路ではFULLのtype-Iフィルタは空集合を返します。論文掲載の9図を生成するnotebookではありません。
 
-いずれも実行済み出力を含めていません。この`script/`ディレクトリをカレントディレクトリとしてJupyterを起動し、新しいkernelで実行してください。図のnotebookは描画セルの実行時にカレントディレクトリへPNG/PDFを出力します。notebookの変数`V`・`eta`はコード入力$V_\tau,\eta_\tau$で、本文では$V=-V_\tau$、$\eta=-\eta_\tau$です。半径・体積の規約は[CONVENTIONS](docs/CONVENTIONS_ja.md)、改訂前の出力は[改訂履歴](../CHANGELOG.md#earlier-results)を参照してください。
+いずれも実行済み出力を含めていません。この`script/`ディレクトリをカレントディレクトリとしてJupyterを起動し、新しいkernelで実行してください。図のnotebookは描画セルの実行時にカレントディレクトリへPNG/PDFを出力します。notebookの変数`V`・`eta`はコード入力 $`V_\tau,\eta_\tau`$ で、本文では $`V=-V_\tau`$ 、 $`\eta=-\eta_\tau`$ です。半径・体積の規約は[CONVENTIONS](docs/CONVENTIONS_ja.md)、改訂前の出力は[改訂履歴](../CHANGELOG.md#earlier-results)を参照してください。
 
 ## クイックスタート
 
@@ -144,11 +144,11 @@ python -B DPPUv2_visualize_phasemap_v3.py output/dppu_scan_S3_FULL_YYYYMMDD_HHMM
 
 EC項に加える項を次のように選びます。各項は四次元で積分します。
 
-- `TT`：torsion二形式の積$T^a\wedge T_a$に$+\theta$を掛けた診断用作用。
-- `REE`：曲率側$e^a\wedge e^b\wedge R_{ab}$に$+\theta$を掛けた診断用作用。
-- `FULL`：両者の差$T^a\wedge T_a-e^a\wedge e^b\wedge R_{ab}$に$\theta$を掛けた完全Nieh-Yan項。
+- `TT`：torsion二形式の積 $`T^a\wedge T_a`$ に $+\theta$ を掛けた診断用作用。
+- `REE`：曲率側 $`e^a\wedge e^b\wedge R_{ab}`$ に $+\theta$ を掛けた診断用作用。
+- `FULL`：両者の差 $`T^a\wedge T_a-e^a\wedge e^b\wedge R_{ab}`$ に $\theta$ を掛けた完全Nieh-Yan項。
 
-ここで$T$はCartan方程式で定義する幾何学的torsionです。TTはvector trace成分だけを指す名称ではありません。接続・入力配列との対応は[規約文書](docs/CONVENTIONS_ja.md)、作用の定義は[論文第2章](../section_02_ja.md)を参照してください。
+ここで $T$ はCartan方程式で定義する幾何学的torsionです。TTはvector trace成分だけを指す名称ではありません。接続・入力配列との対応は[規約文書](docs/CONVENTIONS_ja.md)、作用の定義は[論文第2章](../section_02_ja.md)を参照してください。
 
 ### パラメータスキャン
 

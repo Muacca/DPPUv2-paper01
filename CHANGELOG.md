@@ -6,8 +6,8 @@ This revision corrects the Nieh–Yan (NY) density and global volume normalizati
 
 ### Action and torsion conventions
 
-- Corrected the curvature-side NY density from $\frac14\varepsilon^{abcd}R_{abcd}$ to $\frac12\varepsilon^{abcd}R_{abcd}$. The torsion-side coefficient remains $1/4$. On the static homogeneous ansatz studied in the paper, the two contributions coincide, so the complete NY density vanishes and the FULL reduced potential is independent of $\theta$.
-- Adopted geometric torsion $T$ in the main text. The appendices define the code-input array $\tau=-T$ and its parameter map $V_\tau=-V$, $\eta_\tau=-\eta$, including the reflected input domains. The code's contortion and connection formulas and input API are retained. This change of notation and convention does not itself change the potential.
+- Corrected the curvature-side NY density from $`\frac14\varepsilon^{abcd}R_{abcd}`$ to $`\frac12\varepsilon^{abcd}R_{abcd}`$. The torsion-side coefficient remains $1/4$. On the static homogeneous ansatz studied in the paper, the two contributions coincide, so the complete NY density vanishes and the FULL reduced potential is independent of $\theta$.
+- Adopted geometric torsion $T$ in the main text. The appendices define the code-input array $\tau=-T$ and its parameter map $`V_\tau=-V`$, $`\eta_\tau=-\eta`$, including the reflected input domains. The code's contortion and connection formulas and input API are retained. This change of notation and convention does not itself change the potential.
 - Distinguished the complete NY action from the TT and positive-REE diagnostic actions. The two diagnostic densities coincide on the stated ansatz; their effects must not be attributed to the complete action.
 
 ### Global geometry and normalization
@@ -17,7 +17,7 @@ The common $S^1$ coordinate has period 1, and $L$ denotes its physical circumfer
 | Background | Adopted geometry | Four-volume |
 |---|---|---|
 | $S^3\times S^1$ | Round radius $a=r/2$ | $\pi^2 Lr^3/4$ |
-| $T^3\times S^1$ | Spatial angles of period $2\pi$; circumferences $2\pi R_i$ | $(2\pi)^3 LR_1R_2R_3$ |
+| $T^3\times S^1$ | Spatial angles of period $2\pi$; circumferences $`2\pi R_i`$ | $`(2\pi)^3 LR_1R_2R_3`$ |
 | $\mathrm{Nil}^3\times S^1$ | Heisenberg lattice $(2\pi,2\pi,4\pi^2)$ with twisted face identifications | $(2\pi)^4 LR^3$ |
 
 At the same inputs, the volume correction multiplies the $S^3$ action, potential and derivatives by $1/8$, and the $T^3$ quantities by $1/(2\pi)$. The Nil volume is retained with an explicit compact quotient. These volume changes preserve radius extrema and reduced phase labels; the NY coefficient correction above changes the potentials and their classification.

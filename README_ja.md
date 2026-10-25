@@ -2,7 +2,7 @@
 
 [English README](README.md)
 
-本リポジトリは論文の補足資料として、本文、原稿ソース、計算コード、掲載図表のデータを提供します。本論文はEinstein–Cartan重力において、$S^3\times S^1$、$T^3\times S^1$、コンパクト商空間$\mathrm{Nil}^3\times S^1$上の静的・一様な幾何に対する縮約ポテンシャルを比較します。
+本リポジトリは論文の補足資料として、本文、原稿ソース、計算コード、掲載図表のデータを提供します。本論文はEinstein–Cartan重力において、 $S^3\times S^1$ 、 $T^3\times S^1$ 、コンパクト商空間 $\mathrm{Nil}^3\times S^1$ 上の静的・一様な幾何に対する縮約ポテンシャルを比較します。
 
 対象ansatzでは完全Nieh–Yan（NY）密度が零となり、FULLの縮約ポテンシャルはNY結合に依存しません。TTと正符号REEは別の診断用作用として扱います。相分類は指定した変分経路上のoff-shell極値の分類であり、半径方向の極小だけで全真空解、物理的な質量や崩壊率が確立されるわけではありません。
 
@@ -45,7 +45,7 @@ python -B script/DPPUv2_parameter_scan_v3.py --help
 python -B script/DPPUv2_parameter_scan_v3.py --topologies S3 --ny-variants FULL --V-min 1 --V-max 4 --V-points 2 --eta-min -3 --eta-max 3 --eta-points 7 --theta-min 0 --theta-max 1 --theta-points 2 --workers 1 --output-dir new_scan
 ```
 
-本文と掲載データは幾何学的torsion $T$を使います。コード入力は$\tau=-T$であり、$V_\tau=-V$、$\eta_\tau=-\eta$です。したがって、この例の正のV入力は本文の負のVに対応します。比較時はtorsion規約、大域体積、変分経路を揃えてください。パラメータと入力域の対応は[付録A](appendix_A_ja.md)・[付録C](appendix_C_ja.md)、再現手順は付録Fに示しています。
+本文と掲載データは幾何学的torsion $T$ を使います。コード入力は $\tau=-T$ であり、 $`V_\tau=-V`$ 、 $`\eta_\tau=-\eta`$ です。したがって、この例の正のV入力は本文の負のVに対応します。比較時はtorsion規約、大域体積、変分経路を揃えてください。パラメータと入力域の対応は[付録A](appendix_A_ja.md)・[付録C](appendix_C_ja.md)、再現手順は付録Fに示しています。
 
 CSVは指定ディレクトリに`dppu_scan_all_{timestamp}.csv`および`dppu_scan_{topology}_{ny_variant}_{timestamp}.csv`として保存されます。走査出力と掲載図表のデータでは形式が異なるため、付録Cと[データ案内](data/paper_v3/README.md)を参照してください。
 

@@ -1,6 +1,6 @@
 # Figure and table data
 
-The paper uses geometric torsion $T$. These files use geometric $V,\eta$; the Python input dictionary is $V_\tau=-V,\eta_\tau=-\eta$. Scale $s$ means $r$ on the sphere and isotropic torus, or $R$ on Nil. The actual sphere radius is $a=r/2$. All numerical datasets use $\kappa=L=1$. Table 1 and Section 3 define the volumes and Nil lattice.
+The paper uses geometric torsion $T$. These files use geometric $V,\eta$; the Python input dictionary is $`V_\tau=-V,\eta_\tau=-\eta`$. Scale $s$ means $r$ on the sphere and isotropic torus, or $R$ on Nil. The actual sphere radius is $a=r/2$. All numerical datasets use $\kappa=L=1$. Table 1 and Section 3 define the volumes and Nil lattice.
 
 | Compressed CSV | Content |
 |---|---|
@@ -16,7 +16,7 @@ CSV files are UTF-8 with header rows, compressed with gzip. They can be read wit
 
 These figure datasets have their own descriptive columns; they are not the eight-column scanner output described in Appendix C. The phase slices are not a full default three-dimensional sweep. FULL agrees at $\theta=0,1,2$; TT and positive REE share the diagnostic dataset.
 
-To reproduce a value with the attached scripts, pass the negated pair $(V_\tau,\eta_\tau)$ to the potential functions in script/DPPUv2_parameter_scan_v3.py. Tables 2 and 3 give polynomial coefficients and root conditions. For a curve, evaluate $P(As^3+Bs^2+Cs)$ at the saved scales. For a phase, classify positive stationary roots using $D=B^2-3AC$, treating $A=0$ separately. Table 5 gives local invariants before volume integration.
+To reproduce a value with the attached scripts, pass the negated pair $`(V_\tau,\eta_\tau)`$ to the potential functions in script/DPPUv2_parameter_scan_v3.py. Tables 2 and 3 give polynomial coefficients and root conditions. For a curve, evaluate $P(As^3+Bs^2+Cs)$ at the saved scales. For a phase, classify positive stationary roots using $D=B^2-3AC$, treating $A=0$ separately. Table 5 gives local invariants before volume integration.
 
 ## Asset index
 

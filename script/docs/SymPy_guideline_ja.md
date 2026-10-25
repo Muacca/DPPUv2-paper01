@@ -40,21 +40,21 @@ SymPyを用いた積分計算における「処理時間爆発（2時間以上�
 
 ### Rule 2.1: 配列インデックス操作の禁止 (Robust Method)
 
-非対角計量や $g_{\mu\nu} \neq 1$ の環境下では、`T[mu, nu, lam]` のように配列のインデックスを入れ替える操作は、物理的なテンソルの添字操作（上げ下げ）と等価ではない。
+非対角計量や $`g_{\mu\nu} \neq 1`$ の環境下では、`T[mu, nu, lam]` のように配列のインデックスを入れ替える操作は、物理的なテンソルの添字操作（上げ下げ）と等価ではない。
 
   * **Don't:**
     ```python
     # NG 禁止：物理的に誤った成分を参照する恐れがある
     term = T_tensor[mu, nu, lam]
     ```
-  * **Do:** 必ず計量 $g_{\mu\nu}$ を介して操作する。
-    1.  全ての添字を下げて完全共変形 $T_{\lambda\mu\nu}$ を作る。
+  * **Do:** 必ず計量 $`g_{\mu\nu}`$ を介して操作する。
+    1.  全ての添字を下げて完全共変形 $`T_{\lambda\mu\nu}`$ を作る。
     2.  添字の入れ替え（Permutation）を行う。
     3.  必要に応じて計量で添字を上げる。
 
 #### 正規直交フレーム基底での最適化
 
-正規直交フレーム基底においては、計量が単位行列（ $g_{ab} = \eta_{ab} = \text{diag}(1,1,1,1)$ または $\text{diag}(-1,1,1,1)$）であるため、添字の上げ下げ計算を省略し、直接成分計算を行うことで高速化する。
+正規直交フレーム基底においては、計量が単位行列（ $`g_{ab} = \eta_{ab} = \text{diag}(1,1,1,1)`$ または $\text{diag}(-1,1,1,1)$ ）であるため、添字の上げ下げ計算を省略し、直接成分計算を行うことで高速化する。
 
 ただし、物理的定義（Hehl 1976）の符号パターン $(+1, +1, -1)$ は厳守すること。
 
@@ -83,7 +83,7 @@ for a in range(dim):
 
 ### Rule 2.2: 自己無撞着性の検証 (Consistency Check)
 
-EC接続 ($\Gamma_{\text{EC}}$) を構築した後、必ず以下の検証コードを実行し、ミスマッチが **0** であることを確認しなければならない。
+EC接続 ($`\Gamma_{\text{EC}}`$) を構築した後、必ず以下の検証コードを実行し、ミスマッチが **0** であることを確認しなければならない。
 
 ```python
 # Torsion Consistency Check
@@ -100,24 +100,32 @@ assert mismatch == 0
 
 ### 3.1 Torsion Definition
 
-捩れテンソル $T^\lambda_{\ \mu\nu}$ の定義：
-$$T^\lambda_{\ \mu\nu} \equiv \Gamma^\lambda_{\ \mu\nu} - \Gamma^\lambda_{\ \nu\mu}$$
-（注：本エンジンのフレーム基底での捩れ成分は、CONVENTIONS の第6節で定義された捩れ2-form $T^a = de^a + \omega^{a}{}\_b\wedge e^b$ から $T^a = \frac{1}{2}T^{a}{}\_{bc}\,e^b\wedge e^c$ の係数比較により抽出される）
+捩れテンソル $`T^\lambda_{\ \mu\nu}`$ の定義：
+
+$$
+T^\lambda_{\ \mu\nu} \equiv \Gamma^\lambda_{\ \mu\nu} - \Gamma^\lambda_{\ \nu\mu}
+$$
+
+（注：本エンジンのフレーム基底での捩れ成分は、CONVENTIONS の第6節で定義された捩れ2-form $`T^a = de^a + \omega^{a}{}_b\wedge e^b`$ から $`T^a = \frac{1}{2}T^{a}{}_{bc}\,e^b\wedge e^c`$ の係数比較により抽出される）
 
 ### 3.2 Contortion Formula
 
-上記のTorsion定義と整合するContortion $K^\lambda_{\ \mu\nu}$ の公式（Verified Formula）：
+上記のTorsion定義と整合するContortion $`K^\lambda_{\ \mu\nu}`$ の公式（Verified Formula）：
 
-$$K_{\lambda\mu\nu} = \frac{1}{2} \left( T_{\lambda\mu\nu} + T_{\mu\nu\lambda} - T_{\nu\lambda\mu} \right)$$
+$$
+K_{\lambda\mu\nu} = \frac{1}{2} \left( T_{\lambda\mu\nu} + T_{\mu\nu\lambda} - T_{\nu\lambda\mu} \right)
+$$
 
   * 符号パターン: **$(+1, +1, -1)$**
-  * 注意: この式は $T_{\lambda\mu\nu}$（全ての添字を下げたもの）に対して適用すること。
+  * 注意: この式は $`T_{\lambda\mu\nu}`$ （全ての添字を下げたもの）に対して適用すること。
 
 ### 3.3 Einstein-Cartan Connection
 
-$${\Gamma_{\text{EC}}}^\lambda_{\ \mu\nu} = {\Gamma_{\text{LC}}}^\lambda_{\ \mu\nu} + K^\lambda_{\ \mu\nu}$$
+$$
+{\Gamma_{\text{EC}}}^\lambda_{\ \mu\nu} = {\Gamma_{\text{LC}}}^\lambda_{\ \mu\nu} + K^\lambda_{\ \mu\nu}
+$$
 
-  * $\Gamma_{\text{LC}}$: Levi-Civita接続（Christoffel記号）
+  * $`\Gamma_{\text{LC}}`$: Levi-Civita接続（Christoffel記号）
   * $K$: Contortion
 
 -----
@@ -136,13 +144,13 @@ $M^3 \times S^1$ ミニスーパースペース・アンサーツでの捩れテ
 
 ### 4.2 物理的対応
 
-- **T1（軸対称成分）**: 軸性ベクトル $S^\mu = (\eta/r)(0,0,0,1)$ の双対。空間添字 $a,b,c \in \{0,1,2\}$ に対して $T_{abc} = (2\eta/r)\,\varepsilon_{abc}$。
-- **T2（ベクトル跡部分）**: ベクトル $V_\mu = V\,\delta^3_\mu$（$\tau$ 成分のみ）の双対。 $T_{abc} = \frac{1}{3}(\delta_{ac}V_b - \delta_{ab}V_c)$。
+- **T1（軸対称成分）**: 軸性ベクトル $S^\mu = (\eta/r)(0,0,0,1)$ の双対。空間添字 $`a,b,c \in \{0,1,2\}`$ に対して $`T_{abc} = (2\eta/r)\,\varepsilon_{abc}`$ 。
+- **T2（ベクトル跡部分）**: ベクトル $`V_\mu = V\,\delta^3_\mu`$ （ $\tau$ 成分のみ）の双対。 $`T_{abc} = \frac{1}{3}(\delta_{ac}V_b - \delta_{ab}V_c)`$ 。
 
 ### 4.3 実装ルール
 
 `dppu/torsion/ansatz.py` の `construct_torsion_tensor(mode, r, eta, V, metric, dim)` を使用すること。
-$T_{abc}$ を手打ちで構築してはならない。
+$`T_{abc}`$ を手打ちで構築してはならない。
 
 -----
 
@@ -151,16 +159,23 @@ $T_{abc}$ を手打ちで構築してはならない。
 ### 5.1 Nieh-Yan 分解
 
 完全な Nieh-Yan 密度：
-$$N = N_{\mathrm{TT}} - N_{\mathrm{Ree}},$$
-$$N_{\mathrm{TT}} = \frac{1}{4}\varepsilon^{abcd}T^{e}{}\_{ab}T_{ecd},\qquad N_{\mathrm{Ree}} = \frac{1}{4}\varepsilon^{abcd}R_{abcd}.$$
+
+$$
+N = N_{\mathrm{TT}} - N_{\mathrm{Ree}},
+$$
+
+
+$$
+N_{\mathrm{TT}} = \frac{1}{4}\varepsilon^{abcd}T^{e}{}_{ab}T_{ecd},\qquad N_{\mathrm{Ree}} = \frac{1}{4}\varepsilon^{abcd}R_{abcd}.
+$$
 
 ### 5.2 バリアント選択
 
 | `NyVariant` | 使用する密度 |
 |---|---|
-| `NyVariant.TT` | $N_{\mathrm{TT}}$ のみ |
-| `NyVariant.REE` | $N_{\mathrm{Ree}}$ のみ |
-| `NyVariant.FULL` | $N_{\mathrm{TT}} - N_{\mathrm{Ree}}$（標準） |
+| `NyVariant.TT` | $`N_{\mathrm{TT}}`$ のみ |
+| `NyVariant.REE` | $`N_{\mathrm{Ree}}`$ のみ |
+| `NyVariant.FULL` | $`N_{\mathrm{TT}} - N_{\mathrm{Ree}}`$ （標準） |
 
 ### 5.3 実装
 
@@ -172,13 +187,15 @@ $$N_{\mathrm{TT}} = \frac{1}{4}\varepsilon^{abcd}T^{e}{}\_{ab}T_{ecd},\qquad N_{
 
 ### 6.1 作用の形式
 
-$$S = \int L \times \mathrm{Vol},\qquad
-L = \frac{R}{2\kappa^2} + \theta_{\mathrm{NY}}\times N + \alpha\times C^2.$$
+$$
+S = \int L \times \mathrm{Vol},\qquad
+L = \frac{R}{2\kappa^2} + \theta_{\mathrm{NY}}\times N + \alpha\times C^2.
+$$
 
 | パラメータ | 意味 |
 |---|---|
 | $\kappa$ | Einstein-Cartan 重力結合定数 |
-| $\theta_{\mathrm{NY}}$ | Nieh-Yan 結合定数（トポロジカル） |
+| $`\theta_{\mathrm{NY}}`$ | Nieh-Yan 結合定数（トポロジカル） |
 | $\alpha$ | Weyl 結合定数（共形不変項） |
 
 $\alpha \leq 0$ では定理1により安定真空が保護される。 $\alpha > 0$ では定理2により有効ポテンシャルが非有界となる。
@@ -192,7 +209,7 @@ V_func = engine.get_effective_potential_function()
 # V_func(r, V_param, eta, theta_NY, L, kappa, epsilon, alpha) -> float
 ```
 
-$V_{\rm eff} = -S$。パイプラインステップ `E4.13` で抽出される。
+$`V_{\rm eff} = -S`$ 。パイプラインステップ `E4.13` で抽出される。
 
 ### 6.3 実装位置
 
@@ -214,7 +231,7 @@ Stage 1 の上位 $N$ 候補を初期点として `scipy.optimize.minimize`（L-
 
 ### 7.2 安定性分類
 
-$(r^\*, \varepsilon^\*)$ の最小値発見後、以下に分類する：
+$`(r^*, \varepsilon^*)`$ の最小値発見後、以下に分類する：
 
 | 分類 | 条件 | 物理的意味 |
 |---|---|---|
@@ -226,8 +243,8 @@ $(r^\*, \varepsilon^\*)$ の最小値発見後、以下に分類する：
 
 ### 7.3 注意事項
 
-- $\alpha > 0$ の場合、最適化が探索境界 $(r \to 0^+,\,\varepsilon \to -1^+)$ に張り付く（`converged = False`）。これは最適化の失敗ではなく、ポテンシャルが探索範囲内で非有界であることの正確な報告である。
-- $\mathrm{Nil}^3$ の平坦極限確認のため、探索範囲を通常より広く $\varepsilon_{\rm max} = 5.0$ に設定している（`scripts/paper02/` 参照）。
+- $\alpha > 0$ の場合、最適化が探索境界 $`(r \to 0^+,\,\varepsilon \to -1^+)`$ に張り付く（`converged = False`）。これは最適化の失敗ではなく、ポテンシャルが探索範囲内で非有界であることの正確な報告である。
+- $\mathrm{Nil}^3$ の平坦極限確認のため、探索範囲を通常より広く $`\varepsilon_{\rm max} = 5.0`$ に設定している（`scripts/paper02/` 参照）。
 
 -----
 
@@ -235,20 +252,24 @@ $(r^\*, \varepsilon^\*)$ の最小値発見後、以下に分類する：
 
 ### 8.1 曲率の Hodge 双対
 
-$$(*R)^{ab}{}_{cd} = \frac{1}{2}\varepsilon_{cdef}\,R^{ab,ef},$$
+$$
+(*R)^{ab}{}_{cd} = \frac{1}{2}\varepsilon_{cdef}\thinspace R^{ab,ef},
+$$
 
-ここで $\varepsilon_{cdef}$ はフレーム基底の Levi-Civita 記号（`dppu/utils/levi_civita.py` の `levi_civita_4d()` を使用）。
+ここで $`\varepsilon_{cdef}`$ はフレーム基底の Levi-Civita 記号（`dppu/utils/levi_civita.py` の `levi_civita_4d()` を使用）。
 
 ### 8.2 Pontryagin 内積と SD 残差
 
-$$E_{RR} = \langle R, R\rangle = R_{abcd}R^{abcd},\qquad
-P = \langle R, *R\rangle = R_{abcd}(*R)^{abcd}.$$
+$$
+E_{RR} = \langle R, R\rangle = R_{abcd}R^{abcd},\qquad
+P = \langle R, *R\rangle = R_{abcd}(*R)^{abcd}.
+$$
 
 | 条件 | 物理的状態 |
 |---|---|
-| SD 残差 $< \varepsilon_{\rm SD}$ かつ $\|R\| > \varepsilon_R$ | Self-dual |
-| ASD 残差 $< \varepsilon_{\rm SD}$ かつ $\|R\| > \varepsilon_R$ | Anti-self-dual |
-| $P = 0$（命題1） | Chiral equilibrium（ $M^3 \times S^1$ 上で代数的に成立） |
+| SD 残差 $`< \varepsilon_{\rm SD}`$ かつ $`\Vert R\Vert  > \varepsilon_R`$ | Self-dual |
+| ASD 残差 $`< \varepsilon_{\rm SD}`$ かつ $`\Vert R\Vert  > \varepsilon_R`$ | Anti-self-dual |
+| $P = 0$ （命題1） | Chiral equilibrium（ $M^3 \times S^1$ 上で代数的に成立） |
 
 ### 8.3 使用方法
 

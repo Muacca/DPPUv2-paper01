@@ -37,8 +37,8 @@ DPPUv2 Phase 1 provides tools for:
 
 - **DPPUv2_runner_Nil3S1_v3.py** - Nil³×S¹ topology runner
   - Nilmanifold × circle topology
-  - Nonzero structure coefficients: $C^2{}_{01}=-1/R$, $C^2{}_{10}=1/R$ (spatial indices $0,1,2$; scale $R>0$)
-  - Levi–Civita scalar curvature: $\mathcal R_{\mathrm{LC}}=-\frac{1}{2R^2}$ (torsion-free connection)
+  - Nonzero structure coefficients: $`C^2{}_{01}=-1/R`$, $`C^2{}_{10}=1/R`$ (spatial indices $0,1,2$; scale $R>0$)
+  - Levi–Civita scalar curvature: $`\mathcal R_{\mathrm{LC}}=-\frac{1}{2R^2}`$ (torsion-free connection)
 
 ### Analysis Tools
 
@@ -81,7 +81,7 @@ The [v3 data guide](../data/paper_v3/README.md) lists the published figures, tab
 - [Interactive visualizer](DPPUv2_visualize_notebook_v3.ipynb): launches the accompanying viewer. Requires Jupyter, ipywidgets and ipympl in addition to the calculation dependencies.
 - [Potential exploration](DPPUv2_Paper_Figures_v3.ipynb): uses the accompanying engines for decomposition and comparison of the complete NY action with the diagnostic actions. Its FULL type-I filters return empty datasets on the stated expansion paths. It is not the generator of the paper's nine figures.
 
-Both notebooks are supplied without evaluated outputs. Start Jupyter with this `script/` directory as the working directory and use a fresh kernel. The figure notebook writes PNG/PDF files to the working directory when plotting cells are run. Notebook variables `V` and `eta` are code inputs $V_\tau,\eta_\tau$; the paper uses $V=-V_\tau$, $\eta=-\eta_\tau$. See [CONVENTIONS](docs/CONVENTIONS.md) for the radius and volume conventions, and the [revision history](../CHANGELOG.md#earlier-results) for earlier outputs.
+Both notebooks are supplied without evaluated outputs. Start Jupyter with this `script/` directory as the working directory and use a fresh kernel. The figure notebook writes PNG/PDF files to the working directory when plotting cells are run. Notebook variables `V` and `eta` are code inputs $`V_\tau,\eta_\tau`$; the paper uses $`V=-V_\tau`$, $`\eta=-\eta_\tau`$. See [CONVENTIONS](docs/CONVENTIONS.md) for the radius and volume conventions, and the [revision history](../CHANGELOG.md#earlier-results) for earlier outputs.
 
 ## Quick Start
 
