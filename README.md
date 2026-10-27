@@ -49,7 +49,7 @@ The paper and figure datasets use geometric torsion $T$. The code input is $\tau
 
 CSV files are written to the selected directory as `dppu_scan_all_{timestamp}.csv` and `dppu_scan_{topology}_{ny_variant}_{timestamp}.csv`. The scanner output format differs from the figure datasets; see Appendix C and the [data guide](data/paper_v3/README.md).
 
-Use a fresh output/checkpoint directory for each calculation and restart notebook or viewer kernels after changing code versions. The notebooks are supplied without evaluated outputs; see the [script guide](script/README.md) for their purpose and execution requirements. The v3 figure assets are in [LaTeX/figures/v3](LaTeX/figures/v3/), the tables in [LaTeX/tables/v3](LaTeX/tables/v3/), and the supporting datasets in [data/paper_v3](data/paper_v3/). For earlier results and their interpretation limits, see the [revision history](CHANGELOG.md#earlier-results).
+Use a fresh output/checkpoint directory for each calculation and restart notebook or viewer kernels after changing code versions. The [figure notebook](script/DPPUv2_Paper_Figures_v3.ipynb) generates Figures 1–9 from the supplied data, with a separate option to recompute the datasets. The notebooks are supplied without evaluated outputs; see the [script guide](script/README.md) for setup and commands. The v3 figure assets are in [LaTeX/figures/v3](LaTeX/figures/v3/), the tables in [LaTeX/tables/v3](LaTeX/tables/v3/), and the supporting datasets in [data/paper_v3](data/paper_v3/). For earlier results and their interpretation limits, see the [revision history](CHANGELOG.md#earlier-results).
 
 ## Build the PDF
 

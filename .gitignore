@@ -267,3 +267,6 @@ latex.out/
 *.slo
 *.sls
 
+
+# Default local output of the paper figure notebook
+/script/paper_v3_run/

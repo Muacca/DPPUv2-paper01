@@ -18,6 +18,12 @@ These figure datasets have their own descriptive columns; they are not the eight
 
 To reproduce a value with the attached scripts, pass the negated pair $`(V_\tau,\eta_\tau)`$ to the potential functions in script/DPPUv2_parameter_scan_v3.py. Tables 2 and 3 give polynomial coefficients and root conditions. For a curve, evaluate $P(As^3+Bs^2+Cs)$ at the saved scales. For a phase, classify positive stationary roots using $D=B^2-3AC$, treating $A=0$ separately. Table 5 gives local invariants before volume integration.
 
+## Generate the figures and data
+
+The [figure notebook](../../script/DPPUv2_Paper_Figures_v3.ipynb) displays and saves Figures 1–9. Its default mode reads these supplied datasets. Enable its separate recomputation option to evaluate the same reduced polynomials and fixed grids into a new data directory. The [script guide](../../script/README.md) describes the pinned figure environment and the independent `paper_figures render` / `paper_figures recompute` commands.
+
+The drawing module checks `parameters.json` and the CSV hashes before rendering. Regenerated compressed bytes may differ because of gzip headers; compare the decompressed CSV content. SVG timestamps and generated IDs are not part of the curves or labels. Existing reference assets are not overwritten.
+
 ## Asset index
 
 The same images appear in the Japanese Markdown and English PDF. PNG files use 360 dpi; SVG companions preserve vector curves. Phase colors are blue (I), orange (II), and gray (III). Analytic boundaries are overlaid on the 0.1-spaced phase cells.

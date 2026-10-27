@@ -78,9 +78,30 @@ DPPUv2 Phase 1は以下の機能を提供します：
 [v3データ案内](../data/paper_v3/README.md)に、掲載図表・パラメータ・数値データをまとめています。このデータは内容別の列と幾何学的torsionのパラメータを使っており、CSV可視化スクリプトが読み込むscannerの8列CSVとは形式が異なります。
 
 - [対話型可視化](DPPUv2_visualize_notebook_v3.ipynb)：付属viewerを起動します。計算用の依存ライブラリに加え、Jupyter・ipywidgets・ipymplが必要です。
-- [ポテンシャルの探索](DPPUv2_Paper_Figures_v3.ipynb)：付属エンジンを使って項別分解と完全NY作用・診断用作用の比較を行います。記載した膨張経路ではFULLのtype-Iフィルタは空集合を返します。論文掲載の9図を生成するnotebookではありません。
+- [論文掲載図の生成](DPPUv2_Paper_Figures_v3.ipynb)：v3の図1〜9を生成・表示します。既定では保存済みCSVを読み込み、任意の独立した工程として、縮約多項式から同じ固定格子のデータを再計算できます。
 
-いずれも実行済み出力を含めていません。この`script/`ディレクトリをカレントディレクトリとしてJupyterを起動し、新しいkernelで実行してください。図のnotebookは描画セルの実行時にカレントディレクトリへPNG/PDFを出力します。notebookの変数`V`・`eta`はコード入力 $`V_\tau,\eta_\tau`$ で、本文では $`V=-V_\tau`$ 、 $`\eta=-\eta_\tau`$ です。半径・体積の規約は[CONVENTIONS](docs/CONVENTIONS_ja.md)、改訂前の出力は[改訂履歴](../CHANGELOG.md#earlier-results)を参照してください。
+どちらのnotebookも実行済み出力を含めていません。この `script/` ディレクトリからJupyterを起動し、新しいkernelで実行してください。図生成notebookはリポジトリ直下からの起動にも対応します。図生成では幾何学的torsionのパラメータを使い、対話viewer・engine APIではコード入力を使います。対応は $`V_\tau=-V,\eta_\tau=-\eta`$ です。半径・体積の規約は[CONVENTIONS](docs/CONVENTIONS_ja.md)を参照してください。
+
+### 図1〜9の生成
+
+Python 3.12を使い、このディレクトリで `python -m pip install -r requirements-figures.txt` を実行してください。図生成用にNumPy 2.3.5・Matplotlib 3.10.7・Pillow 12.0.0を固定しています。engine用の `requirements.txt` とは別です。フォントはDejaVu Serif、出力は360 dpiのPNGとSVGです。
+
+notebookで新しい `OUTPUT_ROOT` を指定し、`RECOMPUTE = False` のまま実行すると `data/paper_v3` の保存データから描画します。`RECOMPUTE = True` にすると、先に `OUTPUT_ROOT/data` へCSVを再計算します。その後、図番号ごとのセルが `OUTPUT_ROOT/figures` に各図を保存し、表示します。既定の実行先は `script/paper_v3_run` です。既存出力は上書きしないため、再実行時は新しい実行先を指定するか、生成済みPNGを表示してください。
+
+Jupyterを使わずに、`script/` から実行することもできます。
+
+```powershell
+# 保存データから描画
+python -B -m paper_figures render --output-dir new_figures
+
+# 固定したv3データを別工程で再計算し、そのデータから描画
+python -B -m paper_figures recompute --output-dir new_data
+python -B -m paper_figures render --data-dir new_data --output-dir new_figures_recomputed
+```
+
+[paper_figures/data.py](paper_figures/data.py)は、幾何学的 $T$ 、 $\kappa=L=1$ 、第3章の体積規約で、掲載図の固定入力を評価します。[paper_figures/plots.py](paper_figures/plots.py)は保存CSVを読み込みます。図1・4は模式図で、図4の例示多項式は各パネル内に示されています。描画前にデータ形式・パラメータ・ハッシュを確認します。対象は掲載スライスであり、一般の三次元全面走査ではありません。[図とデータの対応表](../data/paper_v3/README.md#asset-index)も参照してください。
+
+CSVは展開後の値、SVGは日時・内部IDを除いた描画内容で比較します。PNGの画素一致にはフォント・描画環境も影響します。配布した論文画像とデータは比較基準として保持しています。
 
 ## クイックスタート
 

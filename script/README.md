@@ -79,9 +79,30 @@ Technical documentation and conventions:
 The [v3 data guide](../data/paper_v3/README.md) lists the published figures, tables, parameters and numerical datasets. These datasets use descriptive columns and geometric-torsion parameters; they are not the eight-column scanner CSV format expected by the CSV visualization scripts.
 
 - [Interactive visualizer](DPPUv2_visualize_notebook_v3.ipynb): launches the accompanying viewer. Requires Jupyter, ipywidgets and ipympl in addition to the calculation dependencies.
-- [Potential exploration](DPPUv2_Paper_Figures_v3.ipynb): uses the accompanying engines for decomposition and comparison of the complete NY action with the diagnostic actions. Its FULL type-I filters return empty datasets on the stated expansion paths. It is not the generator of the paper's nine figures.
+- [Paper figures](DPPUv2_Paper_Figures_v3.ipynb): generates and displays Figures 1–9 of the v3 paper. By default it reads the supplied CSV datasets; an optional, separate step recomputes the same fixed grids from the reduced polynomials.
 
-Both notebooks are supplied without evaluated outputs. Start Jupyter with this `script/` directory as the working directory and use a fresh kernel. The figure notebook writes PNG/PDF files to the working directory when plotting cells are run. Notebook variables `V` and `eta` are code inputs $`V_\tau,\eta_\tau`$; the paper uses $`V=-V_\tau`$, $`\eta=-\eta_\tau`$. See [CONVENTIONS](docs/CONVENTIONS.md) for the radius and volume conventions, and the [revision history](../CHANGELOG.md#earlier-results) for earlier outputs.
+Both notebooks are supplied without evaluated outputs. Start Jupyter from this `script/` directory with a fresh kernel. The figure notebook also accepts the repository root as its working directory. It uses geometric-torsion parameters, while the interactive viewer and engine APIs use code-input parameters. The dictionary is $`V_\tau=-V,\eta_\tau=-\eta`$. See [CONVENTIONS](docs/CONVENTIONS.md) for the radius and volume conventions.
+
+### Reproducing Figures 1–9
+
+Use Python 3.12 and install `python -m pip install -r requirements-figures.txt` from this directory. This file pins NumPy 2.3.5, Matplotlib 3.10.7 and Pillow 12.0.0 for the figure environment; it does not replace the engine's `requirements.txt`. The renderer uses DejaVu Serif and saves PNG at 360 dpi plus SVG.
+
+In the notebook, choose a new `OUTPUT_ROOT` and leave `RECOMPUTE = False` to draw from `data/paper_v3`. Set `RECOMPUTE = True` to first write fresh CSVs to `OUTPUT_ROOT/data`. Each numbered cell then saves and displays one figure in `OUTPUT_ROOT/figures`. The default run directory is `script/paper_v3_run`. Existing outputs are not overwritten; choose a new run directory or display an already generated PNG when revisiting a cell.
+
+The same operations are available without Jupyter, from `script/`:
+
+```powershell
+# Draw directly from the supplied data.
+python -B -m paper_figures render --output-dir new_figures
+
+# Separately recompute the fixed v3 datasets, then draw from them.
+python -B -m paper_figures recompute --output-dir new_data
+python -B -m paper_figures render --data-dir new_data --output-dir new_figures_recomputed
+```
+
+[paper_figures/data.py](paper_figures/data.py) evaluates the fixed figure inputs with geometric $T$, $\kappa=L=1$ and the volumes of Section 3. [paper_figures/plots.py](paper_figures/plots.py) reads the saved CSVs; Figures 1 and 4 are schematics, with the example polynomials printed in Figure 4. The data schema, parameters and hashes are checked before drawing. These commands reproduce the published slices, not a general three-dimensional scan. See the [figure-to-data index](../data/paper_v3/README.md#asset-index).
+
+Compare regenerated CSV values after decompression and SVG drawing content independently of timestamps and internal IDs. PNG pixel identity additionally depends on fonts and the rendering environment. The supplied manuscript images and data are retained as reference assets.
 
 ## Quick Start
 

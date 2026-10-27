@@ -1,0 +1,6 @@
+# Figure reproduction environment (Python 3.12)
+numpy==2.3.5
+matplotlib==3.10.7
+pillow==12.0.0
+notebook>=6.5.0
+ipykernel>=6.0.0

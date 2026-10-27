@@ -35,12 +35,13 @@ At the same inputs, the volume correction multiplies the $S^3$ action, potential
 - Renamed the Japanese Markdown chapters and appendices to stable filenames without date or version suffixes, and updated their links.
 - Updated the calculation engine and its consumers for the corrected coefficients and volumes. Replaced finite-window searches for supported cubic potentials with analytic stationary-root classification; removed two-decimal input rounding and explicitly handled degenerate or numerically unresolved boundaries.
 - Replaced the paper's illustrations and numerical summaries with nine figures and seven tables based on the revised equations. Supplied their input domains, parameters and numerical datasets in [data/paper_v3](data/paper_v3/README.md). Figure axes and datasets use geometric-torsion parameters. The phase datasets are specified slices, not a full default three-dimensional sweep.
+- Supplied a notebook and reusable calculation/plotting modules for Figures 1–9, separating rendering of the provided datasets from recomputation on the fixed v3 grids.
 - Updated the acknowledgments to disclose computational and plotting-code assistance used for this revision.
 - Added an optional [independent calculation notebook](supplement/nieh_yan/README.md) deriving the local NY identity, its component coefficients and the T/τ dictionary directly from Cartan's equations, with English and Japanese explanations.
 
 ### Earlier results
 
-Pre-revision images, movies, sample scan/run results and embedded notebook outputs are excluded from the v3 supplement. They remain accessible in the [pre-v3 repository revision](https://github.com/Muacca/DPPUv2-paper01/tree/19455291caecba1c10ec97e6a08467200dabf936). The exploratory notebooks retain their executable source and are distributed without evaluated outputs; the figure notebook is not the generator of the v3 paper figures.
+Pre-revision images, movies, sample scan/run results and embedded notebook outputs are excluded from the v3 supplement. They remain accessible in the [pre-v3 repository revision](https://github.com/Muacca/DPPUv2-paper01/tree/19455291caecba1c10ec97e6a08467200dabf936). The figure notebook generates the v3 paper figures; the interactive visualizer remains a separate entry point. Both are distributed without evaluated outputs.
 
 Some generating inputs and versions of the earlier outputs remain unidentified. Those outputs are not evidence for the v3 conclusions, and earlier scan statistics and version-comparison claims are not revalidated by this revision. Existing checkpoints and saved outputs are not automatically converted to the corrected coefficients or volume conventions.
 
