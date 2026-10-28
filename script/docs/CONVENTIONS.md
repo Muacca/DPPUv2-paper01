@@ -1,9 +1,9 @@
-# CONVENTIONS — dppu Engine Geometric Conventions
+# CONVENTIONS — DPPUv2 Engine Geometric Conventions
 
-This document fixes the **geometric, index, and sign conventions** shared between `BaseFrameEngine` and each topology runner in the `dppu` package.
+This document fixes the **geometric, index, and sign conventions** shared between `BaseFrameEngine` and each topology runner in this directory.
 **All runners must define `metric_frame` and `structure_constants` according to these conventions.**
 
-⇒ [日本語版](CONVENTIONS_ja.md) | [SymPy ガイドライン](SymPy_guideline.md)
+⇒ [日本語版](CONVENTIONS_ja.md) | [SymPy guideline](SymPy_guideline.md)
 
 ## 1. Scope and Assumptions
 
@@ -165,87 +165,11 @@ R_{ab cd} = -R_{ba cd},\qquad
 R_{ab cd} = -R_{ab dc}.
 $$
 
----
-
-## 9. Weyl Tensor and Conformal Scalar
-
-### 9.1 Weyl Tensor Definition (4D)
-
-$$
-C_{abcd} = R_{abcd} - \frac{1}{2}(g_{ac}R_{bd} - g_{ad}R_{bc} - g_{bc}R_{ad} + g_{bd}R_{ac}) + \frac{R}{6}(g_{ac}g_{bd} - g_{ad}g_{bc}).
-$$
-
-Key properties:
-- **Traceless**: $`C^a{}_{bad} = 0`$ (holds for all index pairs)
-- **Conformally invariant**: invariant under $`g_{ab} \to \Omega^2 g_{ab}`$
-- **Conformal flatness criterion**: $`C_{abcd} = 0 \Leftrightarrow`$ conformally flat
-
-Note on frame basis (orthonormal): since $`g_{ab} = \delta_{ab}`$, raising and lowering indices is the identity operation; components $`C_{abcd}`$ and $C^{abcd}$ can be treated identically.
-
-### 9.2 Weyl Scalar
-
-$$
-C^2 = C_{abcd}\thinspace C^{abcd} = \sum_{a,b,c,d} C_{abcd}^2.
-$$
-
-In the frame basis, the sum is computed directly without index raising.
-$C^2 = 0$ holds for isotropic $S^3 \times S^1$ at $\varepsilon = 0$ and for $T^3 \times S^1$ identically.
-
-### 9.3 Engine Implementation
-
-- Module: `dppu/curvature/weyl.py`
-  - `compute_weyl_tensor(R_abcd, Ricci, R_scalar, metric, dim)` → $`C_{abcd}`$
-  - `compute_weyl_scalar(C_abcd, metric_inv, dim)` → $C^2$
-- Pipeline step: `E4.3b` (immediately after the Levi-Civita curvature computation)
-
----
-
-## 10. Squashed Homogeneous Spaces and the $\varepsilon$-Parameter
-
-### 10.1 Definition of Squashing
-
-A volume-preserving anisotropy deformation parameter $\varepsilon$ is introduced.
-$\varepsilon = 0$ is the isotropic reference point. Physical range: $\varepsilon \in (-1, +\infty)$ ($\varepsilon = -1$ is a singularity where structure constants diverge).
-
-### 10.2 Topology-Dependent Structure Constant Scaling
-
-The base structure constants $`C^a{}_{bc}(\varepsilon=0)`$ on the left-invariant frame are scaled as follows.
-
-**$S^3 \times S^1$ (SU(2)):**
-
-| Frame index $a$ | Scale factor $`\lambda_a(\varepsilon)`$ |
-|---|---|
-| $`a \in \{0, 1\}`$ | $(1+\varepsilon)^{2/3}$ |
-| $a = 2$ | $(1+\varepsilon)^{-4/3}$ |
-
-Volume preservation: $`\lambda_0\lambda_1\lambda_2 = (1+\varepsilon)^{2/3+2/3-4/3} = 1`$.
-
-**$\mathrm{Nil}^3 \times S^1$ (Heisenberg group):**
-
-| Non-trivial index $a$ | Scale factor |
-|---|---|
-| $a = 2$ (non-commutative component) | $(1+\varepsilon)^{-4/3}$ |
-
-As $\varepsilon \to +\infty$, the structure constants vanish and the geometry asymptotes to flat $T^3$-like behaviour.
-
-**$T^3 \times S^1$ (Abelian group):**
-
-Structure constants are identically zero ($`C^a{}_{bc} = 0`$). The $\varepsilon$-deformation is not defined. $C^2 = 0$ holds identically, so the Weyl term vanishes (null test).
-
-### 10.3 Physical Limits
-
-| Limit | Physical meaning |
-|---|---|
-| $\varepsilon = 0$ | Isotropic $S^3$: $C^2 = 0$, stable vacuum of Paper I |
-| $\varepsilon \to +\infty$ | $\mathrm{Nil}^3$ flat limit ($C^2 \to 0$ asymptotically) |
-| $\varepsilon \to -1^+$ | Singularity of $S^3$ structure (physically inaccessible) |
-| $\varepsilon = -2$ | Mathematical root of $C^2 = 0$, excluded since $\varepsilon < -1$ |
-
-## 11. Global Geometry and Integration Domains
+## 9. Global Geometry and Integration Domains
 
 This section specifies the global backgrounds used by the three topology runners. The metric is the sum of the squares of the orthonormal coframe. All scales are positive. On the common circle, $u\in[0,1)$ and $`e^3=L\,du`$, so **L is the circumference**. The engine integrates a homogeneous scalar density by multiplying it by the Riemannian volume of the specified domain.
 
-### 11.1 Round S³
+### 9.1 Round S³
 
 The scale parameter r in $`C^i{}_{jk}=4\varepsilon_{ijk}/r`$ is twice the round-sphere radius $a=r/2$. An explicit SU(2) coframe is $e^i=-r\lambda^i/4$, where
 
@@ -265,7 +189,7 @@ $$
 R_{\mathrm{LC}}=\frac{24}{r^2}=\frac{6}{a^2}.
 $$
 
-### 11.2 T³
+### 9.2 T³
 
 For $i=1,2,3$, take $x^i\in[0,2\pi)$ and $`e^{i-1}=R_i\,dx^i`$. The $`R_i`$ are coframe scale coefficients; the spatial circumferences are $`\ell_i=2\pi R_i`$.
 
@@ -276,7 +200,7 @@ $$
 
 The scan uses $`R_1=R_2=R_3=r`$. A fixed-shape path $`R_2=\alpha r`$, $`R_3=\beta r`$ holds positive $\alpha,\beta$ fixed. Holding R2 and R3 themselves fixed defines a different variation path.
 
-### 11.3 Compact Nil³
+### 9.3 Compact Nil³
 
 Use the Heisenberg group law and left-invariant coframe
 
@@ -312,7 +236,7 @@ $$
 
 The base-torus circumferences are $2\pi R$ and the central-fiber circumference is $4\pi^2R$. The lattice and its shape are held fixed as R varies. This explicit quotient realizes the local structure constants and the stated global volume together; its central coordinate does not have period $2\pi$.
 
-### 11.4 Input Parameters and Physical Lengths
+### 9.4 Input Parameters and Physical Lengths
 
 The runner and consumer APIs use the local scales r/R1/R2/R3/R and the input-array parameters $`\eta_\tau,V_\tau`$. The geometric torsion dictionary remains $`\eta_g=-\eta_\tau`$, $`V_g=-V_\tau`$.
 

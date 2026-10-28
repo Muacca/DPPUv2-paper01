@@ -1,9 +1,9 @@
-# SymPy Implementation Guidelines — dppu Engine
+# SymPy Implementation Guidelines — DPPUv2 Engine
 
 - **Target:** AI Coding Assistants & Contributors
-- **Context:** Einstein-Cartan Theory on Curved Spacetime (S³×S¹, T³×S¹, Nil³×S¹)
+- **Context:** Einstein–Cartan action with a constant Nieh–Yan coupling on static homogeneous $S^3\times S^1$, $T^3\times S^1$ and compact $\mathrm{Nil}^3\times S^1$
 
-This document establishes the implementation guidelines for symbolic computation (SymPy) and theoretical physics conventions for the `dppu` package. The following rules must be strictly adhered to.
+This document gives the implementation rules for the symbolic engine `DPPUv2_engine_core_v3.py` and the three topology runners in this directory. Index order, frame, torsion and global-geometry conventions are fixed in [CONVENTIONS](CONVENTIONS.md); the paper states the same definitions in Section 2 and Appendix A.
 
 ⇒ [日本語版](SymPy_guideline_ja.md) | [Geometric Conventions](CONVENTIONS.md)
 
@@ -12,6 +12,8 @@ This document establishes the implementation guidelines for symbolic computation
 ## 1. Optimization Rules (Engineering)
 
 Iron rules to prevent "computation time explosion" (taking over 2 hours) in SymPy integration calculations, ensuring completion within seconds.
+
+The current runners use left-invariant frames with constant components and multiply the homogeneous density by the global volume (step `E4.12`). The rules below apply whenever explicit integration or large intermediate expressions are introduced.
 
 ### Rule 1.1: Strict use of `expand()` + `cancel()` Strategy
 
@@ -34,247 +36,209 @@ When performing multiple integrations (e.g., $\phi$ integration $\to$ $\theta$ i
 
 -----
 
-## 2. Theoretical Implementation Rules
+## 2. Implementation Rules for Tensor Components
 
-Iron rules for maintaining consistency in tensor operations within Curved Spacetime.
+### Rule 2.1: Use Frame Components in the Stored Index Order
 
-### Rule 2.1: Prohibition of Direct Index Manipulation (Robust Method)
+The engine works in an orthonormal frame with the Euclidean metric $`g_{ab}=\delta_{ab}`$ (`metric_frame`, default `Matrix.eye(dim)`). Raising and lowering frame indices is then the identity, and components may be used directly. Array positions must follow [CONVENTIONS Section 2](CONVENTIONS.md#2-indices-and-array-index-order):
 
-In environments with non-diagonal metrics or where $`g_{\mu\nu} \neq 1`$, swapping array indices directly (e.g., `T[mu, nu, lam]`) is not equivalent to physical tensor index manipulation (raising/lowering).
+* `C[a,b,c]` $`=C^a{}_{bc}`$
+* `Gamma[a,b,c]` $`=\Gamma^a{}_{bc}`$, where the last index is the direction of differentiation
+* `Riemann[a,b,c,d]` $`=R^a{}_{bcd}`$
 
-  * **Don't:**
-    ```python
-    # NG: PROHIBITED. Risk of referencing physically incorrect components.
-    term = T_tensor[mu, nu, lam]
-    ```
+For a non-orthonormal basis or another metric, lower all indices with the metric, permute them, and raise them again. A bare array transposition is not an index operation.
 
-  * **Do:** Always manipulate indices via the metric tensor $`g_{\mu\nu}`$.
-    1.  Lower all indices to create the fully covariant form $`T_{\lambda\mu\nu}`$.
-    2.  Perform index permutation.
-    3.  Raise indices using the metric as necessary.
+### Rule 2.2: Distinguish the Input Array $\tau$ from Geometric Torsion $T$
 
-#### Optimization for Orthonormal Frame Basis
-
-In an **Orthonormal Frame Basis**, since the metric is the identity matrix ( $`g_{ab} = \eta_{ab} = \text{diag}(1,1,1,1)`$ or $\text{diag}(-1,1,1,1)$ ), the computational overhead of raising and lowering indices should be omitted. Direct component calculation should be used for speed.
-
-However, the sign pattern $(+1, +1, -1)$ defined by the physical definition (Hehl 1976) must be strictly observed.
+`torsion_tensor` stores the input array $\tau$. The torsion obtained from the Cartan equation is the geometric torsion $T=-\tau$, stored as `geometric_torsion_tensor`. The contortion step `E4.5` applies the code formula to $\tau$:
 
 ```python
-# ============================================================
-# Golden Logic for Contortion (Frame Basis / DPPUv2 Standard)
-# ============================================================
-# Assumption: Metric is diagonal/identity (Orthonormal Frame)
-# Therefore T^a_bc and T_abc behave identically in code logic.
-
-K_tensor = MutableDenseNDimArray.zeros(dim, dim, dim)
-
+# Step E4.5: contortion of the input array tau
 for a in range(dim):
     for b in range(dim):
         for c in range(dim):
-            # Formula: K_abc = (1/2)(T_abc + T_bca - T_cab)
-            # Note: Using T[a,b,c] directly as T_abc
-            
-            term = (T_tensor[a, b, c] + T_tensor[b, c, a] - T_tensor[c, a, b])
-            
-            val = term * Rational(1, 2)
-            
-            if val != 0:
-                K_tensor[a, b, c] = cancel(expand(val))
+            val = (tau[a, b, c] + tau[b, c, a] - tau[c, a, b]) * Rational(1, 2)
 ```
 
-### Rule 2.2: Consistency Check
+In geometric torsion the same contortion is $`K_{abc}[T]=-\frac12(T_{abc}+T_{bca}-T_{cab})`$ (paper Eq. M2-03). Convert the array and both parameters together, $`\tau=-T`$, $`\eta_\tau=-\eta`$, $`V_\tau=-V`$. Do not reverse $K$ alone or only one torsion parameter.
 
-After constructing the EC connection ($`\Gamma_{\text{EC}}`$), the following verification code must be executed to confirm that the mismatch count is **0**.
+### Rule 2.3: Torsion Consistency Check Including Structure Coefficients
+
+In a noncoordinate frame, the torsion components contain the structure coefficients:
+
+$$
+T^a{}_{bc}=C^a{}_{bc}+\Gamma^a{}_{cb}-\Gamma^a{}_{bc}.
+$$
+
+After constructing the EC connection, confirm that this reproduces $-\tau$ with a mismatch count of **0**:
 
 ```python
-# Torsion Consistency Check
-T_verify = Gamma_EC[lam, mu, nu] - Gamma_EC[lam, nu, mu] # Hehl definition
-mismatch = count(simplify(T_verify - T_original) != 0)
+dim = engine.data['dim']
+C = engine.data['structure_constants']
+Gamma_EC = engine.data['connection_EC']
+tau = engine.data['torsion_tensor']
+mismatch = sum(
+    1
+    for a in range(dim) for b in range(dim) for c in range(dim)
+    if simplify(C[a, b, c] + Gamma_EC[a, c, b] - Gamma_EC[a, b, c] + tau[a, b, c]) != 0
+)
 assert mismatch == 0
 ```
 
+The difference `Gamma_EC[a,b,c] - Gamma_EC[a,c,b]` alone omits $C$. It is not a valid check on $S^3$ or Nil, where $C\ne0$.
+
+### Rule 2.4: Built-in Checks
+
+* Step `E4.3` verifies metric compatibility $`\Gamma_{abc}+\Gamma_{bac}=0`$ for the Levi–Civita connection and raises an exception on violation.
+* Step `E4.7` verifies $`R_{abcd}=-R_{bacd}`$ and $`R_{abcd}=-R_{abdc}`$ with the verdicts `PROVED_ZERO`, `WITNESS_NONZERO` and `UNPROVED`. An unproved residual is not treated as zero.
+* Pair exchange $`R_{abcd}=R_{cdab}`$ is not required for a connection with torsion (paper Eq. B-02).
+
 -----
 
-## 3. Standard Conventions (Theoretical)
+## 3. Conventions Used by the Engine
 
-To prevent confusion during paper writing, adhere to the **Hehl (1976) Standard**.
+### 3.1 Torsion and Curvature
 
-### 3.1 Torsion Definition
-
-Definition of the Torsion Tensor $`T^\lambda_{\ \mu\nu}`$:
+Torsion and curvature are defined by two-forms, with $`\omega^a{}_b=\Gamma^a{}_{bc}e^c`$ ([CONVENTIONS Section 6](CONVENTIONS.md#6-torsion-and-curvature)):
 
 $$
-T^\lambda_{\ \mu\nu} \equiv \Gamma^\lambda_{\ \mu\nu} - \Gamma^\lambda_{\ \nu\mu}
+\begin{aligned}
+T^a&=de^a+\omega^a{}_b\wedge e^b=\frac12T^a{}_{bc}\thinspace e^b\wedge e^c,\\
+R^a{}_b&=d\omega^a{}_b+\omega^a{}_c\wedge\omega^c{}_b=\frac12R^a{}_{bcd}\thinspace e^c\wedge e^d.
+\end{aligned}
 $$
 
-(Note: In the frame basis of this engine, torsion components are extracted from the torsion 2-form $`T^a = de^a + \omega^{a}{}_b\wedge e^b`$ defined in Section 6 of CONVENTIONS, via the coefficient comparison $`T^a = \frac{1}{2}T^{a}{}_{bc}\,e^b\wedge e^c`$.)
-
-### 3.2 Contortion Formula
-
-The Verified Formula for Contortion $`K^\lambda_{\ \mu\nu}`$ consistent with the above Torsion definition:
+### 3.2 Connection
 
 $$
-K_{\lambda\mu\nu} = \frac{1}{2} \left( T_{\lambda\mu\nu} + T_{\mu\nu\lambda} - T_{\nu\lambda\mu} \right)
+\begin{aligned}
+\Gamma^{\mathrm{EC}}_{abc}&=\Gamma^{\mathrm{LC}}_{abc}+K_{abc},\qquad
+\Gamma^{\mathrm{LC}}_{abc}=\frac12\left(C_{abc}+C_{cba}-C_{bac}\right),\\
+K_{abc}[T]&=-\frac12\left(T_{abc}+T_{bca}-T_{cab}\right)
+=\frac12\left(\tau_{abc}+\tau_{bca}-\tau_{cab}\right).
+\end{aligned}
 $$
 
-  * Sign Pattern: **$(+1, +1, -1)$**
-  * Note: Apply this formula to $`T_{\lambda\mu\nu}`$ (where all indices are lowered).
+The Levi–Civita part is the general Koszul formula of [CONVENTIONS Section 5](CONVENTIONS.md#5-levi-civita-connection-general-koszul-implementation-in-dppuv2-engine). It does not assume a bi-invariant metric.
 
-### 3.3 Einstein-Cartan Connection
+### 3.3 Curvature Components
+
+With frame components constant in each runner, step `E4.7` uses
 
 $$
-{\Gamma_{\text{EC}}}^\lambda_{\ \mu\nu} = {\Gamma_{\text{LC}}}^\lambda_{\ \mu\nu} + K^\lambda_{\ \mu\nu}
+R^a{}_{bcd}=\Gamma^a{}_{ec}\Gamma^e{}_{bd}-\Gamma^a{}_{ed}\Gamma^e{}_{bc}+\Gamma^a{}_{be}C^e{}_{cd}.
 $$
 
-  * $`\Gamma_{\text{LC}}`$: Levi-Civita Connection (Christoffel symbols)
-  * $K$: Contortion
+The last term comes from $de^c$ in a noncoordinate frame and must not be dropped (paper Appendix G).
 
 -----
 
 ## 4. Torsion Ansatz and Mode Decomposition Rules
 
-The torsion tensor on the $M^3 \times S^1$ minisuperspace ansatz is specified via three modes.
-
 ### 4.1 Mode Definitions
 
-| Mode | Physical component | Parameters |
-|---|---|---|
-| `Mode.AX` | Axial component (T1) only | $\eta \neq 0$, $V = 0$ |
-| `Mode.VT` | Vector-trace component (T2) only | $\eta = 0$, $V \neq 0$ |
-| `Mode.MX` | Both T1 and T2 | $\eta \neq 0$, $V \neq 0$ |
+| Mode | Input components |
+|---|---|
+| `Mode.AX` | Axial part only ( $`V_\tau=0`$ ) |
+| `Mode.VT` | Vector-trace part only ( $`\eta_\tau=0`$ ) |
+| `Mode.MX` | Both parts |
 
-### 4.2 Physical Correspondence
+### 4.2 Components
 
-- **T1 (Axial component):** Dual to axial vector $S^\mu = (\eta/r)(0,0,0,1)$. For spatial indices $`a,b,c \in \{0,1,2\}`$: $`T_{abc} = (2\eta/r)\,\varepsilon_{abc}`$.
-- **T2 (Vector-trace component):** Dual to vector $`V_\mu = V\,\delta^3_\mu`$ ($\tau$-component only). $`T_{abc} = \frac{1}{3}(\delta_{ac}V_b - \delta_{ab}V_c)`$.
+Step `E4.4` builds the input array from the runner parameters `eta` $`=\eta_\tau`$, `V` $`=V_\tau`$ and the scale `r`. The scale alias is $r$ on $S^3$, $`R_1`$ on $T^3$, and $R$ on Nil; call it $s$.
 
-### 4.3 Implementation Rule
+$$
+\begin{aligned}
+\tau^{\mathrm{ax}}_{ijk}&=\frac{2\eta_\tau}{s}\varepsilon_{ijk}\quad(i,j,k\in\lbrace 0,1,2\rbrace ),\\
+\tau^{\mathrm{vec}}_{abc}&=\frac13\left(\delta_{ac}(V_\tau)_b-\delta_{ab}(V_\tau)_c\right),\qquad
+(V_\tau)_a=(0,0,0,V_\tau).
+\end{aligned}
+$$
 
-Use `construct_torsion_tensor(mode, r, eta, V, metric, dim)` from `dppu/torsion/ansatz.py`.
-Do **not** construct $`T_{abc}`$ by hand.
+The geometric torsion $T=-\tau$ has the same form with $`\eta=-\eta_\tau`$ and $`V=-V_\tau`$ (paper Eq. M2-05). Runners supply the metric, structure constants, volume and parameters in steps `E4.1`–`E4.2`; they do not construct the torsion array themselves.
 
 -----
 
-## 5. Nieh-Yan Topological Term Variants
+## 5. Nieh–Yan Densities and Action Variants
 
-### 5.1 Nieh-Yan Decomposition
+### 5.1 Densities
 
-The full Nieh-Yan density:
-$`N = N_{\mathrm{TT}} - N_{\mathrm{Ree}},`$
-$`N_{\mathrm{TT}} = \frac{1}{4}\varepsilon^{abcd}T^{e}{}_{ab}T_{ecd},\qquad N_{\mathrm{Ree}} = \frac{1}{4}\varepsilon^{abcd}R_{abcd}.`$
+With $`\varepsilon_{0123}=+1`$ in the Euclidean frame, step `E4.10` computes
+
+$$
+N_{\mathrm{TT}}=\frac14\varepsilon^{abcd}T^e{}_{ab}T_{ecd},\qquad
+N_{\mathrm{REE}}=\frac12\varepsilon^{abcd}R_{abcd},\qquad
+N_{\mathrm{FULL}}=N_{\mathrm{TT}}-N_{\mathrm{REE}}.
+$$
+
+The TT factor $1/4$ comes from the two torsion two-forms and the REE factor $1/2$ from the single curvature two-form. $`N_{\mathrm{TT}}`$ is quadratic in torsion, so evaluating it with $\tau$ gives the same value. On the ansatz of the three runners,
+
+$$
+N_{\mathrm{TT}}=N_{\mathrm{REE}}=-\frac{4V\eta}{s}=-\frac{4V_\tau\eta_\tau}{s},\qquad N_{\mathrm{FULL}}=0.
+$$
 
 ### 5.2 Variant Selection
 
-| `NyVariant` | Density used |
-|---|---|
-| `NyVariant.TT` | $`N_{\mathrm{TT}}`$ only |
-| `NyVariant.REE` | $`N_{\mathrm{Ree}}`$ only |
-| `NyVariant.FULL` | $`N_{\mathrm{TT}} - N_{\mathrm{Ree}}`$ (canonical) |
+| `NyVariant` | NY term in the Lagrangian | Role |
+|---|---|---|
+| `NyVariant.FULL` | $`\theta N_{\mathrm{FULL}}`$ | Complete NY action |
+| `NyVariant.TT` | $`\theta N_{\mathrm{TT}}`$ | Diagnostic action |
+| `NyVariant.REE` | $`+\theta N_{\mathrm{REE}}`$ | Diagnostic action with a positive sign; not the negative component of FULL |
+
+On this ansatz TT and REE give the same potential. Their barriers and $\theta$ dependence are not results of the complete NY action.
 
 ### 5.3 Implementation
 
-All three variants are computed in pipeline step `E4.10`. Select the variant via the `ny_variant` argument in the engine's `__init__`. See `dppu/torsion/nieh_yan.py`.
+`step_E4_10_nieh_yan_frame` stores `ny_density_TT`, `ny_density_Ree` and `ny_density_full`, and selects the adopted density by the `ny_variant` argument of `BaseFrameEngine`.
 
 -----
 
-## 6. Extended Lagrangian and Weyl Coupling Constant $\alpha$
+## 6. Action and Reduced Potential
 
-### 6.1 Action Form
+### 6.1 Action
 
 $$
-S = \int L \times \mathrm{Vol},\qquad
-L = \frac{R}{2\kappa^2} + \theta_{\mathrm{NY}}\times N + \alpha\times C^2.
+L=\frac{\mathcal R_{\mathrm{EC}}}{2\kappa^2}+\theta N,\qquad
+S=L\times\mathrm{Vol},\qquad
+U=-S.
 $$
 
-| Parameter | Meaning |
-|---|---|
-| $\kappa$ | Einstein-Cartan gravitational coupling |
-| $`\theta_{\mathrm{NY}}`$ | Nieh-Yan coupling (topological) |
-| $\alpha$ | Weyl coupling (conformal invariant term) |
+Steps `E4.11`, `E4.12` and `E4.13` construct $L$, $S$ and $U$. The volume `total_volume` is defined by each runner ([CONVENTIONS Section 9](CONVENTIONS.md#9-global-geometry-and-integration-domains)). $U$ is stored as `potential`; the log labels it "Effective Potential V(r)".
 
-For $\alpha \leq 0$, Theorem 1 guarantees protection of the stable vacuum. For $\alpha > 0$, Theorem 2 guarantees $`V_{\rm eff} \to -\infty`$.
-
-### 6.2 Obtaining the Effective Potential
+### 6.2 Obtaining the Potential
 
 ```python
+from DPPUv2_engine_core_v3 import Mode, NyVariant
+from DPPUv2_runner_S3S1_v3 import S3S1Engine
+
+engine = S3S1Engine(Mode.MX, NyVariant.FULL)
 engine.run()
-V_func = engine.get_effective_potential_function()
-# Call signature:
-# V_func(r, V_param, eta, theta_NY, L, kappa, epsilon, alpha) -> float
+U = engine.get_effective_potential_function()
+# Arguments: (scale, V_tau, eta_tau, theta_NY, L, kappa)
 ```
 
-$`V_{\rm eff} = -S`$. Extracted in pipeline step `E4.13`.
-
-### 6.3 Implementation
-
-See `compute_lagrangian()` in `dppu/action/lagrangian.py` and `dppu/action/potential.py`.
-
------
-
-## 7. Numerical Optimisation Strategy (Phase Atlas Search)
-
-### 7.1 Two-Stage Strategy
-
-**Stage 1: Brute-force grid search**
-
-`scipy.optimize.brute` with `Ns` points per axis over the $(r, \varepsilon)$ 2D grid, to locate the basin of the global minimum.
-
-**Stage 2: Multi-start L-BFGS-B refinement**
-
-Top- $N$ candidates from Stage 1 are used as starting points for `scipy.optimize.minimize` (L-BFGS-B, `ftol=1e-8`) to obtain a high-precision minimum.
-
-### 7.2 Stability Classification
-
-After locating the minimum at $`(r^*, \varepsilon^*)`$ , classify as follows:
-
-| Class | Condition | Physical meaning |
-|---|---|---|
-| Type-I | $V(r)$ rises as $r \to 0$ (barrier present) | Stable vacuum (nucleation barrier exists) |
-| Type-II | $V(r)$ decreases monotonically as $r \to 0$ (no barrier) | Spontaneous nucleation possible |
-| Type-III | No local minimum in the physical region | Unstable configuration |
-
-Use `analyze_stability()` from `dppu/action/stability.py`.
-
-### 7.3 Important Notes
-
-- For $\alpha > 0$, the optimiser attaches to the search boundary $`(r \to 0^+,\,\varepsilon \to -1^+)`$ (`converged = False`). This is not an optimisation failure; it correctly reports that the potential is unbounded below within the search range.
-- For $\mathrm{Nil}^3$ flat-limit confirmation, the search range is extended to $`\varepsilon_{\rm max} = 5.0`$, wider than the default (see `scripts/paper02/`).
+* The scale argument is `r` on $S^3$, `R1` on $T^3$ and `R` on Nil.
+* The torsion arguments are code inputs. For the paper's geometric values, pass $`V_\tau=-V`$ and $`\eta_\tau=-\eta`$.
+* On $T^3$ the stored potential keeps `R2` and `R3`. Substitute the variation path into `engine.data['potential']` (for example $`R_2=\alpha R_1`$, $`R_3=\beta R_1`$) before calling `get_effective_potential_function()`.
+* `get_potential_decomposition()` returns the coefficients of powers of the scale.
 
 -----
 
-## 8. Self-Duality (SD) Diagnostic Rules
+## 7. Classification of Radius Extrema
 
-### 8.1 Hodge Dual of Curvature
+Step `E4.14` records derivatives only. Use the analytic classifier in `DPPUv2_parameter_scan_v3.py`:
 
-$$
-(*R)^{ab}{}_{cd} = \frac{1}{2}\varepsilon_{cdef}\thinspace R^{ab,ef},
-$$
+* `get_cubic_coefficients(topology, ny_variant, V, eta, theta)` returns $(a,b,c)$ of $U=ar^3+br^2+cr$ for the registered isotropic $T^3$, sphere and uniform Nil paths, with code inputs.
+* `analyze_cubic_stability(a, b, c)` classifies the positive-radius domain (paper Section 4, Table 3).
 
-where $`\varepsilon_{cdef}`$ is the Levi-Civita symbol in the frame basis (use `levi_civita_4d()` from `dppu/utils/levi_civita.py`).
-
-### 8.2 Pontryagin Inner Product and SD Residuals
-
-$$
-E_{RR} = \langle R, R\rangle = R_{abcd}R^{abcd},\qquad
-P = \langle R, *R\rangle = R_{abcd}(*R)^{abcd}.
-$$
-
-| Condition | Physical state |
+| Type | Definition on $r>0$ |
 |---|---|
-| SD residual $`< \varepsilon_{\rm SD}`$ and $`\Vert R\Vert  > \varepsilon_R`$ | Self-dual |
-| ASD residual $`< \varepsilon_{\rm SD}`$ and $`\Vert R\Vert  > \varepsilon_R`$ | Anti-self-dual |
-| $P = 0$ (Proposition 1) | Chiral equilibrium (algebraic identity on $M^3 \times S^1$) |
+| Type-I | A positive-radius local maximum followed by a strict local minimum |
+| Type-II | A strict local minimum without a preceding positive-radius maximum |
+| Type-III | No strict local minimum: monotone, flat, runaway or stationary-inflection cases |
 
-### 8.3 Usage
+* The Type-I height is the action difference from the maximum to the minimum. The Type-II depth is measured from the origin limit $U(0)=0$. Do not plot them as the same kind of barrier.
+* If $`b^2-3ac\le64\epsilon_{\mathrm{float}}\max(b^2,\lvert 3ac\rvert)`$, no strict minimum is resolved. This does not prove that the discriminant is zero; analytic inequalities take precedence.
+* Callables without cubic coefficients fall back to a bounded numerical search, limited by its window and resolution.
 
-```python
-from dppu.curvature.self_duality import SDExtensionMixin
-SDExtensionMixin.attach_to(engine)          # Dynamically attach methods
-R = engine.get_R_ab_cd_numerical(params_dict)
-diag = engine.evaluate_sd_status(params_dict)
-# Check diag['P_RstarR'] (expected value: 0)
-```
-
-See `dppu/curvature/self_duality.py` and `dppu/curvature/pontryagin.py`.
-
-
+These are off-shell radius extrema along fixed variation paths. They do not establish a full Einstein–Cartan vacuum, dynamical stability, nucleation, physical masses or decay rates (paper Sections 5 and 7).

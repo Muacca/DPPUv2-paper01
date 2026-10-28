@@ -1,4 +1,4 @@
-# CONVENTIONS — dppu エンジン幾何規約
+# CONVENTIONS — DPPUv2 エンジン幾何規約
 
 本書は、`BaseFrameEngine` と各 topology runner が共有する **幾何・添字・符号規約**を固定する。
 **全 runner はこの規約に従って `metric_frame` と `structure_constants` を定義すること。**
@@ -166,89 +166,11 @@ R_{ab cd} = -R_{ba cd},\qquad
 R_{ab cd} = -R_{ab dc}.
 $$
 
----
-
-## 9. Weyl テンソルと共形スカラー
-
-### 9.1 Weyl テンソルの定義（4次元）
-
-$$
-C_{abcd} = R_{abcd} - \frac{1}{2}(g_{ac}R_{bd} - g_{ad}R_{bc} - g_{bc}R_{ad} + g_{bd}R_{ac}) + \frac{R}{6}(g_{ac}g_{bd} - g_{ad}g_{bc}).
-$$
-
-主要な性質：
-- **無跡**： $`C^{a}{}_{bad} = 0`$ （全添字対で成立）
-- **共形不変**：計量の共形変換 $`g_{ab} \to \Omega^2 g_{ab}`$ のもとで不変
-- **共形平坦判定**： $`C_{abcd} = 0 \Leftrightarrow`$ 共形的平坦
-
-フレーム基底（正規直交）での注意： $`g_{ab} = \delta_{ab}`$ のため添字の上げ下げは恒等変換に等しく、
- $`C_{abcd} = C^{abcd}`$ として直接成分を扱える。
-
-### 9.2 Weyl スカラー
-
-$$
-C^2 = C_{abcd}\thinspace C^{abcd} = \sum_{a,b,c,d} C_{abcd}^2.
-$$
-
-フレーム基底での高速計算：添字上げ下げを省略し、直接2乗和をとる。
-$C^2 = 0 \Leftrightarrow$ 共形的平坦（等方的 $S^3 \times S^1$ で $\varepsilon = 0$ のとき成立）。
-
-### 9.3 engine での実装位置
-
-- モジュール：`dppu/curvature/weyl.py`
-  - `compute_weyl_tensor(R_abcd, Ricci, R_scalar, metric, dim)` → $`C_{abcd}`$
-  - `compute_weyl_scalar(C_abcd, metric_inv, dim)` → $C^2$
-- パイプラインステップ：`E4.3b`（Levi-Civita 曲率計算の直後）
-
----
-
-## 10. Squashed 等質空間と $\varepsilon$-パラメータ
-
-### 10.1 Squashing の定義
-
-体積保存の異方性変形パラメータ $\varepsilon$ を導入する。
-$\varepsilon = 0$ が等方（アイソトロピック）基準点。物理的範囲： $\varepsilon \in (-1, +\infty)$ （ $\varepsilon = -1$ で構造定数が発散し特異点）。
-
-### 10.2 トポロジー別の構造定数スケーリング
-
-左不変フレームの基底構造定数 $`C^a{}_{bc}(\varepsilon=0)`$ を以下のスケーリングで変形する。
-
-**$S^3 \times S^1$ （SU(2)）:**
-
-| フレーム添字 $a$ | スケール因子 $`\lambda_a(\varepsilon)`$ |
-|---|---|
-| $`a \in \{0, 1\}`$ | $(1+\varepsilon)^{2/3}$ |
-| $a = 2$ | $(1+\varepsilon)^{-4/3}$ |
-
-体積保存の確認： $`\lambda_0\lambda_1\lambda_2 = (1+\varepsilon)^{2/3+2/3-4/3} = 1`$ 。
-
-**$\mathrm{Nil}^3 \times S^1$ （Heisenberg 群）:**
-
-| 非自明な添字 $a$ | スケール因子 |
-|---|---|
-| $a = 2$ （非可換成分） | $(1+\varepsilon)^{-4/3}$ |
-
-$\varepsilon \to +\infty$ で構造定数が消失し、平坦 $T^3$ 的挙動に漸近する。
-
-**$T^3 \times S^1$ （Abelian 群）:**
-
-構造定数は恒等的にゼロ（ $`C^a{}_{bc} = 0`$ ）。 $\varepsilon$ による変形は定義されない。
-$C^2 = 0$ が全域で成立し、Weyl 項は常にゼロとなる（null test）。
-
-### 10.3 物理的極限
-
-| 極限 | 物理的意味 |
-|---|---|
-| $\varepsilon = 0$ | 等方的 $S^3$ の背景： $C^2 = 0$ |
-| $\varepsilon \to +\infty$ | $\mathrm{Nil}^3$ の平坦極限（ $C^2 \to 0$ 漸近） |
-| $\varepsilon \to -1^+$ | $S^3$ 構造の特異点（物理的到達不能） |
-| $\varepsilon = -2$ | $C^2 = 0$ の数学的根だが $\varepsilon < -1$ のため物理的除外 |
-
-## 11. 大域幾何と積分領域
+## 9. 大域幾何と積分領域
 
 3種類のtopology runnerで使う大域背景を定める。計量は正規直交coframeの平方和で、スケールは全て正とする。共通の円について、 $u\in[0,1)$ 、 $`e^3=L\,du`$ とし、**Lは円周長**を表す。engineは一様なスカラー密度に、指定した領域のRiemann体積を掛けて積分する。
 
-### 11.1 丸いS³
+### 9.1 丸いS³
 
 $`C^i{}_{jk}=4\varepsilon_{ijk}/r`$ に現れるスケールrは丸球半径の2倍であり、実半径は $a=r/2$ 。明示的なSU(2) coframeは $e^i=-r\lambda^i/4$ で、
 
@@ -268,7 +190,7 @@ $$
 R_{\mathrm{LC}}=\frac{24}{r^2}=\frac{6}{a^2}.
 $$
 
-### 11.2 T³
+### 9.2 T³
 
 $i=1,2,3$ について、 $x^i\in[0,2\pi)$ 、 $`e^{i-1}=R_i\,dx^i`$ とする。 $`R_i`$ はcoframeのスケール係数で、空間各方向の周長は $`\ell_i=2\pi R_i`$ 。
 
@@ -279,7 +201,7 @@ $$
 
 scanは $`R_1=R_2=R_3=r`$ を使う。固定形状経路 $`R_2=\alpha r`$ 、 $`R_3=\beta r`$ では正の $\alpha,\beta$ を固定する。R2・R3自体を固定する場合は別の変分経路となる。
 
-### 11.3 コンパクトNil³
+### 9.3 コンパクトNil³
 
 Heisenberg群の積と左不変coframeを
 
@@ -315,7 +237,7 @@ $$
 
 底のトーラスの周長は各 $2\pi R$ 、中央S¹繊維の周長は $4\pi^2R$ 。Rを変分するときも格子とその形状を固定する。この商は局所構造定数と指定体積を同時に実現し、中央座標の周期は $2\pi$ ではない。
 
-### 11.4 入力パラメータと実長さ
+### 9.4 入力パラメータと実長さ
 
 runner・消費側のAPIは局所スケールr/R1/R2/R3/Rと入力配列のパラメータ $`\eta_\tau,V_\tau`$ を使用する。幾何学的torsionとの辞書は $`\eta_g=-\eta_\tau`$ 、 $`V_g=-V_\tau`$ 。
 
